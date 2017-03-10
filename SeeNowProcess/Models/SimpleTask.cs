@@ -34,8 +34,8 @@ namespace SeeNowProcess.Models
         Critical
     };
 
-    public class TaskDBContext : DbContext
+    public class SimpleTaskDBContext : DbContext
     {
-        public DbSet<SimpleTask> Movies { get; set; }
+        public DbSet<SimpleTask> SimpleTasks { get; set; }
     }
 }
