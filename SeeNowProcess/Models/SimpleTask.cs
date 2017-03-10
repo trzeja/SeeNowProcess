@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SeeNowProcess.Models
 {
-    public class Task
+    public class SimpleTask
     {
         public int ID { get; set; }
         public Importance Importance { get; set; }
@@ -36,6 +36,6 @@ namespace SeeNowProcess.Models
 
     public class TaskDBContext : DbContext
     {
-        public DbSet<Task> Movies { get; set; }
+        public DbSet<SimpleTask> Movies { get; set; }
     }
 }
