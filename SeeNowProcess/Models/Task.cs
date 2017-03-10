@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -32,4 +33,9 @@ namespace SeeNowProcess.Models
         Important,
         Critical
     };
+
+    public class TaskDBContext : DbContext
+    {
+        public DbSet<Task> Movies { get; set; }
+    }
 }
