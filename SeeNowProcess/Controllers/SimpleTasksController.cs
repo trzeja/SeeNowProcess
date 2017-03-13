@@ -15,10 +15,40 @@ namespace SeeNowProcess.Controllers
         private SimpleTaskDBContext db = new SimpleTaskDBContext();
 
         // GET: SimpleTasks
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    return View(db.SimpleTasks.ToList());
+        //}
+
+        // GET: SimpleTasks
+        public ActionResult Index(string importance, string searchString)
         {
-            return View(db.SimpleTasks.ToList());
+            var ImportanceLst = new List<string>();
+
+            var ImportanceQry = from d in db.SimpleTasks
+                           orderby d.Importance
+                           select d.Importance.ToString();           
+            
+            ImportanceLst.AddRange(ImportanceQry.Distinct());
+            ViewBag.importance = new SelectList(ImportanceLst);
+
+            var simpleTasks = from s in db.SimpleTasks
+                         select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                simpleTasks = simpleTasks.Where(s => s.Title.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(importance))
+            {
+                simpleTasks = simpleTasks.Where(x => x.Importance.ToString() == importance);
+            }
+
+            return View(simpleTasks);
         }
+
+
 
         // GET: SimpleTasks/Details/5
         public ActionResult Details(int? id)
