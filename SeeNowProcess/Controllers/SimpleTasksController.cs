@@ -76,7 +76,7 @@ namespace SeeNowProcess.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress")] SimpleTask simpleTask)
+        public ActionResult Create([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress,Comments")] SimpleTask simpleTask)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace SeeNowProcess.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress")] SimpleTask simpleTask)
+        public ActionResult Edit([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress,Comments")] SimpleTask simpleTask)
         {
             if (ModelState.IsValid)
             {

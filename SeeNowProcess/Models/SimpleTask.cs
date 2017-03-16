@@ -26,7 +26,8 @@ namespace SeeNowProcess.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CompletionDate { get; set; }        
-        public decimal Progress { get; set; }
+        public decimal Progress { get; set; }        
+        public string Comments { get; set; }
     }
 
     public enum State

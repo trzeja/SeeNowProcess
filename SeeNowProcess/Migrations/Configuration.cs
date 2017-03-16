@@ -24,7 +24,8 @@ namespace SeeNowProcess.Migrations
                     Importance = Importance.Critical,
                     CurrentState = State.Finished,
                     Description = "desc1",
-                    Progress = 80
+                    Progress = 80,
+                    Comments = "Comm1"
                 },
 
                 new SimpleTask
@@ -35,7 +36,9 @@ namespace SeeNowProcess.Migrations
                     Importance = Importance.Regular,
                     CurrentState = State.InProgress,
                     Description = "desc2",
-                    Progress = 50
+                    Progress = 50,
+                    Comments = "Comm2"
+                    
                 },
 
                 new SimpleTask
@@ -46,7 +49,8 @@ namespace SeeNowProcess.Migrations
                     Importance = Importance.Trivial,
                     CurrentState = State.Created,
                     Description = "desc3",
-                    Progress = 20
+                    Progress = 20,
+                    Comments = "Comm3"
                 }
            );
 

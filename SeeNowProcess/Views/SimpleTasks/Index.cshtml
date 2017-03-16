@@ -42,6 +42,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Progress)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
         <th></th>
     </tr>
 
@@ -67,6 +70,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Progress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
