@@ -11,6 +11,8 @@ namespace SeeNowProcess.Models
     {
         public int ID { get; set; }
         public Importance Importance { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
         public string Description { get; set; }
 
