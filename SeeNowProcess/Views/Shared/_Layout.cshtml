@@ -6,37 +6,63 @@
     <title>@ViewBag.Title - SeeNowProcess</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("SeeNowProcess", "Index", "SimpleTasks", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container col-sm-1 sidebar" id="sidebar">
+                <!-- <u1 class="my_list-group" style="background-color:azure;height: 100%; padding-top: 20px; padding-bottom: 40px"> -->
+                <!--<button type="button" class="btn btn-lg btn-block"> Start Bootstrap </button></li> -->
+                <a class="btn btn-lg btn-block green_button" href="/Add/Index" role="button">+Add</a> <!--Adding new project-->
+                <p style="padding:20px"></p>
+                <a class="btn btn-block my_sidebar_button" href="/MyRecent/Index" role="button"><strong>My Recent</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/MyWork/Index" role="button"><strong>My Work</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/Backlog/Index" role="button"><strong>Backlog</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/ReleasePlan/Index" role="button"><strong>Release Plan </strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/IterationPlan/Index" role="button"><strong>Iteration Plan</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/TaskBoard/Index" role="button"><strong>Task Board</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/People/Index" role="button"><strong>People</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/Dashboard/Index" role="button"><strong>Dashboard</strong> </a>
+                <a class="btn btn-block my_sidebar_button" href="/Contact/Index" role="button"><strong>Contact</strong> </a>
+                <p style="padding:50px"></p>
+                <a class="btn btn-lg btn-block create_button" href="/Create/Index" role="button">+Create</a>
+                <!--   </u1> -->
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+
+            <div class="container col-sm-11 main_page" id="main">
+                <div class="container body-content">
+                    @RenderBody()
+                    <hr />
+                    <footer>
+                        <p>&copy; @DateTime.Now.Year - MVC demo</p>
+                    </footer>
+                </div>
+            </div>
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <!-- <div class="container">-->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("SeeNowProcess", "Index", "SimpleTasks", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - MVC demo</p>
-        </footer>
-    </div>
 
+    <!-- </div> -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

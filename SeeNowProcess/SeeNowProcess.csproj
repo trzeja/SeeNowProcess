@@ -168,9 +168,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AddController.cs" />
+    <Compile Include="Controllers\BacklogController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CreateController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IterationPlanController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MyRecentController.cs" />
+    <Compile Include="Controllers\MyWorkController.cs" />
+    <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="Controllers\ReleasePlanController.cs" />
     <Compile Include="Controllers\SimpleTasksController.cs" />
+    <Compile Include="Controllers\TaskBoardController.cs" />
+    <Compile Include="Controllers\WorkByPersonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,10 +209,23 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\leftmenu.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\czarno.jpg" />
+    <Content Include="img\IwSK.jpg" />
+    <Content Include="img\magia_EKOSu.jpg" />
+    <Content Include="img\mem_mowa_pogrzebowa_v2.jpg" />
+    <Content Include="img\nadkrasnal.jpg" />
+    <Content Include="img\nope.jpg" />
+    <Content Include="img\planet.jpg" />
+    <Content Include="img\popcorn.jpg" />
+    <Content Include="img\power.jpg" />
+    <Content Include="img\szop_mem.jpg" />
+    <Content Include="img\whatever.jpg" />
+    <Content Include="img\zwolnienie.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -254,6 +279,18 @@
     <Content Include="Views\SimpleTasks\Details.cshtml" />
     <Content Include="Views\SimpleTasks\Edit.cshtml" />
     <Content Include="Views\SimpleTasks\Index.cshtml" />
+    <Content Include="Views\Add\Index.cshtml" />
+    <Content Include="Views\Backlog\Index.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Create\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\IterationPlan\Index.cshtml" />
+    <Content Include="Views\MyRecent\Index.cshtml" />
+    <Content Include="Views\MyWork\Index.cshtml" />
+    <Content Include="Views\People\Index.cshtml" />
+    <Content Include="Views\ReleasePlan\Index.cshtml" />
+    <Content Include="Views\TaskBoard\Index.cshtml" />
+    <Content Include="Views\WorkByPerson\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
