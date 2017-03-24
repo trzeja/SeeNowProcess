@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Workers.Models.Worker>
+
+@{
+    ViewBag.Title = "Tree";
+}
+
+<style>
+    li.hover {
+        font-weight: bold;
+    }
+    li.hover ul {
+        font-weight: normal;
+    }
+
+    li.dragable {
+        cursor: -webkit-grab;
+    }
+    li.dragged {
+        z-index: 999999;
+        background-color: white;
+        cursor: -webkit-grabbing;
+        position: absolute;
+    }
+</style>
+
+<h2>Tree</h2>
+@helper DisplayHierarchy(IEnumerable<Workers.Models.Worker> workers)
+{
+    <ul>
+    @foreach (var worker in workers)
+        {
+            <li class="dragable">
+                @Html.DisplayFor(modelItem => worker.FullName)
+                <p></p>
+                @if (worker.Subordinates.Count > 0)
+                {
+                    @DisplayHierarchy(worker.Subordinates)
+                }
+            </li>
+        }
+    </ul>
+}
+
+<div id="tree">
+    @DisplayHierarchy(Model)
+
+</div>
+
+@section Scripts {
+
+<script>
+    $(function () {
+        $('body').attr('onselectstart', 'return false;');
+        $('div#tree')
+            .on("mouseover", "li", function (evt) {
+                evt.stopPropagation();
+                $(this).addClass('hover');
+            }).on("mouseout", "li", function (evt) {
+                evt.stopPropagation();
+                $(this).removeClass('hover');
+            }).on("mousedown", "li", function (evt) {
+                evt.stopPropagation();
+                console.log(evt);
+                $(this)
+                    .addClass("dragged")
+                    .data("origin", {left: evt.offsetX, top: evt.offsetY})
+                    .css({
+                        left:   evt.clientX - evt.offsetX + "px",
+                        top:    evt.clientY - evt.offsetY + "px"
+                    });
+                $('body')
+                    .on('mousemove.moveWorker', function (evt) {
+                        var origin = $('li.dragged').data("origin");
+                        if (origin == null)
+                            return;
+                        $('li.dragged').css({
+                            left: (evt.clientX - origin.left)+"px",
+                            top:  (evt.clientY - origin.top) +"px"
+                        });
+                        console.log(evt);
+                        console.log({ dx: (evt.offsetX - origin.left), dy: (evt.offsetY - origin.top), x: $(this).css("left"), y: $(this).css("top") });
+                    })
+                    .on('mouseup', function () {
+                        $(this)
+                            .off('mouseover.moveWorker')
+                            .off('mouseup.moveWorker');
+                        $('li.dragged').removeClass('dragged');
+                        return;
+                        var pos1 = $(this).offset().top + $(this).height() / 2;
+                        var place=null;
+                        $('div#tree li:not(.dragged)').each(function () {
+                            var pos3 = $(this).offset().top;
+                            var pos4 = $(this).height() + pos3;
+                            if (pos3 <= pos1 && pos4 >= pos1)
+                                place = this;
+                        });
+                        if (place != null)
+                        {
+                            var origin = $('li.dragged');
+                            $(place).find("ul").append($('li.dragged').clone());
+                            origin.remove();
+                        }
+                    });
+            });
+    });
+</script>
+
+}
