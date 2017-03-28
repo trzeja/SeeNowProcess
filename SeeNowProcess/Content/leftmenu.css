@@ -30,7 +30,7 @@
     /*height: 100%; */
     padding-top: 40px;
     padding-bottom: 50px; 
-    min-width:180px
+    min-width:150px
 }
 
 
@@ -57,6 +57,5 @@
 }
 
 .main_page {
-    padding-top: 30px;
-
+    padding-top: 60px;
 }
