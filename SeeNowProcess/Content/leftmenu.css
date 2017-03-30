@@ -30,7 +30,8 @@
     /*height: 100%; */
     padding-top: 40px;
     padding-bottom: 50px; 
-    min-width:150px
+    min-width:150px;
+    margin-bottom:0px;
 }
 
 
@@ -59,3 +60,9 @@
 .main_page {
     padding-top: 60px;
 }
+/*
+#main {
+    width: 100%;
+    position:absolute;
+    padding: 15px;
+}*/
