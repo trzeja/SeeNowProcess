@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeeNowProcess.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
@@ -30,23 +31,7 @@ namespace SeeNowProcess.Models
         public DateTime CompletionDate { get; set; }        
         public decimal Progress { get; set; }        
         public string Comments { get; set; }
-    }
-
-    public enum State
-    {
-        Created,
-        InProgress,
-        Finished
-    }
-
-    public enum Importance
-    {
-        None,
-        Trivial,
-        Regular,
-        Important,
-        Critical
-    };
+    }    
 
     public class SimpleTaskDBContext : DbContext
     {

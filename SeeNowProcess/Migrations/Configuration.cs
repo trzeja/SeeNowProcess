@@ -1,6 +1,7 @@
 namespace SeeNowProcess.Migrations
 {
     using Models;
+    using Models.Enums;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
