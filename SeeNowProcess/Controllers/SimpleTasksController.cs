@@ -57,7 +57,7 @@ namespace SeeNowProcess.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SimpleTask simpleTask = db.SimpleTasks.Find(id);
+            Problem simpleTask = db.SimpleTasks.Find(id);
             if (simpleTask == null)
             {
                 return HttpNotFound();
@@ -76,7 +76,7 @@ namespace SeeNowProcess.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress,Comments")] SimpleTask simpleTask)
+        public ActionResult Create([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress,Comments")] Problem simpleTask)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace SeeNowProcess.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SimpleTask simpleTask = db.SimpleTasks.Find(id);
+            Problem simpleTask = db.SimpleTasks.Find(id);
             if (simpleTask == null)
             {
                 return HttpNotFound();
@@ -108,7 +108,7 @@ namespace SeeNowProcess.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress,Comments")] SimpleTask simpleTask)
+        public ActionResult Edit([Bind(Include = "ID,Importance,Title,Description,CurrentState,CreationDate,CompletionDate,Progress,Comments")] Problem simpleTask)
         {
             if (ModelState.IsValid)
             {
@@ -126,7 +126,7 @@ namespace SeeNowProcess.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SimpleTask simpleTask = db.SimpleTasks.Find(id);
+            Problem simpleTask = db.SimpleTasks.Find(id);
             if (simpleTask == null)
             {
                 return HttpNotFound();
@@ -139,7 +139,7 @@ namespace SeeNowProcess.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SimpleTask simpleTask = db.SimpleTasks.Find(id);
+            Problem simpleTask = db.SimpleTasks.Find(id);
             db.SimpleTasks.Remove(simpleTask);
             db.SaveChanges();
             return RedirectToAction("Index");

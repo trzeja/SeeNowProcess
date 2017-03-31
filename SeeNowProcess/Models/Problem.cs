@@ -8,33 +8,35 @@ using System.Web;
 
 namespace SeeNowProcess.Models
 {
-    public class SimpleTask
+    public class Problem
     {
         public int ID { get; set; }
-        public Importance Importance { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
         public string Description { get; set; }
 
-        [Display(Name = "Current State")]        
+        [Display(Name = "Current State")]
         public State CurrentState { get; set; }
+        public Importance Importance { get; set; }
+        public int Progress { get; set; }
 
         [Display(Name = "Creation Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CreationDate { get; set; }
 
-        [Display(Name = "Completion Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime CompletionDate { get; set; }        
-        public decimal Progress { get; set; }        
-        public string Comments { get; set; }
+
+        // reszta todo jutro
+        //Box Box 
+        public Problem ParentProblem { get; set; }
+
+        //public string Comments { get; set; }
     }    
 
-    public class SimpleTaskDBContext : DbContext
+    
+    public class SimpleTaskDBContext : DbContext // to pojdziedo kosza pewnie
     {
-        public DbSet<SimpleTask> SimpleTasks { get; set; }
+        public DbSet<Problem> SimpleTasks { get; set; }
     }
 }
