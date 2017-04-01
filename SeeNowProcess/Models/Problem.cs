@@ -25,18 +25,17 @@ namespace SeeNowProcess.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CreationDate { get; set; }
+        public Box Box { get; set; }
 
-
-        // reszta todo jutro
-        //Box Box 
+        [Display(Name = "Parent Problem")]
         public Problem ParentProblem { get; set; }
 
-        //public string Comments { get; set; }
-    }    
+        [Display(Name = "Estimated Time")]
+        public TimeSpan EstimatedTime { get; set; } //new TimeSpan(2, 14, 18); "02:14:18"
 
-    
-    public class SimpleTaskDBContext : DbContext // to pojdziedo kosza pewnie
-    {
-        public DbSet<Problem> SimpleTasks { get; set; }
-    }
+        [Display(Name = "Final Time")]
+        public TimeSpan FinalTime { get; set; }
+        //public UserStory Story { get; set; }
+        
+    } 
 }
