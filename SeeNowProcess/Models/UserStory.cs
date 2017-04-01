@@ -16,9 +16,9 @@ namespace SeeNowProcess.Models
         public int Size { get; set; }
         public string Unit { get; set; }
         public string Notes { get; set; }
-        //public User Owner {get;set;}
-        //IEnumerable<Team> Teams { get; set; } //to
-        //public Team Team { get; set; }        //lub to
+        public User Owner {get;set;}
+        IEnumerable<Team> Teams { get; set; } //to
+        public Team Team { get; set; }        //lub to
         public string Criteria { get; set; }
         public Project Project { get; set; }
 

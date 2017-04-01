@@ -35,7 +35,7 @@ namespace SeeNowProcess.Models
 
         [Display(Name = "Final Time")]
         public TimeSpan FinalTime { get; set; }
-        //public UserStory Story { get; set; }
+        public UserStory Story { get; set; }
         
     } 
 }
