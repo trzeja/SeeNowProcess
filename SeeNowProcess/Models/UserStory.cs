@@ -8,6 +8,8 @@ namespace SeeNowProcess.Models
 {
     public class UserStory
     {
+        public int ID { get; set; }
+
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
         public string Description { get; set; }
@@ -18,7 +20,7 @@ namespace SeeNowProcess.Models
         //IEnumerable<Team> Teams { get; set; } //to
         //public Team Team { get; set; }        //lub to
         public string Criteria { get; set; }
-        //public Project Project { get; set; }
+        public Project Project { get; set; }
 
     }
 }
