@@ -6,7 +6,102 @@
     ViewBag.Title = "Index";
 }
 
-<p>My Work not implement yet. </p>
+<head>
+    <style>
+        .space {
+            height: 70px;
+      
+            width: 0px;
+            border: 1px solid #aaaaaa;
+            background-color:lavender;
+            min-height:400px;
+            max-height: 1000px;
+            /*padding: 0 !important;
+            margin: 0 !important;*/
+        }
+
+        .space2 {
+            height: 100%;
+            border: 1px solid #aaaaaa;
+            background-color:lavender;
+        }
+        .body {
+            margin:0!important;
+        }
+    </style>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
+            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Planned</strong></h5></div>
+            <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Progress</strong></h5></div>
+            <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Testing</strong></h5></div>
+            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Done</strong></h5></div>
+            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Cancelled</strong></h5></div>
+        </div>
+        <div class="row">
+            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
 
 
-<img src="~/img/zwolnienie.jpg" alt="Upsik - brakuje obrazka" />
+                <h3 class="text-center" ondragstart="dragStart(event)" draggable="true" id="dragtarget">
+                    <span class="label label-default">
+                        Task 1
+                    </span>
+                </h3>
+
+            </div>
+            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            </div>
+            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            </div>
+            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            </div>
+            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            </div>
+            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            </div>
+        </div>
+    </div>
+    @*<p>Drag the p element back and forth between the two rectangles:</p>*@
+
+    @*<div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">*@
+    @*<p class="dragtarget" ondragstart="dragStart(event)" ondrag="dragging(event)" draggable="true" id="dragtarget">Drag me!</p>*@
+    @*</div>*@
+
+    @*<div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>*@
+
+    @*<p style="clear:both;"><strong>Note:</strong> drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.</p>*@
+
+    <p id="demo"></p>
+
+    <script>
+function dragStart(event) {
+    event.dataTransfer.setData("Text", event.target.id);
+}
+
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("Text");
+    event.target.appendChild(document.getElementById(data));
+}
+    </script>
+
+</body>
+

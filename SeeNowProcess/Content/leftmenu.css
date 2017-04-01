@@ -77,10 +77,16 @@
 
 .main_page {
     padding-top: 60px;
-    margin-left:25%;
+    margin-left:200px;
     padding-left: 16px;
     width:75%;
     overflow:auto;
+}
+@media screen and (max-width: 600px) {
+    main_page {
+        width: 75%;
+        margin-left:150px;
+    }
 }
 /*
 #main {
