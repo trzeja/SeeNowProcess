@@ -34,7 +34,9 @@
     margin-bottom:0px;
 }
 
-
+.topbar {
+    margin-right:10px;
+} 
 
 .green_button {
   background-color:chartreuse; 

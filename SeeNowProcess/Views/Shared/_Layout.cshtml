@@ -56,7 +56,11 @@
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
-                    @Html.Partial("_LoginPartial")
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="topbar"><a href="/Account/Register"><span class="glyphicon glyphicon-log-in"></span> REGISTER</a></li>
+                        <li class="topbar"><a href="/Account/Login"><span class="glyphicon glyphicon-log-in"> </span>LOG IN</a></li>
+                    </ul>
+               <!--     @Html.Partial("_LoginPartial")-->
                 </div>
             </div> 
         </div>
