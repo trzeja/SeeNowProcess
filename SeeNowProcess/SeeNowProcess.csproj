@@ -187,6 +187,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Enums\Box.cs" />
+    <Compile Include="Models\Enums\Role.cs" />
     <Compile Include="Models\Enums\Importance.cs" />
     <Compile Include="Models\Enums\State.cs" />
     <Compile Include="Models\Enums\Status.cs" />
