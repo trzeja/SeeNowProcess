@@ -30,5 +30,6 @@ namespace SeeNowProcess.Models
         public Status Status { get; set; }
 
         public virtual ICollection<UserStory> Stories { get; set; }
+        public virtual ICollection<Box> Boxes { get; set; }
     }
 }

@@ -87,6 +87,18 @@ namespace SeeNowProcess.Migrations
                 .PrimaryKey(t => t.ProjectID);
             
             CreateTable(
+                "dbo.Box",
+                c => new
+                    {
+                        BoxID = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Project_ProjectID = c.Int(),
+                    })
+                .PrimaryKey(t => t.BoxID)
+                .ForeignKey("dbo.Project", t => t.Project_ProjectID)
+                .Index(t => t.Project_ProjectID);
+            
+            CreateTable(
                 "dbo.Problem",
                 c => new
                     {
@@ -97,15 +109,17 @@ namespace SeeNowProcess.Migrations
                         Importance = c.Int(nullable: false),
                         Progress = c.Int(nullable: false),
                         CreationDate = c.DateTime(nullable: false),
-                        Box = c.Int(nullable: false),
                         EstimatedTime = c.Time(nullable: false, precision: 7),
                         FinalTime = c.Time(nullable: false, precision: 7),
+                        Box_BoxID = c.Int(),
                         ParentProblem_ProblemID = c.Int(),
                         Story_UserStoryID = c.Int(),
                     })
                 .PrimaryKey(t => t.ProblemID)
+                .ForeignKey("dbo.Box", t => t.Box_BoxID)
                 .ForeignKey("dbo.Problem", t => t.ParentProblem_ProblemID)
                 .ForeignKey("dbo.UserStory", t => t.Story_UserStoryID)
+                .Index(t => t.Box_BoxID)
                 .Index(t => t.ParentProblem_ProblemID)
                 .Index(t => t.Story_UserStoryID);
             
@@ -113,17 +127,21 @@ namespace SeeNowProcess.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Problem", "Story_UserStoryID", "dbo.UserStory");
-            DropForeignKey("dbo.Problem", "ParentProblem_ProblemID", "dbo.Problem");
             DropForeignKey("dbo.Team", "TeamLeader_UserID", "dbo.User");
             DropForeignKey("dbo.User", "Supervisor_UserID", "dbo.User");
             DropForeignKey("dbo.Team", "UserStory_UserStoryID", "dbo.UserStory");
             DropForeignKey("dbo.UserStory", "Project_ProjectID", "dbo.Project");
+            DropForeignKey("dbo.Box", "Project_ProjectID", "dbo.Project");
+            DropForeignKey("dbo.Problem", "Story_UserStoryID", "dbo.UserStory");
+            DropForeignKey("dbo.Problem", "ParentProblem_ProblemID", "dbo.Problem");
+            DropForeignKey("dbo.Problem", "Box_BoxID", "dbo.Box");
             DropForeignKey("dbo.UserStory", "Owner_UserID", "dbo.User");
             DropForeignKey("dbo.Assignment", "UserID", "dbo.User");
             DropForeignKey("dbo.Assignment", "TeamID", "dbo.Team");
             DropIndex("dbo.Problem", new[] { "Story_UserStoryID" });
             DropIndex("dbo.Problem", new[] { "ParentProblem_ProblemID" });
+            DropIndex("dbo.Problem", new[] { "Box_BoxID" });
+            DropIndex("dbo.Box", new[] { "Project_ProjectID" });
             DropIndex("dbo.UserStory", new[] { "Project_ProjectID" });
             DropIndex("dbo.UserStory", new[] { "Owner_UserID" });
             DropIndex("dbo.User", new[] { "Supervisor_UserID" });
@@ -132,6 +150,7 @@ namespace SeeNowProcess.Migrations
             DropIndex("dbo.Assignment", new[] { "TeamID" });
             DropIndex("dbo.Assignment", new[] { "UserID" });
             DropTable("dbo.Problem");
+            DropTable("dbo.Box");
             DropTable("dbo.Project");
             DropTable("dbo.UserStory");
             DropTable("dbo.User");

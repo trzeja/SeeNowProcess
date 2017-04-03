@@ -28,7 +28,7 @@ namespace SeeNowProcess.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CreationDate { get; set; }
-        public Box Box { get; set; }
+        public virtual Box Box { get; set; }
 
         [Display(Name = "Parent Problem")]
         public virtual Problem ParentProblem { get; set; }

@@ -8,6 +8,7 @@ namespace SeeNowProcess.Models.Enums
     public enum State
     {
         Created,
+        Suspended,
         InProgress,
         Finished
     }
