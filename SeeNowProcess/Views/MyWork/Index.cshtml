@@ -9,11 +9,11 @@
 <head>
     <style>
         .space {
-            height: 70px;
+            height: 200px;
       
             width: 0px;
             border: 1px solid #aaaaaa;
-            background-color:lavender;
+            background-color:#e6ffe6;
             min-height:400px;
             max-height: 1000px;
             /*padding: 0 !important;
@@ -23,7 +23,7 @@
         .space2 {
             height: 100%;
             border: 1px solid #aaaaaa;
-            background-color:lavender;
+            background-color:#e6ffe6;
         }
         .body {
             margin:0!important;
@@ -75,7 +75,7 @@
 
             $scope.models = {
                 selected: null,
-                lists: { "A": [], "B": [] }
+                lists: { "A": [], "B": [], "C": [] }
             };
 
             // Generate initial model
@@ -93,33 +93,12 @@
 
 </script>
 
-    <div ng-app="dragAndDrop" ng-controller="dragging" >
+    <div class="container-fluid" ng-app="dragAndDrop" ng-controller="dragging" >
   
-        <ul dnd-list="models.lists.A">
-            <li ng-repeat="item in models.lists.A"
-                dnd-draggable="item"
-                dnd-moved="models.lists.A.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                {{item.label}}
-            </li>
-        </ul>
+        
 
-        <ul dnd-list="models.lists.B">
-            <li ng-repeat="item in models.lists.B"
-                dnd-draggable="item"
-                dnd-moved="models.lists.B.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                {{item.label}}
-            </li>
-        </ul>
+        
 
-    </div>
-
-    <div class="container-fluid">
         <div class="row">
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Planned</strong></h5></div>
@@ -129,29 +108,56 @@
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Cancelled</strong></h5></div>
         </div>
         <div class="row">
-            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+                <ul dnd-list="models.lists.A">
+                    <li ng-repeat="item in models.lists.A"
+                        dnd-draggable="item"
+                        dnd-moved="models.lists.A.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = item"
+                        ng-class="{'selected': models.selected === item}">
+                        {{item.label}}
+                    </li>
+                </ul>
 
-
-                <h3 class="text-center" ondragstart="dragStart(event)" draggable="true" id="dragtarget">
+                @*<h3 class="text-center" ondragstart="dragStart(event)" draggable="true" id="dragtarget">
                     <span class="label label-default">
                         Task 1
                     </span>
-                </h3>
+                </h3>*@
 
             </div>
-            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+                <ul dnd-list="models.lists.B">
+                    <li ng-repeat="item in models.lists.B"
+                        dnd-draggable="item"
+                        dnd-moved="models.lists.B.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = item"
+                        ng-class="{'selected': models.selected === item}">
+                        {{item.label}}
+                    </li>
+                </ul>
+            </div>
+            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+                <ul dnd-list="models.lists.C">
+                    <li ng-repeat="item in models.lists.C"
+                        dnd-draggable="item"
+                        dnd-moved="models.lists.C.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = item"
+                        ng-class="{'selected': models.selected === item}">
+                        {{item.label}}
+                    </li>
+                </ul>
+            </div>
+            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
 
             </div>
-            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
 
             </div>
-            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-            </div>
-            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-            </div>
-            <div class="space col-sm-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
 
             </div>
         </div>
@@ -168,23 +174,23 @@
 
     @*<p style="clear:both;"><strong>Note:</strong> drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.</p>*@
 
-    <p id="demo"></p>
+    @*<p id="demo"></p> *@
 
     <script>
-function dragStart(event) {
-    event.dataTransfer.setData("Text", event.target.id);
-}
+//function dragStart(event) {
+//    event.dataTransfer.setData("Text", event.target.id);
+//}
 
 
-function allowDrop(event) {
-    event.preventDefault();
-}
+//function allowDrop(event) {
+//    event.preventDefault();
+//}
 
-function drop(event) {
-    event.preventDefault();
-    var data = event.dataTransfer.getData("Text");
-    event.target.appendChild(document.getElementById(data));
-}
+//function drop(event) {
+//    event.preventDefault();
+//    var data = event.dataTransfer.getData("Text");
+//    event.target.appendChild(document.getElementById(data));
+//}
     </script>
 
 </body>
