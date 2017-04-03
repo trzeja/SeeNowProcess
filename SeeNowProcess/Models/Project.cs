@@ -27,6 +27,6 @@ namespace SeeNowProcess.Models
         public DateTime CompletionDate { get; set; }
         public Status Status { get; set; }
 
-        public IEnumerable<UserStory> Stories { get; set; }
+        public virtual IEnumerable<UserStory> Stories { get; set; }
     }
 }

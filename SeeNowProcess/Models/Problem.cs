@@ -28,14 +28,14 @@ namespace SeeNowProcess.Models
         public Box Box { get; set; }
 
         [Display(Name = "Parent Problem")]
-        public Problem ParentProblem { get; set; }
+        public virtual Problem ParentProblem { get; set; }
 
         [Display(Name = "Estimated Time")]
         public TimeSpan EstimatedTime { get; set; } //new TimeSpan(2, 14, 18); "02:14:18"
 
         [Display(Name = "Final Time")]
         public TimeSpan FinalTime { get; set; }
-        public UserStory Story { get; set; }
+        public virtual UserStory Story { get; set; }
         
     } 
 }
