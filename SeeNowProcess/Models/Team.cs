@@ -10,6 +10,6 @@ namespace SeeNowProcess.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public virtual User TeamLeader { get; set; }
-        public virtual IEnumerable<User> Devs { get; set; }
+        public virtual ICollection<User> Devs { get; set; }
     }
 }

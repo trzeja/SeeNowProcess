@@ -24,7 +24,7 @@ namespace SeeNowProcess.Models
         public string PhoneNumber { get; set; }
         public Role role { get; set; }
         public virtual User supervisor { get; set; }
-        public virtual IEnumerable<Team> Teams { get; set; }
-        public virtual IEnumerable<User> Subordinates { get; set; } // users whose supervisor I am
+        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
     }
 }
