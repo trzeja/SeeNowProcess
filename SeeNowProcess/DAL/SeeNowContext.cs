@@ -20,6 +20,8 @@ namespace SeeNowProcess.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<UserStory> UserStories { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Box> Boxes { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
