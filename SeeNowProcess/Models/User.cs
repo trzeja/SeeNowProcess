@@ -27,5 +27,6 @@ namespace SeeNowProcess.Models
         public virtual User Supervisor { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
+        public virtual ICollection<UserStory> Stories { get; set; }
     }
 }

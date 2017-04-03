@@ -18,7 +18,7 @@ namespace SeeNowProcess.Models
         public int Size { get; set; }
         public string Unit { get; set; }
         public string Notes { get; set; }
-        public User Owner {get;set;}
+        public virtual User Owner {get;set;}
         public virtual ICollection<Team> Teams { get; set; } //to
         //public Team Team { get; set; }        //lub to
         public string Criteria { get; set; }
