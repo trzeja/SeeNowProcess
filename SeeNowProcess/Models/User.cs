@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using SeeNowProcess.Models.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SeeNowProcess.Models
 {
     public class User
     {
-        public int ID { get; set; }
-        public int SupervisorID { get; set; }
+        
+        public int UserID { get; set; }
+        
         [StringLength(20, MinimumLength=5)]
         public string Login { get; set; }
         [StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
@@ -25,7 +27,7 @@ namespace SeeNowProcess.Models
         public string PhoneNumber { get; set; }
         public Role role { get; set; }
         public virtual User Supervisor { get; set; }
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
         public virtual ICollection<UserStory> Stories { get; set; }
     }

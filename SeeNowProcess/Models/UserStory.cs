@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,9 +9,9 @@ namespace SeeNowProcess.Models
 {
     public class UserStory
     {
-        public int ID { get; set; }
-        public int OwnerID { get; set; }
-        public int ProjectID { get; set; }
+        
+        public int UserStoryID { get; set; }
+      
 
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
