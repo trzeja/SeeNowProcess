@@ -224,6 +224,7 @@
     <Content Include="img\szop_mem.jpg" />
     <Content Include="img\whatever.jpg" />
     <Content Include="img\zwolnienie.jpg" />
+    <Content Include="Scripts\angular-drag-and-drop-lists.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
