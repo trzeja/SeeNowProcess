@@ -182,6 +182,7 @@
     <Compile Include="Controllers\ReleasePlanController.cs" />
     <Compile Include="Controllers\TaskBoardController.cs" />
     <Compile Include="Controllers\WorkByPersonController.cs" />
+    <Compile Include="DAL\SeeNowContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
