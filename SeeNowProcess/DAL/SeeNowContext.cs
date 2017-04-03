@@ -10,15 +10,19 @@ namespace SeeNowProcess.DAL
 {
     public class SeeNowContext : DbContext
     {
-        public SeeNowContext() : base("SeeNowProcessContext") //jawna nazwa connection stringa
+        public SeeNowContext() : base("SeeNowContext") //jawna nazwa connection stringa
         {
 
         }
         public DbSet<Problem> Problems { get; set; }
-        public DbSet<Project> Enrollments { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserStory> UserStories { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Box> Boxes { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

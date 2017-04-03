@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,8 @@ namespace SeeNowProcess.Models
 {
     public class Project
     {
-        public int ID { get; set; }
+        
+        public int ProjectID { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         public string Name { get; set; }
@@ -28,5 +30,6 @@ namespace SeeNowProcess.Models
         public Status Status { get; set; }
 
         public virtual ICollection<UserStory> Stories { get; set; }
+        public virtual ICollection<Box> Boxes { get; set; }
     }
 }
