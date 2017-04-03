@@ -5,14 +5,14 @@ namespace SeeNowProcess.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SeeNowProcess.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SeeNowProcess.DAL.SeeNowContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SeeNowProcess.Models.ApplicationDbContext context)
+        protected override void Seed(SeeNowProcess.DAL.SeeNowContext context)
         {
             //  This method will be called after migrating to the latest version.
 
