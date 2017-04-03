@@ -9,7 +9,7 @@ namespace SeeNowProcess.Models
 {
     public class Project
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         public string Name { get; set; }

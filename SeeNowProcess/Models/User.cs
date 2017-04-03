@@ -9,7 +9,8 @@ namespace SeeNowProcess.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
+        public int SupervisorID { get; set; }
         [StringLength(20, MinimumLength=5)]
         public string Login { get; set; }
         [StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
@@ -23,7 +24,7 @@ namespace SeeNowProcess.Models
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         public Role role { get; set; }
-        public virtual User supervisor { get; set; }
+        public virtual User Supervisor { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
     }

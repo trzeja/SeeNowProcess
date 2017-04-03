@@ -8,7 +8,9 @@ namespace SeeNowProcess.Models
 {
     public class UserStory
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
+        public int OwnerID { get; set; }
+        public int ProjectID { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
