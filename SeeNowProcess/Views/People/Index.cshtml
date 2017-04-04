@@ -1,12 +1,54 @@
-﻿@{
+﻿
+@model IEnumerable<SeeNowProcess.Models.User>
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @{
     ViewBag.Title = "Index";
 }
 
 <p>People not implement yet. </p>
+<h2>Trying to Show people</h2>
+<!--by Ania :D Jestem z siebie dumna xD-->
+<div>
+    <h4>People</h4>
+    <hr />
+
+    <h2>Index</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+          
+            </tr>
+        }
+
+    </table>
 
 
 <img class="img-responsive" src="~/img/whatever.jpg" alt="Upsik - brakuje obrazka" />
