@@ -14,10 +14,10 @@ namespace SeeNowProcess.DAL
             AddProjects(context);
             AddUsers(context);
             AddBoxes(context);
-            AddUserStories(context);
-            AddTeams(context);
-            AddAssignments(context);
-            AddProblems(context);
+            //AddUserStories(context);
+            //AddTeams(context);
+            //AddAssignments(context);
+            //AddProblems(context);
 
         }
         protected void AddUsers(SeeNowContext context)
