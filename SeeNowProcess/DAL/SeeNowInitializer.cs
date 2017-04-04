@@ -30,15 +30,22 @@ namespace SeeNowProcess.DAL
         {
 
         }
+
+        public override void InitializeDatabase(SeeNowContext context)
+        {
+            base.InitializeDatabase(context);
+            Seed(context);
+        }
+
         protected override void Seed(SeeNowContext context)
         {
-            AddProjects(context);
+            //AddProjects(context);
             AddUsers(context);
-            AddProblems(context);
-            AddTeams(context);
-            AddUserStories(context);
-            AddAssignments(context);
-            AddBoxes(context);
+            //AddProblems(context);
+            //AddTeams(context);
+            //AddUserStories(context);
+            //AddAssignments(context);
+            //AddBoxes(context);
 
         }
 

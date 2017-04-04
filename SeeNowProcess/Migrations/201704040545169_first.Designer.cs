@@ -13,7 +13,7 @@ namespace SeeNowProcess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704031549207_first"; }
+            get { return "201704040545169_first"; }
         }
         
         string IMigrationMetadata.Source

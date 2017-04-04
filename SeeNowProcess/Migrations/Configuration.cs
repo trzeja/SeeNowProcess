@@ -1,5 +1,6 @@
 namespace SeeNowProcess.Migrations
 {
+    using DAL;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,6 +15,18 @@ namespace SeeNowProcess.Migrations
 
         protected override void Seed(SeeNowProcess.DAL.SeeNowContext context)
         {
+            SeeNowInitializer initializer = new SeeNowInitializer();
+            try
+            {
+                
+                initializer.InitializeDatabase(context);
+
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
