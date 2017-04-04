@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using SeeNowProcess.Models;
 using SeeNowProcess.DAL;
 
-namespace Projekt_programistyczny_pierwsze_kroki.Controllers
+namespace SeeNowProcess.Controllers
 {
     public class PeopleController : Controller
     {
