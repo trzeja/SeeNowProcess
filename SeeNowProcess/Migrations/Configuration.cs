@@ -22,8 +22,7 @@ namespace SeeNowProcess.Migrations
             }
             catch (Exception)
             {
-
-                //do nothing
+                throw new Exception("Error in SeeNowInitializer. Did you filled all fields required in Seed(Add) methods?");                
             }            
         }
     }
