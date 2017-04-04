@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="SeeNowProcess.Models.UserStory">
+    <Position X="15" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAgCECAAAAggEAAIAAACAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\UserStory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SeeNowProcess.Models.User">
+    <Position X="0.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIAIACAACAAAAAAAAAAQBwAAAAAgAACAAAQAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SeeNowProcess.Models.Team">
+    <Position X="5.75" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAABAAAAAAAAAAQCAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SeeNowProcess.Models.Project">
+    <Position X="17.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAAgAABAAAAAAAQABAACAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SeeNowProcess.Models.Problem">
+    <Position X="12.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAgEEAAABAAACAIEAIAAACAACAAAACAAAA=</HashCode>
+      <FileName>Models\Problem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SeeNowProcess.Models.Box">
+    <Position X="9.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAACAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Models\Box.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SeeNowProcess.Models.Assignment">
+    <Position X="3.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAgAAAAAAAAAAgCAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Assignment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="SeeNowProcess.Models.Enums.Importance">
+    <Position X="12.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAEAQAAAAAAgAAAAEAAAA=</HashCode>
+      <FileName>Models\Enums\Importance.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SeeNowProcess.Models.Enums.Role">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAAABAAIAAAAAAAQQAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Enums\Role.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SeeNowProcess.Models.Enums.State">
+    <Position X="12.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAQAAAAAAAAAAAQAAAAAABAAAAA=</HashCode>
+      <FileName>Models\Enums\State.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SeeNowProcess.Models.Enums.Status">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Models\Enums\Status.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
