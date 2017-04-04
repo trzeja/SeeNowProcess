@@ -10,7 +10,7 @@ namespace SeeNowProcess.DAL
 {
     public class SeeNowContext : DbContext
     {
-        public SeeNowContext() : base("DefaultConnection") //jawna nazwa connection stringa
+        public SeeNowContext() : base("DefaultConnection") //jawna nazwa connection stringa (polen name w webconfigu)
         {
 
         }
