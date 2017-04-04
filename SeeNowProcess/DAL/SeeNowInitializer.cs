@@ -39,7 +39,7 @@ namespace SeeNowProcess.DAL
 
         protected override void Seed(SeeNowContext context)
         {
-            //AddProjects(context);
+            AddProjects(context);
             AddUsers(context);
             //AddProblems(context);
             //AddTeams(context);

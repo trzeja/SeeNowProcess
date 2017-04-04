@@ -16,7 +16,7 @@ namespace SeeNowProcess.Models
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
         public string Description { get; set; }
-        public int Size { get; set; }
+        public int? Size { get; set; }
         public string Unit { get; set; }
         public string Notes { get; set; }
         public virtual User Owner {get;set;}

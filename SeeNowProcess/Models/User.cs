@@ -25,7 +25,7 @@ namespace SeeNowProcess.Models
         [Display(Name="Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-        public Role role { get; set; }
+        public Role? role { get; set; }
         public virtual User Supervisor { get; set; }
         public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am

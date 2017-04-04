@@ -20,14 +20,14 @@ namespace SeeNowProcess.Models
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
 
         [Display(Name = "Completion Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime CompletionDate { get; set; }
-        public Status Status { get; set; }
+        public DateTime? CompletionDate { get; set; }
+        public Status? Status { get; set; }
 
         public virtual ICollection<UserStory> Stories { get; set; }
         public virtual ICollection<Box> Boxes { get; set; }
