@@ -20,9 +20,9 @@ namespace SeeNowProcess.Migrations
                 SeeNowInitializer initializer = new SeeNowInitializer();
                 initializer.InitializeDatabase(context);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Error in SeeNowInitializer. Did you filled all fields required in Seed(Add) methods?");                
+                throw new Exception("Error in SeeNowInitializer. Did you filled all fields required in Seed(Add) methods?\n"+e.Message);
             }            
         }
     }
