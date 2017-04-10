@@ -86,10 +86,8 @@ namespace SeeNowProcess.DAL
         private void AddAssignments(SeeNowContext context)
         {
             Team teslaTeam = context.Teams.Where(t => t.Name == "Tesla Team").First();
-            return;
             List<string> teslaLogins = new List<string> {"kajak", "adada"};
             List<User> teslaUsers = context.Users.Where(u => teslaLogins.Contains(u.Login)).ToList();
-            return;
             Team germanTeam = context.Teams.Where(t => t.Name == "Schmetterling!").First();
             List<string> germanLogins = new List<string> { "adada", "alada", "aliada"};
             List<User> germanUsers = context.Users.Where(u => germanLogins.Contains(u.Login)).ToList();
