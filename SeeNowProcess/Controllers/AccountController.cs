@@ -8,7 +8,7 @@ using SeeNowProcess.DAL;
 
 namespace SeeNowProcess.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : DIContextBaseController
     {
         // GET: Account
         public ActionResult Index()
@@ -24,7 +24,7 @@ namespace SeeNowProcess.Controllers
         [HttpPost]
         public ActionResult LoginAction()
         {
-            using (var db = new SeeNowContext())
+            using (db)
             {
                 string login = Request.Form["login"];
                 string password = Request.Form["password"];

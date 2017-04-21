@@ -8,17 +8,8 @@ using SeeNowProcess.DAL;
 
 namespace SeeNowProcess.Controllers
 {
-    public class PeopleController : Controller
+    public class PeopleController : DIContextBaseController
     {
-        private ISeeNowContext dbContext = new SeeNowContext();
-
-        public PeopleController() { }
-
-        public PeopleController(ISeeNowContext context)
-        {
-            dbContext = context;
-        }
-
         // GET: People
         /* public ActionResult Index()
          {
@@ -27,9 +18,9 @@ namespace SeeNowProcess.Controllers
          [HttpPost]*/
         public ActionResult Index(int? count)
         {
-            using (var dbContext = new SeeNowContext())
+            using (db)
             {
-                var all = dbContext.Users.ToList();
+                var all = db.Users.ToList();
                 if (count == null)
                 {
                     return View(all);

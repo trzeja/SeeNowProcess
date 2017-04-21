@@ -5,25 +5,18 @@ using System.Web;
 using System.Web.Mvc;
 using SeeNowProcess.Models;
 using SeeNowProcess.DAL;
+using SeeNowProcess.Controllers;
 
 namespace Projekt_programistyczny_pierwsze_kroki.Controllers
 {
-    public class MyWorkController : Controller
+    public class MyWorkController : DIContextBaseController
     {
-        private ISeeNowContext dbContext = new SeeNowContext();
-
-        public MyWorkController() { }
-
-        public MyWorkController(ISeeNowContext context)
-        {
-            dbContext = context;
-        }
         // GET: MyWork
         public ActionResult Index(int? count)
         {
-            using (dbContext)
+            using (db)
             {
-                var all = dbContext.Users.ToList();
+                var all = db.Users.ToList();
                 if (count == null)
                 {
                     return View(all);

@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CreateController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DIContextBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IterationPlanController.cs" />
     <Compile Include="Controllers\MyRecentController.cs" />
