@@ -10,6 +10,10 @@ namespace SeeNowProcess.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToActionPermanent("Login", "Account");
+            }
             return View();
         }
 
