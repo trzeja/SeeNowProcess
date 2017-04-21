@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SeeNowProcess.DAL
 {
-    public class SeeNowContext : DbContext
+    public class SeeNowContext : DbContext, ISeeNowContext
     {
         public SeeNowContext() : base("DefaultConnection") //jawna nazwa connection stringa (polen name w webconfigu)
         {

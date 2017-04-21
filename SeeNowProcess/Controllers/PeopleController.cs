@@ -10,12 +10,21 @@ namespace SeeNowProcess.Controllers
 {
     public class PeopleController : Controller
     {
-        // GET: People
-       /* public ActionResult Index()
+        private ISeeNowContext dbContext = new SeeNowContext();
+
+        public PeopleController() { }
+
+        public PeopleController(ISeeNowContext context)
         {
-            return View();
+            dbContext = context;
         }
-        [HttpPost]*/
+
+        // GET: People
+        /* public ActionResult Index()
+         {
+             return View();
+         }
+         [HttpPost]*/
         public ActionResult Index(int? count)
         {
             using (var dbContext = new SeeNowContext())

@@ -10,10 +10,18 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
 {
     public class MyWorkController : Controller
     {
+        private ISeeNowContext dbContext = new SeeNowContext();
+
+        public MyWorkController() { }
+
+        public MyWorkController(ISeeNowContext context)
+        {
+            dbContext = context;
+        }
         // GET: MyWork
         public ActionResult Index(int? count)
         {
-            using (var dbContext = new SeeNowContext())
+            using (dbContext)
             {
                 var all = dbContext.Users.ToList();
                 if (count == null)
