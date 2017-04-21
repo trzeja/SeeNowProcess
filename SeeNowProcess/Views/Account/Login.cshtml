@@ -1,64 +1,69 @@
-﻿@using SeeNowProcess.Models
-@model LoginViewModel
+﻿
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Login";
 }
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="~/Scripts/angularLogin.js"></script>
+</head>
+<h2>Login</h2>
 
-<h2>@ViewBag.Title.</h2>
-    <h1>ADDING TASK</h1>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
+<form ng-app="loginForm" name="loginForm" ng-controller="loginCtrl" class="form-horizontal" ng-submit="loginCheck()">
+    <ul>
+        <li ng-repeat="x in logins">
+            {{x.Login}}<br>
+            {{x.Password}}<br>
+        </li>
+    </ul>
+    <div>{{myWelcome}}</div>
+    <div class="form-group row">
+        <label class="col-sm-2 control-label" for="login"> Login: </label>
+        <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
+        <span style="color:red" ng-show="(loginForm.login.$dirty || Submited ) && loginForm.login.$error.required">Please enter LOGIN</span>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+    <div class="form-group row">
+        <label class="col-sm-2 control-label" for="password"> Password: </label>
+        <input class="form-control" type="password" id="password" ng-model="password" ng-class="Submited?'ng-dirty':''" required autofocus>
+        <span style="color:red" ng-show="(loginForm.password.$dirty || Submited ) && loginForm.password.$error.required">Password Required</span>
     </div>
+    <div class="form-group row">
+        <label class="col-sm-10 control-label"></label>
+        <input type="submit" class="form-control btn green_button" style="margin-left: 20%" value="LOGIN"> <!-- ng-click="loginCheck()"-->
+    </div>
+</form>
+
+<!--
+<h2>Login Using Angular</h2>
+
+<div ng-controller="LoginController">
+    <form name="myForm" novalidate ng-submit="LoginForm()">
+        <div style="color:green">{{msg}}</div>
+        <table ng-show="!IsLoggedIn" class="table table-horizontal">
+            <tr>
+                <td>Email/UserName :</td>
+                <td>
+                    <input type="email" ng-model="UserModel.Email" name="UserEmail" <!--ng-class="Submited?'ng-dirty':''" required autofocus  class="form-control />
+                  <!--  <span style="color:red" ng-show="(myForm.UserEmail.$dirty || Submited ) && myForm.UserEmail.$error.required">Please enter Email</span>
+                    <span style="color:red" ng-show="myForm.UserEmail.$error.email">Email is not valid</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Password :</td>
+                <td>
+                    <input type="password" ng-model="UserModel.Password" name="UserPassword" ng-class="Submited?'ng-dirty':''" required autofocus class="form-control" />
+              <!--      <span style="color:red" ng-show="(myForm.UserPassword.$dirty || Submited) && myForm.UserPassword.$error.required">Password Required</span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts{
+    <script src="~/Controllers/AngularController.js"></script>
 }
+-->

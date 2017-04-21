@@ -203,7 +203,6 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IterationPlanController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MyRecentController.cs" />
     <Compile Include="Controllers\MyWorkController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
@@ -221,7 +220,6 @@
       <DependentUpon>201704040617120_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\Enums\Role.cs" />
@@ -229,7 +227,6 @@
     <Compile Include="Models\Enums\State.cs" />
     <Compile Include="Models\Enums\Status.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Problem.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Team.cs" />
@@ -260,6 +257,8 @@
     <Content Include="img\whatever.jpg" />
     <Content Include="img\zwolnienie.jpg" />
     <Content Include="Scripts\angular-drag-and-drop-lists.js" />
+    <Content Include="Scripts\angularLogin.js" />
+    <Content Include="Scripts\angularRegister.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="DbClassDiagram.cd" />
@@ -289,24 +288,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Add\Index.cshtml" />
@@ -321,6 +302,8 @@
     <Content Include="Views\ReleasePlan\Index.cshtml" />
     <Content Include="Views\TaskBoard\Index.cshtml" />
     <Content Include="Views\WorkByPerson\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

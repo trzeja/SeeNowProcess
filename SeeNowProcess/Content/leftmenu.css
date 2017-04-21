@@ -39,6 +39,12 @@
     margin-left:-20px;
     overflow:auto;
 }
+
+.sidebar li {
+    list-style-type:none;
+    /*list-style-type:none;*/    
+}
+
 /*
 @media screen and (max-width: 900px) {
     sidebar {
@@ -50,7 +56,13 @@
 
 .topbar {
     margin-right:10px;
-} 
+}
+
+.top-left {
+    margin-left:10px;
+    color: white;
+    font-size:50px;
+}
 
 .green_button {
   background-color:chartreuse; 
