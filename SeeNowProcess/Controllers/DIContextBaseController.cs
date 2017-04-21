@@ -10,7 +10,7 @@ namespace SeeNowProcess.Controllers
     /// <summary>
     /// Base controller for controllers wchich use context (enables DI)
     /// </summary>
-    public class DIContextBaseController : Controller
+    public abstract class DIContextBaseController : Controller
     {
         protected ISeeNowContext db = new SeeNowContext();
 
