@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using SeeNowProcess.Controllers;
 using System.Web.Mvc;
+using SeeNowProcess.Tests.DAL;
+using SeeNowProcess.Models.Enums;
 
 namespace SeeNowProcess.Tests.Controllers
 {
@@ -15,21 +17,46 @@ namespace SeeNowProcess.Tests.Controllers
         [Test]
         public void TestIndexView()
         {
-            //var result = new ViewResult();
-            //var controller = new PeopleController();
-            //try
+            //var context = new TestSeeNowContext();
+            //context.Users.Add(new User
             //{
-            //    result = controller.Index(null) as ViewResult;
-
-            //}
-            //catch (Exception e)
+            //    Login = "asdfg",
+            //    Email = "As.Dfg@company.com",
+            //    Name = "As Dfg",
+            //    Password = "admin11",
+            //    PhoneNumber = "111-222-333",
+            //    role = Role.Admin
+            //});
+            //context.Users.Add(new User
             //{
+            //    Login = "qwert",
+            //    Email = "Qw.Ert@company.com",
+            //    Name = "Qw Ert",
+            //    Password = "secret1",
+            //    PhoneNumber = "123-456-789",
+            //    role = Role.HeadMaster
+            //});
+            //context.Users.Add(new User
+            //{
+            //    Login = "kajak",
+            //    Email = "Kaj.Kajak@company.com",
+            //    Name = "Kaj Kajak",
+            //    Password = "parostatkiem",
+            //    PhoneNumber = "555-666-777",
+            //    role = Role.SeniorDev
+            //});
 
-            //    throw;
-            //}
-           
-            //int i = 3;
-            //Assert.AreEqual("Index", result.ViewName);           
+            //var controller = new PeopleController(context);
+
+            //var result = controller.Index(null) as ViewResult;
+            //var users = ()result.
+
+            //Assert.IsNotNull(result);
+            //Assert.AreEqual(3, result.Local.Count);
+
+            //var result = controller.Index(null) as ViewResult;
+
+            //Assert.AreEqual("Index", result);
         }
     }
 }

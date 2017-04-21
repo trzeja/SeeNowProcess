@@ -11,6 +11,8 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
 {
     public class MyWorkController : DIContextBaseController
     {
+        public MyWorkController(ISeeNowContext context) : base(context) { }
+        
         // GET: MyWork
         public ActionResult Index(int? count)
         {

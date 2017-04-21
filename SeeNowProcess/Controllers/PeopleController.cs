@@ -16,6 +16,8 @@ namespace SeeNowProcess.Controllers
              return View();
          }
          [HttpPost]*/
+        public PeopleController(ISeeNowContext context):base(context) {}
+
         public ActionResult Index(int? count)
         {
             using (db)
