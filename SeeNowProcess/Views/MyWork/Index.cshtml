@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SeeNowProcess.Models.User>
+﻿@model IEnumerable<SeeNowProcess.Models.Problem>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,16 +10,30 @@
 
 <head>
     <style>
+        .element {
+            border-radius: 40px;
+            background-color: #33cc33;
+            width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .element2 {
+            border-radius: 50px;
+            background-color: #79ff4d;
+            width: 300px;
+        }
+
         .space {
             height: 500px;
-      
+            padding-top: 15px;
             width: 0px;
             border: 1px solid #aaaaaa;
-            background-color:#e6ffe6;
-            min-height:400px;
+            background-color: #e6ffe6;
+            min-height: 400px;
             max-height: 1000px;
-            /*padding: 0 !important;
-            margin: 0 !important;*/
         }
 
         .visible {
@@ -30,11 +44,13 @@
         .space2 {
             height: 100%;
             border: 1px solid #aaaaaa;
-            background-color:#e6ffe6;
+            background-color: #e6ffe6;
         }
+
         .body {
-            margin:0!important;
+            margin: 0 !important;
         }
+
         .simpleDemo ul[dnd-list],
         .simpleDemo ul[dnd-list] > li {
             position: relative;
@@ -77,51 +93,31 @@
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
 </head>
 <body>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Login)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Login)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-
-            </tr>
-        }
-
-    </table>
     <script>
-        angular.module("dragAndDrop", ['dndLists']).controller("dragging", function ($scope) {
-
+        angular.module("dragAndDrop", ['dndLists']).controller("dragging", function ($scope, $http) {
+            $http.get("/Controllers/MyWorkController/IndexJS")
+            .success(function (result) {
+                $scope.list = result;
+            })
             $scope.models = {
                 selected: null,
                 lists: { "A": [], "B": [], "C": [], "D":[], "E":[], "F":[] }
             };
 
-            // Generate initial model
-            for (var i = 1; i <= 3; ++i) {
-                $scope.models.lists.A.push({ label: "Item A" + i });
-                $scope.models.lists.B.push({ label: "Item B" + i });
+            $scope.addTask = function (title,description) {
+                $scope.models.lists.A.push({title, description});
             }
+            // Generate initial model
+            //for (var i = 1; i <= 3; ++i) {
+            //    $scope.models.lists.A.push({ label: "Item A" + i });
+            //    $scope.models.lists.B.push({ label: "Item B" + i });
+            //}
 
+
+            $scope.$watch('list', function (modeling) {
+                $scope.modelAsJson = angular.toJson(modeling, true);
+            }, true);
             // Model to JSON for demo purpose
             $scope.$watch('models', function (model) {
                 $scope.modelAsJson = angular.toJson(model, true);
@@ -129,13 +125,44 @@
 
         });
 
-</script>
+    </script>
 
-    <div class="container-fluid" ng-app="dragAndDrop" ng-controller="dragging" >
-  
-        
 
-        
+
+
+    <div class="container-fluid" ng-app="dragAndDrop" ng-controller="dragging">
+        <div>{{list}}</div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentState)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentState)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
 
         <div class="row">
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
@@ -146,7 +173,7 @@
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Cancelled</strong></h5></div>
         </div>
         <div class="row">
-            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+            <div class="space col-sm-2">
                 <ul class="visible list-unstyled text-center" dnd-list="models.lists.A">
                     <li ng-repeat="item in models.lists.A"
                         dnd-draggable="item"
@@ -154,18 +181,12 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <h3><p class="label label-success">{{item.label}}</p></h3>
+                        <p class="element">{{item.label}}</p>
                     </li>
                 </ul>
-
-                @*<h3 class="text-center" ondragstart="dragStart(event)" draggable="true" id="dragtarget">
-                    <span class="label label-default">
-                        Task 1
-                    </span>
-                </h3>*@
-
             </div>
-            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+
+            <div class="space col-sm-2">
                 <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
                     <li ng-repeat="item in models.lists.B"
                         dnd-draggable="item"
@@ -173,11 +194,11 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <h3><p class="label label-success">{{item.label}}</p></h3>
+                        <p class="element">{{item.label}}</p>
                     </li>
                 </ul>
             </div>
-            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+            <div class="space col-sm-2">
                 <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
                     <li ng-repeat="item in models.lists.C"
                         dnd-draggable="item"
@@ -185,11 +206,11 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <h3><p class="label label-success">{{item.label}}</p></h3>
+                        <p class="element">{{item.label}}</p>
                     </li>
                 </ul>
             </div>
-            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+            <div class="space col-sm-2">
                 <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
                     <li ng-repeat="item in models.lists.D"
                         dnd-draggable="item"
@@ -197,11 +218,11 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <h3><p class="label label-success">{{item.label}}</p></h3>
+                        <p class="element">{{item.label}}</p>
                     </li>
                 </ul>
             </div>
-            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+            <div class="space col-sm-2">
                 <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
                     <li ng-repeat="item in models.lists.E"
                         dnd-draggable="item"
@@ -209,11 +230,11 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <h3><p class="label label-success">{{item.label}}</p></h3>
+                        <p class="element">{{item.label}}</p>
                     </li>
                 </ul>
             </div>
-            <div class="space col-sm-2" @*ondrop="drop(event)" ondragover="allowDrop(event)"*@>
+            <div class="space col-sm-2">
                 <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
                     <li ng-repeat="item in models.lists.F"
                         dnd-draggable="item"
@@ -221,42 +242,11 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <h3><p class="label label-success">{{item.label}}</p></h3>
+                        <p class="element">{{item.label}}</p>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    @*<p>Drag the p element back and forth between the two rectangles:</p>*@
-
-    @*<div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">*@
-    @*<p class="dragtarget" ondragstart="dragStart(event)" ondrag="dragging(event)" draggable="true" id="dragtarget">Drag me!</p>*@
-    @*</div>*@
-
-    @*<div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>*@
-
-    @*<p style="clear:both;"><strong>Note:</strong> drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.</p>*@
-
-    @*<p id="demo"></p> *@
-
-    <script>
-//function dragStart(event) {
-//    event.dataTransfer.setData("Text", event.target.id);
-//}
-
-
-//function allowDrop(event) {
-//    event.preventDefault();
-//}
-
-//function drop(event) {
-//    event.preventDefault();
-//    var data = event.dataTransfer.getData("Text");
-//    event.target.appendChild(document.getElementById(data));
-//}
-    </script>
-
 </body>
 
