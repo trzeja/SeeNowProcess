@@ -34,17 +34,21 @@ namespace SeeNowProcess.Controllers
                 if (user != null)
                 {
                     Session["user"] = user;
-                    return new JsonResult { Data = "Username: " + user.Name + " Login: " + user.Login, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new JsonResult { Data = "Success"/*"Username: " + user.Name + " Login: " + user.Login*/, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
                 else {
+                    return new JsonResult { Data = "Incorrect data", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    /*
+                     ~KK - raczej rozsądniejsze wydaje mi się odrzucenie całego żądania niż zwracanie "błędny login"/"błędne hasło"
+                       
                     var user2 = db.Users.Where(x => x.Login.Equals(login)).FirstOrDefault();
                     if (user2 != null)
                     {
                         return Content("Password Error");
                     }
-                    return Content("Login Error");
+                    return Content("Login Error");*/
                 }
-               // return Content("Login or password uncorrect");
+                // return Content("Login or password uncorrect");
             }
             // return Content("Login: " + Request.Form["login"] + "Paswword: " + Request.Form["password"]);
         }

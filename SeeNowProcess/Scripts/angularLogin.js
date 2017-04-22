@@ -22,20 +22,10 @@ loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
         }).then(function mySucces(response) {
-            if (response.data.indexOf("Error") === -1) {                //tutaj to wszystko trzeba poprawic bo na razie nie robi przekierowania na inna strone
-                $http({
-                    method: "GET",
-                    url: "/People/Index",
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-                })
-                $scope.myWelcome = response.data;
-            }
-            else if (response.data.indexOf("Login") === -1) {
-                $scope.myWelcome = "Wrong Password";
-            }
-            else {
-                $scope.myWelcome = "Wrong Login - User doesn't exist";
-            }
+            if (response.data === "Success")
+                window.location.href = "/People/Index";
+            else
+                $scope.myWelcome = "Error - incorrect data!";
         }, function myError(response) {
                 $scope.myWelcome = "Error";
         })
