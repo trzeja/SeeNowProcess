@@ -18,6 +18,8 @@ namespace SeeNowProcess.Models
         [StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
         [DataType(DataType.Password)] // w sumie nie wiem co to dokladnie robi, ale typ pasuje
         public string Password { get; set; }
+        public byte[] Salt { get; set; }
+        public byte[] Hash { get; set; }
         public string Name { get; set; }
         [Display(Name="E-mail address")]
         [DataType(DataType.EmailAddress)]
@@ -30,5 +32,28 @@ namespace SeeNowProcess.Models
         public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
         public virtual ICollection<UserStory> Stories { get; set; }
+
+        public Boolean ComparePassword(String attemptedPassword)
+        {
+            if (Hash == null || Salt == null)
+                return false;
+            return CryptoServices.CheckPassword(attemptedPassword, Hash, Salt);
+        }
+
+        public Boolean SetPassword(String newPassword)
+        {
+            byte[] newSalt;
+            byte[] newHash;
+            try {
+                newSalt = CryptoServices.GenerateSalt();
+                newHash = CryptoServices.Encrypt(newPassword, newSalt);
+            } catch (Exception e)
+            {
+                return false;
+            }
+            Hash = newHash;
+            Salt = newSalt;
+            return true;
+        }
     }
 }

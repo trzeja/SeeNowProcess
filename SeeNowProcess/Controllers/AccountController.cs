@@ -28,7 +28,7 @@ namespace SeeNowProcess.Controllers
             {
                 string login = Request.Form["login"];
                 string password = Request.Form["password"];
-                var user = db.Users.Where(x => x.Login.Equals(login) && x.Password.Equals(password)).FirstOrDefault();
+                /*var user = db.Users.Where(x => x.Login.Equals(login) && x.Password.Equals(password)).FirstOrDefault();
                 if (user != null)
                 {
                     Session["user"] = user;
@@ -41,6 +41,19 @@ namespace SeeNowProcess.Controllers
                         return Content("Password Error");
                     }
                     return Content("Login Error");
+                }*/
+                var test = db.Users.Where(X => X.Login.Equals(login));
+                var user = db.Users.Where(X => X.Login.Equals(login)).FirstOrDefault();
+                if (user == null)
+                {
+                    return Content("Login Error");
+                } else if (user.ComparePassword(password))
+                {
+                    Session["user"] = user;
+                    return new JsonResult { Data = "Username: " + user.Name + " Login: " + user.Login, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                } else
+                {
+                    return Content("Password Error");
                 }
                // return Content("Login or password uncorrect");
             }
