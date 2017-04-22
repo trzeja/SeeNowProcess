@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201704040617120_first.Designer.cs">
       <DependentUpon>201704040617120_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704221617180_BoxOrder.cs" />
+    <Compile Include="Migrations\201704221617180_BoxOrder.Designer.cs">
+      <DependentUpon>201704221617180_BoxOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -320,6 +324,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704040617120_first.resx">
       <DependentUpon>201704040617120_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704221617180_BoxOrder.resx">
+      <DependentUpon>201704221617180_BoxOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
