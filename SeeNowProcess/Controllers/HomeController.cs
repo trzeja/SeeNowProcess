@@ -12,7 +12,7 @@ namespace SeeNowProcess.Controllers
         {
             if (Session["user"] == null)
             {
-                return RedirectToActionPermanent("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
             return View();
         }

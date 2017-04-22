@@ -18,6 +18,8 @@ namespace SeeNowProcess.Controllers
 
         public ActionResult Login()
         {
+            if (Session["user"] != null)
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
