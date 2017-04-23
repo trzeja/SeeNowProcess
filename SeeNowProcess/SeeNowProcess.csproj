@@ -232,6 +232,10 @@
     <Compile Include="Migrations\201704222121515_Remove Old Password Storage.Designer.cs">
       <DependentUpon>201704222121515_Remove Old Password Storage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704230922486_UsersProblems.cs" />
+    <Compile Include="Migrations\201704230922486_UsersProblems.Designer.cs">
+      <DependentUpon>201704230922486_UsersProblems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -344,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704222121515_Remove Old Password Storage.resx">
       <DependentUpon>201704222121515_Remove Old Password Storage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704230922486_UsersProblems.resx">
+      <DependentUpon>201704230922486_UsersProblems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

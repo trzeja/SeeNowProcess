@@ -39,6 +39,7 @@ namespace SeeNowProcess.Models
         [Display(Name = "Final Time")]
         public TimeSpan? FinalTime { get; set; }
         public virtual UserStory Story { get; set; }
+        public virtual ICollection<User> AssignedUsers { get; set; }
         
     } 
 }

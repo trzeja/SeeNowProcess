@@ -26,9 +26,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Login)
             </th>
-            @*<th>
-        @Html.DisplayNameFor(model => model.Password)
-            </th> nie bangla - Marcin wywalil akcesor chyba i nie przetestowal :< (MT)*@
+            <th>
+                @Html.DisplayNameFor(model => model.Hash)
+            </th>
             <th></th>
         </tr>
 
@@ -41,9 +41,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Login)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hash)
+                </td>
           
             </tr>
         }
