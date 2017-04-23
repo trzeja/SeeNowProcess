@@ -7,6 +7,7 @@ using System.Data.Entity;
 using SeeNowProcess.Models;
 using SeeNowProcess.DAL;
 using SeeNowProcess.Tests.DAL.DbSets;
+using SeeNowProcess.Tests.DAL.DbSets.Base;
 
 namespace SeeNowProcess.Tests.DAL
 {
@@ -14,7 +15,7 @@ namespace SeeNowProcess.Tests.DAL
     {
         public TestSeeNowContext()
         {
-            Users = new TestUserDbSet();
+            Users = new TestDbSet<User>();
         }
 
         public DbSet<Problem> Problems { get; set; }

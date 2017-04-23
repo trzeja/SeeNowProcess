@@ -22,13 +22,13 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                var all = db.Users.ToList();
-                if (count == null)
+                var allUsers = db.Users;
+                if (count != null)
                 {
-                    return View(all);
+                    allUsers.Take((int)count);                    
                 }
 
-                return View(all);
+                return View(allUsers.ToList());
             }
         }
     }

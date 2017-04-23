@@ -18,8 +18,33 @@ namespace SeeNowProcess.Tests.Controllers
         [Test]
         public void Index_SholuldReturnAllPeople()
         {
-            var context = new TestSeeNowContext();
-            context.Users.Add(new User
+            var context =GetTestContextDemo();            
+
+            var controller = new PeopleController(context);
+            var result = controller.Index(null) as ViewResult;
+            var users = (List<User>)result.ViewData.Model;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, users.Count);
+        }
+
+        [Test]
+        public void Index_SholudReturnCertainNumberOfPeople()
+        {
+            var context = GetTestContextDemo();
+
+            var controller = new PeopleController(context);
+            var result = controller.Index(1) as ViewResult;
+            var users = (List<User>)result.ViewData.Model;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, users.Count);
+        }
+
+        TestSeeNowContext GetTestContextDemo()
+        {
+            var demoContext = new TestSeeNowContext();
+            demoContext.Users.Add(new User
             {
                 Login = "asdfg",
                 Email = "As.Dfg@company.com",
@@ -28,7 +53,7 @@ namespace SeeNowProcess.Tests.Controllers
                 PhoneNumber = "111-222-333",
                 role = Role.Admin
             });
-            context.Users.Add(new User
+            demoContext.Users.Add(new User
             {
                 Login = "qwert",
                 Email = "Qw.Ert@company.com",
@@ -37,7 +62,7 @@ namespace SeeNowProcess.Tests.Controllers
                 PhoneNumber = "123-456-789",
                 role = Role.HeadMaster
             });
-            context.Users.Add(new User
+            demoContext.Users.Add(new User
             {
                 Login = "kajak",
                 Email = "Kaj.Kajak@company.com",
@@ -47,12 +72,7 @@ namespace SeeNowProcess.Tests.Controllers
                 role = Role.SeniorDev
             });
 
-            var controller = new PeopleController(context);
-            var result = controller.Index(null) as ViewResult;
-            var users = (List<User>)result.ViewData.Model;
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(3, users.Count);
+            return demoContext;
         }
     }
 }
