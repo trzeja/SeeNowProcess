@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using SeeNowProcess.Models;
 using SeeNowProcess.DAL;
+using SeeNowProcess.Tests.DAL.DbSets;
 
 namespace SeeNowProcess.Tests.DAL
 {

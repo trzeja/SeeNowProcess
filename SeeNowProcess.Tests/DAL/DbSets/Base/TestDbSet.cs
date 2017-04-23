@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeeNowProcess.Tests.DAL
+namespace SeeNowProcess.Tests.DAL.DbSets.Base
 {
     public class TestDbSet<T> : DbSet<T>, IQueryable, IEnumerable<T>
         where T : class
