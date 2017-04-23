@@ -29,9 +29,9 @@ namespace SeeNowProcess.Models
         public string PhoneNumber { get; set; }
         public Role? role { get; set; }
         public virtual User Supervisor { get; set; }
-        public virtual ICollection<Assignment> Assignments { get; set; }
-        public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
-        public virtual ICollection<UserStory> Stories { get; set; }
+        public virtual IQueryable<Assignment> Assignments { get; set; }
+        public virtual IQueryable<User> Subordinates { get; set; } // users whose supervisor I am
+        public virtual IQueryable<UserStory> Stories { get; set; }
 
         public Boolean ComparePassword(String attemptedPassword)
         {
