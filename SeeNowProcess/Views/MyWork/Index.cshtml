@@ -96,9 +96,15 @@
 
     <script>
         angular.module("dragAndDrop", ['dndLists']).controller("dragging", function ($scope, $http) {
-            $http.get("/Controllers/MyWorkController/IndexJS")
-            .success(function (result) {
-                $scope.list = result;
+            $http({
+                method: "GET",
+                url: "/MyWork/IndexJS",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            })
+            .then(function success(result) {
+                $scope.list = result.data;
+            }).catch(function fail(result) {
+                $scope.list = ":(";
             })
             $scope.models = {
                 selected: null,
@@ -115,13 +121,13 @@
             //}
 
 
-            $scope.$watch('list', function (modeling) {
-                $scope.modelAsJson = angular.toJson(modeling, true);
-            }, true);
+            //$scope.$watch('list', function (modeling) {
+            //    $scope.modelAsJson = angular.toJson(modeling, true);
+            //}, true);
             // Model to JSON for demo purpose
-            $scope.$watch('models', function (model) {
-                $scope.modelAsJson = angular.toJson(model, true);
-            }, true);
+            //$scope.$watch('models', function (model) {
+            //    $scope.modelAsJson = angular.toJson(model, true);
+            //}, true);
 
         });
 
