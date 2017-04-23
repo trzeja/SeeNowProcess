@@ -73,9 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PeopleControllerTest.cs" />
+    <Compile Include="DAL\DbSets\TestAssignmentDbSet.cs" />
     <Compile Include="DAL\TestSeeNowContext.cs" />
-    <Compile Include="DAL\TestUserDbSet.cs" />
-    <Compile Include="DAL\TestDbSet.cs" />
+    <Compile Include="DAL\DbSets\TestUserDbSet.cs" />
+    <Compile Include="DAL\DbSets\Base\TestDbSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
