@@ -29,7 +29,7 @@ namespace SeeNowProcess.Models
         public DateTime? CompletionDate { get; set; }
         public Status? Status { get; set; }
 
-        public virtual ICollection<UserStory> Stories { get; set; }
-        public virtual ICollection<Box> Boxes { get; set; }
+        public virtual IQueryable<UserStory> Stories { get; set; }
+        public virtual IQueryable<Box> Boxes { get; set; }
     }
 }
