@@ -220,9 +220,22 @@
     <Compile Include="Migrations\201704040617120_first.Designer.cs">
       <DependentUpon>201704040617120_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704221617180_BoxOrder.cs" />
+    <Compile Include="Migrations\201704221617180_BoxOrder.Designer.cs">
+      <DependentUpon>201704221617180_BoxOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704222016250_New Password Storing.cs" />
+    <Compile Include="Migrations\201704222016250_New Password Storing.Designer.cs">
+      <DependentUpon>201704222016250_New Password Storing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704222121515_Remove Old Password Storage.cs" />
+    <Compile Include="Migrations\201704222121515_Remove Old Password Storage.Designer.cs">
+      <DependentUpon>201704222121515_Remove Old Password Storage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
+    <Compile Include="Models\CryptoServices.cs" />
     <Compile Include="Models\Enums\Role.cs" />
     <Compile Include="Models\Enums\Importance.cs" />
     <Compile Include="Models\Enums\State.cs" />
@@ -275,7 +288,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -320,6 +335,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704040617120_first.resx">
       <DependentUpon>201704040617120_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704221617180_BoxOrder.resx">
+      <DependentUpon>201704221617180_BoxOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704222016250_New Password Storing.resx">
+      <DependentUpon>201704222016250_New Password Storing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704222121515_Remove Old Password Storage.resx">
+      <DependentUpon>201704222121515_Remove Old Password Storage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

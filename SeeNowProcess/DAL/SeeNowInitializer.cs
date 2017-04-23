@@ -77,9 +77,12 @@ namespace SeeNowProcess.DAL
         {
             List<Project> Projects = context.Projects.ToList();
             List<string> BoxNames = new List<string> {"New", "Assigned", "In Progress", "Waiting For Tests", "Under Tests", "Done", "Approved"};
-            foreach(Project project in Projects)
-                foreach(String boxName in BoxNames)
-                    context.Boxes.Add(new Box {Name=boxName, Project=project});
+            foreach (Project project in Projects)
+            {
+                int order = 0;
+                foreach (String boxName in BoxNames)
+                    context.Boxes.Add(new Box { Name = boxName, Project = project, Order=order++ });
+            }
             context.SaveChanges();
         }
 

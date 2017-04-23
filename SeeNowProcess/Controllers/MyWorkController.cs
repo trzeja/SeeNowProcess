@@ -18,7 +18,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         {
             using (db)
             {
-                var all = db.Users.ToList();
+                var all = db.Problems.ToList();
                 if (count == null)
                 {
                     return View(all);
