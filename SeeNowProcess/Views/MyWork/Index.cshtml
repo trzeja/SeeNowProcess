@@ -11,19 +11,25 @@
 <head>
     <style>
         .element {
-            border-radius: 40px;
+            border-radius: 20px;
             background-color: #33cc33;
-            width: 100px;
+            width: 150px;
+            padding: 5px;
             margin-left: auto;
             margin-right: auto;
             margin-top: 5px;
             text-align: center;
+            font-size: 12px;
         }
 
         .element2 {
-            border-radius: 50px;
+            border-radius: 30px;
             background-color: #79ff4d;
-            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding: 5px;
+            width: 120px;
         }
 
         .space {
@@ -102,7 +108,12 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             })
             .then(function success(result) {
-                $scope.list = result.data;
+                $scope.models.lists.A = result.data;
+                //for (x in $scope.list.data) {
+                //    $scope.models.lists.A.push({ProblemID:x.ProblemID, Title:x.Title, Description:x.Description});
+                //} 
+
+                
             }).catch(function fail(result) {
                 $scope.list = ":(";
             })
@@ -137,38 +148,7 @@
 
 
     <div class="container-fluid" ng-app="dragAndDrop" ng-controller="dragging">
-        <div>{{list}}</div>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CurrentState)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CurrentState)
-                    </td>
-
-                </tr>
-            }
-
-        </table>
+      
 
         <div class="row">
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
@@ -187,7 +167,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <p class="element">{{item.label}}</p>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </div>
@@ -200,7 +180,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <p class="element">{{item.label}}</p>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </div>
@@ -212,7 +192,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <p class="element">{{item.label}}</p>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </div>
@@ -224,7 +204,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <p class="element">{{item.label}}</p>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </div>
@@ -236,7 +216,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <p class="element">{{item.label}}</p>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </div>
@@ -248,7 +228,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="models.selected = item"
                         ng-class="{'selected': models.selected === item}">
-                        <p class="element">{{item.label}}</p>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </div>
