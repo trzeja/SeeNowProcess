@@ -32,6 +32,7 @@ namespace SeeNowProcess.Models
         public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
         public virtual ICollection<UserStory> Stories { get; set; }
+        public virtual ICollection<Problem> MyProblems { get; set; }
 
         public Boolean ComparePassword(String attemptedPassword)
         {
