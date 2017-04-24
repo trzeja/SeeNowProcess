@@ -11,7 +11,7 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
     $scope.message = '';
     $scope.registerUser = function () {
         if ($scope.password !== $scope.confirmPassword)
-            $scope.message = "Incorrect password";
+            $scope.message = "Passwords don't match!";
         else {
             $http({
                 method: "POST",
