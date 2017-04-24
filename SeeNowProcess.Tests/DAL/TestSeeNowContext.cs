@@ -16,6 +16,7 @@ namespace SeeNowProcess.Tests.DAL
         public TestSeeNowContext()
         {
             Users = new TestDbSet<User>();
+            //Users = new TestUserDbSet();            
         }
 
         public DbSet<Problem> Problems { get; set; }
@@ -28,8 +29,10 @@ namespace SeeNowProcess.Tests.DAL
 
         public int SaveChanges()
         {
-            return 0;
+            return 0; // no real db, no sql
         }
+
+        public void MarkAsModified<TEntity>(TEntity entity) where TEntity : class { }
 
         public void Dispose() { }
 

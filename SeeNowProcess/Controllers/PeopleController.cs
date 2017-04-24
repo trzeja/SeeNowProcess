@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SeeNowProcess.Models;
 using SeeNowProcess.DAL;
+using System.Data.Entity.Infrastructure;
 
 namespace SeeNowProcess.Controllers
 {
@@ -29,6 +30,16 @@ namespace SeeNowProcess.Controllers
                 }
 
                 return View(allUsers.ToList());
+            }
+        }
+        [Route("{id}")]
+        public ActionResult Show(int id)
+        {
+            using (db)
+            {
+                var allUsers = db.Users.Where(u => u.UserID == id);                            
+                return View(allUsers.ToList());
+                //db.MarkAsModified<User>(allUsers.FirstOrDefault()); //Sample of mark as modified 
             }
         }
     }
