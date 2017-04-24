@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using SeeNowProcess.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace SeeNowProcess.DAL
 {
@@ -19,6 +20,7 @@ namespace SeeNowProcess.DAL
         DbSet<Box> Boxes { get; set; }
 
         int SaveChanges();
+        void MarkAsModified<TEntity>(TEntity entity) where TEntity : class;
         //void OnModelCreating(DbModelBuilder modelBuilder);
     }
 }
