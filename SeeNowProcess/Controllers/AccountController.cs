@@ -59,9 +59,16 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterAction()
+        public ActionResult RegisterAction([Bind(Include ="Login,Password,Name,Email,Phone")] User user)
         {
-            return View();
+            using (db)
+            {
+                if (db.Users.Where(u => u.Login == user.Login).Count() != 0)
+                    return new JsonResult { Data = "User already exists", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                db.Users.Add(user);
+                db.SaveChanges();
+                return new JsonResult { Data = "Success", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
         }
 
 
