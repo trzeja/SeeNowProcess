@@ -22,27 +22,27 @@
 
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="login"> Login: </label>
-        <input class="form-control" type="text" id="login" ng-model="login">
+        <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="password"> Password: </label>
-        <input class="form-control" type="password" id="password" ng-model="password">
+        <input class="form-control" type="password" id="password" ng-model="password" required autofocus ng-class="Submited?'ng-dirty':''">
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="confirmPassword"> Confirm Password: </label>
-        <input class="form-control" type="password" id="confirmPassword" ng-model="confirmPassword">
+        <input class="form-control" type="password" id="confirmPassword" ng-model="confirmPassword" required autofocus ng-class="Submited?'ng-dirty':''">
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="name"> Full Name: </label>
-        <input class="form-control" type="text" id="name" ng-model="name">
+        <input class="form-control" type="text" id="name" ng-model="name" required autofocus ng-class="Submited?'ng-dirty':''">
     </div>
     <div class="form-group row">
         <label class="control-label col-sm-2" for="email"> Email adress: </label>
-        <input class="form-control" type="email" id="email" ng-model="email">
+        <input class="form-control" type="email" id="email" ng-model="email" required autofocus ng-class="Submited?'ng-dirty':''">
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="phone"> Phone number: </label>
-        <input class="form-control" type="text" id="phone" ng-model="phone">
+        <input class="form-control" type="tel" id="phone" ng-model="phone" required autofocus ng-class="Submited?'ng-dirty':''">
     </div>
     <div class="form-group row">
         <label class="col-sm-10 control-label"></label>
