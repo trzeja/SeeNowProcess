@@ -17,7 +17,15 @@ namespace SeeNowProcess.Models
         public string Login { get; set; }
         //[StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
         //[DataType(DataType.Password)] // w sumie nie wiem co to dokladnie robi, ale typ pasuje
-        public string Password { set { this.SetPassword(value); } }
+        [NotMapped]
+        public string Password {
+            set {
+                this.SetPassword(value);
+            }
+            get {
+                return Hash==null ? null : Hash.ToString(); // cos musi byc; generalnie nie uzywac tego gettera
+            }
+        }
         public byte[] Salt { get; set; }
         public byte[] Hash { get; set; }
         public string Name { get; set; }
