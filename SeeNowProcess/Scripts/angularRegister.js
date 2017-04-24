@@ -11,12 +11,7 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
     $scope.message = '';
     $scope.registerUser = function () {
         if ($scope.password !== $scope.confirmPassword) {
-            $scope.message = "Incorrect password";
-            $scope.login = "";
-            $scope.password = "";
-            $scope.name = "";
-            $scope.email = "";
-            $scope.phone = "";
+            $scope.message = "Passwords don't match!";
         }
         else {
             $scope.users.push({
@@ -32,20 +27,10 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
                 if (response.data === "Success")
                     window.location.href = "/Add/Index";
                 else {
-                    $scope.message = "Error - incorrect data!";
-                    $scope.login = "";
-                    $scope.password = "";
-                    $scope.name = "";
-                    $scope.email = "";
-                    $scope.phone = "";
+                    $scope.message = response.data;
                 }
             }, function myError(response) {
                 $scope.message = "Error";
-                $scope.login = "";
-                $scope.password = "";
-                $scope.name = "";
-                $scope.email = "";
-                $scope.phone = "";
             })
 
 
