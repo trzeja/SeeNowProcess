@@ -26,8 +26,12 @@ loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
                 window.location.href = "/People/Index";
             else
                 $scope.myWelcome = "Error - incorrect data!";
+                $scope.login = "";
+                $scope.password = "";
         }, function myError(response) {
-                $scope.myWelcome = "Error";
+            $scope.myWelcome = "Error";
+            $scope.login = "";
+            $scope.password = "";
         })
 
         /*
