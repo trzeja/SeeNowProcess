@@ -31,5 +31,14 @@ namespace SeeNowProcess.Controllers
                 return View(allUsers.ToList());
             }
         }
+        [Route("{id}")]
+        public ActionResult Show(int id)
+        {
+            using (db)
+            {
+                var allUsers = db.Users.Where(u => u.UserID == id);                
+                return View(allUsers.ToList());
+            }
+        }
     }
 }

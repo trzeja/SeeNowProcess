@@ -29,49 +29,62 @@ namespace SeeNowProcess.Tests.Controllers
         }
 
         [Test]
-        public void Index_SholudReturnCertainNumberOfPeople()
+        public void Index_SholudReturnPersonWithSpecifiedID()
         {
             var context = GetTestContextDemo();
 
             var controller = new PeopleController(context);
-            var result = controller.Index(1) as ViewResult;
+            var result = controller.Show(2) as ViewResult;
             var users = (List<User>)result.ViewData.Model;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, users.Count);
+            Assert.AreEqual(2, users[0].UserID);
         }
 
         TestSeeNowContext GetTestContextDemo()
         {
             var demoContext = new TestSeeNowContext();
-            demoContext.Users.Add(new User
+            try
             {
-                Login = "asdfg",
-                Email = "As.Dfg@company.com",
-                Name = "As Dfg",
-                Password = "admin11",
-                PhoneNumber = "111-222-333",
-                role = Role.Admin
-            });
-            demoContext.Users.Add(new User
+                demoContext.Users.Add(new User
+                {
+                    UserID = 0,
+                    Login = "asdfg",
+                    Email = "As.Dfg@company.com",
+                    Name = "As Dfg",
+                    Password = "admin11",
+                    PhoneNumber = "111-222-333",
+                    role = Role.Admin
+                });
+                demoContext.Users.Add(new User
+                {
+                    UserID = 1,
+                    Login = "qwert",
+                    Email = "Qw.Ert@company.com",
+                    Name = "Qw Ert",
+                    Password = "secret1",
+                    PhoneNumber = "123-456-789",
+                    role = Role.HeadMaster
+                });
+                demoContext.Users.Add(new User
+                {
+                    UserID = 2,
+                    Login = "kajak",
+                    Email = "Kaj.Kajak@company.com",
+                    Name = "Kaj Kajak",
+                    Password = "parostatkiem",
+                    PhoneNumber = "555-666-777",
+                    role = Role.SeniorDev
+                });
+            }
+            catch (Exception e)
             {
-                Login = "qwert",
-                Email = "Qw.Ert@company.com",
-                Name = "Qw Ert",
-                Password = "secret1",
-                PhoneNumber = "123-456-789",
-                role = Role.HeadMaster
-            });
-            demoContext.Users.Add(new User
-            {
-                Login = "kajak",
-                Email = "Kaj.Kajak@company.com",
-                Name = "Kaj Kajak",
-                Password = "parostatkiem",
-                PhoneNumber = "555-666-777",
-                role = Role.SeniorDev
-            });
 
+                throw;
+            }
+
+            
+            
             return demoContext;
         }
     }
