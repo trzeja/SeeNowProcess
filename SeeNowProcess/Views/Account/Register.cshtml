@@ -10,16 +10,6 @@
 
 <form ng-app="registerForm" name="registerForm" ng-controller="registerCtrl" class="form-horizontal" ng-submit="registerUser()">
     <div>{{message}}</div>
-    <ul>
-        <li ng-repeat="x in users">
-            {{x.login}}<br>
-            {{x.password}}<br>
-            {{x.name}}<br>
-            {{x.email}}<br>
-            {{x.phone}}
-        </li>
-    </ul>
-
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="login"> Login: </label>
         <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">

@@ -1,22 +1,11 @@
 ﻿var registerApp = angular.module("registerForm", []);
 registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $http) {
-    $scope.users =
-        [
-            {
-                login: "", password: "",
-                name: "", email: "",
-                phone: ""
-            }
-        ];
     $scope.message = '';
     $scope.registerUser = function () {
         if ($scope.password !== $scope.confirmPassword) {
             $scope.message = "Passwords don't match!";
         }
         else {
-            $scope.users.push({
-                login: $scope.login, password: $scope.password, name: $scope.name, email: $scope.email, phone: $scope.phone
-            });
             $http({
                 method: "POST",
                 url: "/Account/RegisterAction",
