@@ -19,7 +19,7 @@
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="login"> Login: </label>
         <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
-        <span style="color:red" ng-show="(loginForm.login.$dirty || Submited ) && loginForm.login.$error.required">Please enter LOGIN</span>
+        <p style="color:red" ng-show="(loginForm.login.$dirty || Submited ) && loginForm.login.$error.required">Please enter LOGIN</p>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="password"> Password: </label>

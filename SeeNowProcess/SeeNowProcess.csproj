@@ -257,7 +257,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\leftmenu.css" />
-    <Content Include="Controllers\AngularController.js" />
+    <Content Include="Scripts\angularAdd.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
