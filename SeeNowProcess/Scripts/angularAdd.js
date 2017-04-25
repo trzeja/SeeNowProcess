@@ -1,5 +1,5 @@
 ﻿var taskApp = angular.module("taskForm", []);
-taskApp.controller("taskCtrl", function ($scope) {
+taskApp.controller("taskCtrl", function ($scope,$http) {
     $scope.tasks =
         [
             {
@@ -37,6 +37,22 @@ taskApp.controller("taskCtrl", function ($scope) {
         $scope.tasks.push({
             title: $scope.title, description: $scope.description, status: $scope.status.value,
             importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
+        });
+        $http({
+            method: "POST",
+            url: "/Add/IndexAdd",
+            data: $.param({
+                'title': $scope.title, 'description': $scope.description,
+                'status': $scope.status.value, 'importance': $scope.importance.value,
+                'estimated_time': $scope.estimated_time, 'parent': $scope.parent.value
+            }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function success(response) {
+            $scope.message = "Did it!";
+        },
+        function failure(response)
+        {
+            $scope.message = "Fail...";
         });
     }
 });
