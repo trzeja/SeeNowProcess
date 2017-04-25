@@ -20,6 +20,15 @@ namespace SeeNowProcess.DAL
         DbSet<Box> Boxes { get; set; }
 
         int SaveChanges();
+
+        /// <summary>
+        /// Marks entity as modified - useful in edit actions
+        /// Example: db.MarkAsModified<User>(allUsers.FirstOrDefault());
+        /// </summary>
+        /// <typeparam name="TEntity">
+        /// Write here class from  model eg. User
+        /// </typeparam>
+        /// <param name="entity"></param>
         void MarkAsModified<TEntity>(TEntity entity) where TEntity : class;
         //void OnModelCreating(DbModelBuilder modelBuilder);
     }
