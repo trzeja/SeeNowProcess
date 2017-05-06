@@ -9,11 +9,29 @@
 }
 
 <head>
+    <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
     <style>
+        .fill {
+    top: 70px;
+    left: 195px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+        table, th, td {
+          
+    border: 1px solid black;
+}
+        .wid {
+            width: 200px;
+        }
         .element {
             border-radius: 20px;
             background-color: #33cc33;
-            width: 150px;
+            /*width: 150px;*/
+            width:12vw;
             padding: 5px;
             margin-left: auto;
             margin-right: auto;
@@ -30,17 +48,20 @@
             margin-right: auto;
             text-align: center;
             padding: 5px;
-            width: 120px;
+            width: 10vw;
+            /*width: 120px;*/
         }
 
         .space {
             height: 900px;
+            /*height: 100%;*/
             padding-top: 15px;
-            width: 0px;
+            width: 200px;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
             min-height: 400px;
             max-height: 1000px;
+            min-width: 150px;
         }
 
         .visible {
@@ -49,6 +70,7 @@
         }
 
         .space2 {
+            min-width: 150px;
             height: 100%;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
@@ -148,8 +170,111 @@
 
 
 
-    <div class="container-fluid" ng-app="dragAndDrop" ng-controller="dragging">
-      
+    <div class="container-fluid fill" ng-app="dragAndDrop" ng-controller="dragging">
+        @*<table class="fill">
+            <tr>
+                <th class="wid space2"><h5 class="text-center"><strong>Open</strong></h5></th>
+                <th class="wid space2"><h5 class="text-center"><strong>Planned</strong></h5></th>
+                <th class="wid space2"><h5 class="text-center"><strong>In Progress</strong></h5></th>
+                <th class="wid space2"><h5 class="text-center"><strong>In Testing</strong></h5></th>
+                <th class="wid space2"><h5 class="text-center"><strong>Done</strong></h5></th>
+                <th class="wid space2"><h5 class="text-center"><strong>Cancelled</strong></h5></th>
+            </tr>
+
+
+            <tr>
+                <td class="wid">
+                    <div class="space">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.A">
+                        <li ng-repeat="item in models.lists.A"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.A.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                        </div>
+                </td>
+                <td class="wid">
+                    <div class="space">
+                        <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
+                            <li ng-repeat="item in models.lists.B"
+                                dnd-draggable="item"
+                                dnd-moved="models.lists.B.splice($index, 1)"
+                                dnd-effect-allowed="move"
+                                dnd-selected="models.selected = item"
+                                ng-class="{'selected': models.selected === item}">
+                                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                            </li>
+                        </ul>
+                        </div>
+
+</td>
+
+                <td class="wid">
+                    <div class="space">
+                        <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
+                            <li ng-repeat="item in models.lists.C"
+                                dnd-draggable="item"
+                                dnd-moved="models.lists.C.splice($index, 1)"
+                                dnd-effect-allowed="move"
+                                dnd-selected="models.selected = item"
+                                ng-class="{'selected': models.selected === item}">
+                                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                            </li>
+                        </ul>
+                        </div>
+
+</td>
+
+                <td class="wid">
+                    <div class="space">
+                        <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
+                            <li ng-repeat="item in models.lists.D"
+                                dnd-draggable="item"
+                                dnd-moved="models.lists.D.splice($index, 1)"
+                                dnd-effect-allowed="move"
+                                dnd-selected="models.selected = item"
+                                ng-class="{'selected': models.selected === item}">
+                                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                            </li>
+                        </ul>
+                        </div>
+</td>
+                <td class="wid">
+                    <div class="space">
+                        <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
+                            <li ng-repeat="item in models.lists.E"
+                                dnd-draggable="item"
+                                dnd-moved="models.lists.E.splice($index, 1)"
+                                dnd-effect-allowed="move"
+                                dnd-selected="models.selected = item"
+                                ng-class="{'selected': models.selected === item}">
+                                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                            </li>
+                        </ul>
+                        </div>
+</td>
+
+                <td class="wid">
+                    <div class="space">
+                        <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
+                            <li ng-repeat="item in models.lists.F"
+                                dnd-draggable="item"
+                                dnd-moved="models.lists.F.splice($index, 1)"
+                                dnd-effect-allowed="move"
+                                dnd-selected="models.selected = item"
+                                ng-class="{'selected': models.selected === item}">
+                                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                            </li>
+                        </ul>
+                        </div>
+</td>
+            </tr>
+
+        </table>*@
 
         <div class="row">
             <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
