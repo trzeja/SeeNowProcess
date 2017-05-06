@@ -317,7 +317,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\IterationPlan\Index.cshtml" />
     <Content Include="Views\MyRecent\Index.cshtml" />
-    <Content Include="Views\MyWork\Index.cshtml" />
+    <Content Include="Views\MyWork\MyWorkIndex.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
     <Content Include="Views\ReleasePlan\Index.cshtml" />
     <Content Include="Views\TaskBoard\Index.cshtml" />

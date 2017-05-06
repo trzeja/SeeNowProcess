@@ -14,7 +14,7 @@ namespace SeeNowProcess.Controllers
        // public MyWorkController(ISeeNowContext context) : base(context) { }
         
         // GET: MyWork
-        public ActionResult Index(int? count)
+        public ActionResult MyWorkIndex(int? count)
         {
             using (db)
             {
@@ -36,10 +36,8 @@ namespace SeeNowProcess.Controllers
                 var resultJ = db.Problems.Select(a => new {
                 ProblemID = a.ProblemID,
                 Title = a.Title,
-                Description = a.Description});
-                //var all = db.Problems.ToList();
-                //JsonResult result = new JsonResult { Data = all, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                //return new JsonResult {Data = all, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                Description = a.Description,
+                CurrentState = a.CurrentState});
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
