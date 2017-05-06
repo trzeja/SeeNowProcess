@@ -29,6 +29,7 @@ namespace SeeNowProcess.Controllers
         }
 
         
+
         public ActionResult IndexJS()
         {
             using (db)
@@ -41,5 +42,18 @@ namespace SeeNowProcess.Controllers
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
+
+        [HttpPost]
+        public ActionResult UpdateDatabase()
+        {
+            using (db)
+            {
+                //trzeba wyszukać w bazie id taska i zmienić Current State
+                var ProblemID = Request.Form["ProblemID"]; 
+                var NewState = Request.Form["NewState"]; //numer albo "null"
+                return View();
+            }
+        }
+
     }
 }
