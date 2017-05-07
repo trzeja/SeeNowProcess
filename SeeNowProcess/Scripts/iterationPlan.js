@@ -1,6 +1,6 @@
 ﻿var iterationApp = angular.module("iterationPart", ['dndLists']);
 iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $http) {
-    $scope.message = 'Cos nie dziala nie wiem co...';
+    $scope.message = "Cos nie dziala nie wiem co...";
     $scope.iterations = [];
     $scope.lists = [];
     $scope.selected = null;
@@ -8,8 +8,17 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
     $scope.addIteration = function () {
 
     }
-
-
+        $scope.iterations.push({ "Name": "Backlog", "StartDate": "dhefuieff", "EndDate": "jeoefof;rg" });
+        for (var i = 0; i < $scope.iterations.length; ++i) {
+            var lista_pomocnicza = [];
+            lista_pomocnicza.push({ Title: "Sierotka Marysia", Description: "Whatever" });
+            $scope.lists.push({"i": lista_pomocnicza});
+           // $scope.lists.i.push({ Title: "Sierotka Marysia", Description: "Whatever" });
+        }
+        
+        //var item = { "Title": "Sierotka Marysia", "Description": "Whatever" };
+        //$scope.lists.push({Title: "Sierotka Marysia", Description: "Whatever"});
+    /*
     function loadData() {
         iterations.push = { "Name": "Backlog", "StartDate": "dhefuieff", "EndDate": "jeoefof;rg" };
         var item = { "Title": "Sierotka Marysia", "Description": "Whatever" };
@@ -45,7 +54,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
         }
     }
 
-    loadData();
+    loadData();*/
         
 
 }]);

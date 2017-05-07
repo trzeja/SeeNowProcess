@@ -20,14 +20,9 @@
         <label class="col-sm-10 control-label"></label>
         <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
     </div>
-    <div>{{message}}</div>
-    
     <div class="row" ng-repeat="x in iterations">
         <div class="space2 column"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p>{{x.StartDate}} - {{x.EndDate}}</p></div>
     </div>
-    
-    <div>{{message}}</div>
-    
     <div class="row" ng-repeat="x in lists">
         <div class="space column">
             <ul class="visible list-unstyled text-center" dnd-list="x">
@@ -42,8 +37,6 @@
             </ul>
         </div>
     </div>
-
-    <div>{{message}}</div>
 </div>
 </body>
 
