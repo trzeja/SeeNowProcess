@@ -22,6 +22,7 @@ namespace SeeNowProcess.DAL
         public DbSet<UserStory> UserStories { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Box> Boxes { get; set; }
+        public DbSet<Iteration> Iterations { get; set; }
 
         public void MarkAsModified<TEntity>(TEntity entity) where TEntity : class
         {

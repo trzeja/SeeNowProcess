@@ -7,6 +7,7 @@ using System.Web;
 
 namespace SeeNowProcess.DAL
 {
+    // na samym dole dalem szkielet AddIterations :)
     public class SeeNowInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<SeeNowContext>
     {
         protected override void Seed(SeeNowContext context)
@@ -18,16 +19,16 @@ namespace SeeNowProcess.DAL
                 AddProjects(context);
                 method = "AddUsers";
                 AddUsers(context);
-                method = "AddBoxes";
-                AddBoxes(context);
+                //method = "AddBoxes";
+                //AddBoxes(context);
                 method = "AddUserStories";
                 AddUserStories(context);
                 method = "AddTeams";
                 AddTeams(context);
                 method = "AddAssignments";
                 AddAssignments(context);
-                method = "AddProblems";
-                AddProblems(context);
+                //method = "AddProblems";
+                //AddProblems(context);
             }
             catch(Exception e)
             {
@@ -73,18 +74,18 @@ namespace SeeNowProcess.DAL
             Seed(context);
         }
 
-        private void AddBoxes(SeeNowContext context)
-        {
-            List<Project> Projects = context.Projects.ToList();
-            List<string> BoxNames = new List<string> {"New", "Assigned", "In Progress", "Waiting For Tests", "Under Tests", "Done", "Approved"};
-            foreach (Project project in Projects)
-            {
-                int order = 0;
-                foreach (String boxName in BoxNames)
-                    context.Boxes.Add(new Box { Name = boxName, Project = project, Order=order++ });
-            }
-            context.SaveChanges();
-        }
+        //private void AddBoxes(SeeNowContext context)
+        //{
+        //    List<Project> Projects = context.Projects.ToList();
+        //    List<string> BoxNames = new List<string> {"New", "Assigned", "In Progress", "Waiting For Tests", "Under Tests", "Done", "Approved"};
+        //    foreach (Project project in Projects)
+        //    {
+        //        int order = 0;
+        //        foreach (String boxName in BoxNames)
+        //            context.Boxes.Add(new Box { Name = boxName, Project = project, Order=order++ });
+        //    }
+        //    context.SaveChanges();
+        //}
 
         private void AddAssignments(SeeNowContext context)
         {
@@ -126,21 +127,35 @@ namespace SeeNowProcess.DAL
             context.SaveChanges();
         }
 
-        private void AddProblems(SeeNowContext context)
+
+        //private void AddProblems(SeeNowContext context)
+        //{
+        //    Project FirstProject = context.Projects.Where(p => p.Name == "First Project").First();
+        //    var projectBoxes = context.Boxes.Where(b => b.Project.ProjectID == FirstProject.ProjectID);
+        //    UserStory userStory = context.UserStories.Where(us => us.Title == "Once upon a Time").First();
+        //    var Problems = new List<Problem>
+        //    {
+        //        new Problem {Title="My code works and I don't know why",        Description="I just clicked a few times, VS generated plenty of code and it works!... - but I don't know why...",   Importance=Importance.Important,Story=userStory, Box=projectBoxes.Where(b=>b.Name=="New").First(),              CreationDate=new DateTime(2017,4,1, 3,2,0), CurrentState=State.Created },
+        //        new Problem {Title="My code doesn't work and I don't know why", Description="I tried to do a small refactor but it did broke everything! I cannot undo it and I beg for help.",     Importance=Importance.Critical, Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Assigned").First(),         CreationDate=new DateTime(2017,4,1, 4,0,0), CurrentState=State.InProgress },
+        //        new Problem {Title="Analyse generated classes",                 Description="Ask Kaj for details",                                                                                  Importance=Importance.Regular,  Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Waiting for Tests").First(),CreationDate=new DateTime(2017,4,1, 9,0,0), CurrentState=State.InProgress,  Progress=50, EstimatedTime=new TimeSpan(12,0,0) },
+        //        new Problem {Title="Learn how to use VS",                       Description="Google for VS tutorial",                                                                               Importance=Importance.Trivial,  Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Approved").First(),         CreationDate=new DateTime(2017,4,1,10,0,0), CurrentState=State.Finished,    Progress=100, EstimatedTime=new TimeSpan(4,0,0), FinalTime=new TimeSpan(2,0,0) }
+        //    };
+        //    Problems[2].ParentProblem = Problems[0];
+        //    Problems[3].ParentProblem = Problems[0];
+        //    Problems.ForEach(p => context.Problems.Add(p));
+        //    context.SaveChanges();
+        //}
+
+        private void AddIterations(SeeNowContext context)
         {
-            Project FirstProject = context.Projects.Where(p => p.Name == "First Project").First();
-            var projectBoxes = context.Boxes.Where(b => b.Project.ProjectID == FirstProject.ProjectID);
-            UserStory userStory = context.UserStories.Where(us => us.Title == "Once upon a Time").First();
-            var Problems = new List<Problem>
+            // na razie tylko dwie iteracje z czego jedna będzie pusta (żeby był jakiś wybór)
+            //wszystko do backologu na razie
+            List<Iteration> Iterations = new List<Iteration>
             {
-                new Problem {Title="My code works and I don't know why",        Description="I just clicked a few times, VS generated plenty of code and it works!... - but I don't know why...",   Importance=Importance.Important,Story=userStory, Box=projectBoxes.Where(b=>b.Name=="New").First(),              CreationDate=new DateTime(2017,4,1, 3,2,0), CurrentState=State.Created },
-                new Problem {Title="My code doesn't work and I don't know why", Description="I tried to do a small refactor but it did broke everything! I cannot undo it and I beg for help.",     Importance=Importance.Critical, Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Assigned").First(),         CreationDate=new DateTime(2017,4,1, 4,0,0), CurrentState=State.InProgress },
-                new Problem {Title="Analyse generated classes",                 Description="Ask Kaj for details",                                                                                  Importance=Importance.Regular,  Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Waiting for Tests").First(),CreationDate=new DateTime(2017,4,1, 9,0,0), CurrentState=State.InProgress,  Progress=50, EstimatedTime=new TimeSpan(12,0,0) },
-                new Problem {Title="Learn how to use VS",                       Description="Google for VS tutorial",                                                                               Importance=Importance.Trivial,  Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Approved").First(),         CreationDate=new DateTime(2017,4,1,10,0,0), CurrentState=State.Finished,    Progress=100, EstimatedTime=new TimeSpan(4,0,0), FinalTime=new TimeSpan(2,0,0) }
+                new Iteration {Name="First Iteration", Description="Our team's first itaration. It must be the fastest!", StartDate=new DateTime(2017, 4, 1, 3, 0, 0),  EndDate=new DateTime(2017, 5, 1, 3, 0, 0) },
+                new Iteration {Name="Backlog", Description="Garbage Collector", StartDate=new DateTime(2017,1,1,0,0,0), EndDate=new DateTime(2017, 5, 1, 3, 0, 0)}
             };
-            Problems[2].ParentProblem = Problems[0];
-            Problems[3].ParentProblem = Problems[0];
-            Problems.ForEach(p => context.Problems.Add(p));
+            Iterations.ForEach(i => context.Iterations.Add(i));
             context.SaveChanges();
         }
     }

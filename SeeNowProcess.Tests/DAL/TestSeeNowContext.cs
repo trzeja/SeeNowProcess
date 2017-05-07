@@ -26,14 +26,15 @@ namespace SeeNowProcess.Tests.DAL
         public DbSet<UserStory> UserStories { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Box> Boxes { get; set; }
+        public DbSet<Iteration> Iterations { get; set; }
 
         public int SaveChanges()
         {
             return 0; // no real db, no sql
         }
-
+        //only to satisfy ISeeNowContext
         public void MarkAsModified<TEntity>(TEntity entity) where TEntity : class { }
-
+        //only to satisfy ISeeNowContext
         public void Dispose() { }
 
 
