@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201704230922486_UsersProblems.Designer.cs">
       <DependentUpon>201704230922486_UsersProblems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705070605598_IterationsAddedAndCurrentStateDeleted.cs" />
+    <Compile Include="Migrations\201705070605598_IterationsAddedAndCurrentStateDeleted.Designer.cs">
+      <DependentUpon>201705070605598_IterationsAddedAndCurrentStateDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -245,6 +249,7 @@
     <Compile Include="Models\Enums\State.cs" />
     <Compile Include="Models\Enums\Status.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Iteration.cs" />
     <Compile Include="Models\Problem.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Team.cs" />
@@ -352,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704230922486_UsersProblems.resx">
       <DependentUpon>201704230922486_UsersProblems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705070605598_IterationsAddedAndCurrentStateDeleted.resx">
+      <DependentUpon>201705070605598_IterationsAddedAndCurrentStateDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

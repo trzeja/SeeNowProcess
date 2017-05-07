@@ -37,8 +37,8 @@ namespace SeeNowProcess.Controllers
                 var resultJ = db.Problems.Select(a => new {
                 ProblemID = a.ProblemID,
                 Title = a.Title,
-                Description = a.Description,
-                CurrentState = a.CurrentState});
+                Description = a.Description
+                /*CurrentState = a.CurrentState*/});
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }

@@ -19,8 +19,8 @@ namespace SeeNowProcess.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
-        [Display(Name = "Current State")]
-        public State? CurrentState { get; set; }
+        //[Display(Name = "Current State")]
+        //public State? CurrentState { get; set; }
         public Importance? Importance { get; set; }
         public int? Progress { get; set; }
 

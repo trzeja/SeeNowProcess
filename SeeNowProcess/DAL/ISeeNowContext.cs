@@ -18,6 +18,7 @@ namespace SeeNowProcess.DAL
         DbSet<UserStory> UserStories { get; set; }
         DbSet<Assignment> Assignments { get; set; }
         DbSet<Box> Boxes { get; set; }
+        DbSet<Iteration> Iterations { get; set; }
 
         int SaveChanges();
 
