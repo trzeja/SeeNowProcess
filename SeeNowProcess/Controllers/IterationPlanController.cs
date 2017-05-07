@@ -50,13 +50,14 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                 // chyba teraz nie rozrozniamy projektu
                 Project project = db.Projects.FirstOrDefault();
                 var iterations = db.Iterations
-                    .Where(i => i.Project == project)
+                    .Where(i => i.Project.ProjectID == project.ProjectID)
                     .Select(i => new
                     {
+                        id=i.IterationId,
                         name = i.Name,
                         duration = (i.StartDate == null ? "?" : i.StartDate.ToString()) + " - " + (i.EndDate == null ? "?" : i.EndDate.ToString())
                     });
-                return Json(iterations, JsonRequestBehavior.AllowGet);
+                return Json(iterations.ToList(), JsonRequestBehavior.AllowGet);
 
             }
                             /*tutaj prosze o zwrocenie listy obiektow skladajacych sie z: 
