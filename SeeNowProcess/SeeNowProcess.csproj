@@ -261,6 +261,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\drag-and-drop-styles.css" />
     <Content Include="Content\leftmenu.css" />
     <Content Include="Scripts\angularAdd.js" />
     <Content Include="favicon.ico" />

@@ -6,93 +6,108 @@
     ViewBag.Title = "Index";
 }
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
+
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
     <script src="~/Scripts/iterationPlan.js"></script>
-    <style>
-
-    </style>
 </head>
 
 
-<body  ng-app="iteration" name="iteration" ng-controller="iterationCtrl">
-    <div class="row" ng-repeat="x in iterations">
-        <div class="space2 column"><h5 class="text-center"><strong>{{x.name}}</strong></h5><p>{{x.duration}}</p></div>
+<body>
+<div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
+    <div>
+        <label class="col-sm-10 control-label"></label>
+        <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
     </div>
+    <div>{{message}}</div>
+    
+    <div class="row" ng-repeat="x in iterations">
+        <div class="space2 column"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p>{{x.StartDate}} - {{x.EndDate}}</p></div>
+    </div>
+    
+    <div>{{message}}</div>
+    
     <div class="row" ng-repeat="x in lists">
-        <div class="space col-sm-2">
+        <div class="space column">
             <ul class="visible list-unstyled text-center" dnd-list="x">
                 <li ng-repeat="item in x"
                     dnd-draggable="item"
                     dnd-moved="x.splice($index, 1)"
                     dnd-effect-allowed="move"
-                    dnd-selected="models.selected = item"
+                    dnd-selected="selected = item"
                     ng-class="{'selected': selected === item}">
                     <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                 </li>
             </ul>
         </div>
-@*
-        <div class="space col-sm-2">
-            <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
-                <li ng-repeat="item in models.lists.B"
-                    dnd-draggable="item"
-                    dnd-moved="models.lists.B.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                    dnd-selected="models.selected = item"
-                    ng-class="{'selected': models.selected === item}">
-                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                </li>
-            </ul>
-        </div>
-        <div class="space col-sm-2">
-            <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
-                <li ng-repeat="item in models.lists.C"
-                    dnd-draggable="item"
-                    dnd-moved="models.lists.C.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                    dnd-selected="models.selected = item"
-                    ng-class="{'selected': models.selected === item}">
-                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                </li>
-            </ul>
-        </div>
-        <div class="space col-sm-2">
-            <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
-                <li ng-repeat="item in models.lists.D"
-                    dnd-draggable="item"
-                    dnd-moved="models.lists.D.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                    dnd-selected="models.selected = item"
-                    ng-class="{'selected': models.selected === item}">
-                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                </li>
-            </ul>
-        </div>
-        <div class="space col-sm-2">
-            <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
-                <li ng-repeat="item in models.lists.E"
-                    dnd-draggable="item"
-                    dnd-moved="models.lists.E.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                    dnd-selected="models.selected = item"
-                    ng-class="{'selected': models.selected === item}">
-                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                </li>
-            </ul>
-        </div>
-        <div class="space col-sm-2">
-            <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
-                <li ng-repeat="item in models.lists.F"
-                    dnd-draggable="item"
-                    dnd-moved="models.lists.F.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                    dnd-selected="models.selected = item"
-                    ng-class="{'selected': models.selected === item}">
-                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                </li>
-            </ul>
-        </div>*@
     </div>
 
+    <div>{{message}}</div>
+</div>
 </body>
+
+
+
+
+@*  KOD Z PLIKÓW OD ROKSANY (jeszcze nie wyrzucać)
+    <div class="space col-sm-2">
+        <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
+            <li ng-repeat="item in models.lists.B"
+                dnd-draggable="item"
+                dnd-moved="models.lists.B.splice($index, 1)"
+                dnd-effect-allowed="move"
+                dnd-selected="models.selected = item"
+                ng-class="{'selected': models.selected === item}">
+                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+            </li>
+        </ul>
+    </div>
+    <div class="space col-sm-2">
+        <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
+            <li ng-repeat="item in models.lists.C"
+                dnd-draggable="item"
+                dnd-moved="models.lists.C.splice($index, 1)"
+                dnd-effect-allowed="move"
+                dnd-selected="models.selected = item"
+                ng-class="{'selected': models.selected === item}">
+                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+            </li>
+        </ul>
+    </div>
+    <div class="space col-sm-2">
+        <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
+            <li ng-repeat="item in models.lists.D"
+                dnd-draggable="item"
+                dnd-moved="models.lists.D.splice($index, 1)"
+                dnd-effect-allowed="move"
+                dnd-selected="models.selected = item"
+                ng-class="{'selected': models.selected === item}">
+                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+            </li>
+        </ul>
+    </div>
+    <div class="space col-sm-2">
+        <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
+            <li ng-repeat="item in models.lists.E"
+                dnd-draggable="item"
+                dnd-moved="models.lists.E.splice($index, 1)"
+                dnd-effect-allowed="move"
+                dnd-selected="models.selected = item"
+                ng-class="{'selected': models.selected === item}">
+                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+            </li>
+        </ul>
+    </div>
+    <div class="space col-sm-2">
+        <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
+            <li ng-repeat="item in models.lists.F"
+                dnd-draggable="item"
+                dnd-moved="models.lists.F.splice($index, 1)"
+                dnd-effect-allowed="move"
+                dnd-selected="models.selected = item"
+                ng-class="{'selected': models.selected === item}">
+                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+            </li>
+        </ul>
+    </div>*@

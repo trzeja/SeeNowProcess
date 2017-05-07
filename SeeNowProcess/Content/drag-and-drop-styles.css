@@ -1,0 +1,114 @@
+﻿.fill {
+    top: 70px;
+    left: 195px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+table, th, td {          
+    border: 1px solid black;
+}
+
+.wid {
+    width: 200px;
+}
+
+.column {
+    min-width:1vw;
+    max-width:20vw;
+    height:12vh;
+    width:20vw;
+
+}
+
+
+.element {
+    border-radius: 20px;
+    background-color: #33cc33;
+    /*width: 150px;*/
+    width:12vw;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 12px;
+    min-height: 100px;
+}
+
+.element2 {
+    border-radius: 30px;
+    background-color: #79ff4d;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 5px;
+    width: 10vw;
+    /*width: 120px;*/
+}
+
+.space {
+    height: 900px;
+    /*height: 100%;*/
+    padding-top: 15px;
+   /* width: 200px;*/
+    border: 1px solid #aaaaaa;
+    background-color: #e6ffe6;
+    min-height: 400px;
+    max-height: 1000px;
+    min-width: 150px;
+}
+
+.visible {
+    min-height: 500px;
+    min-width: 50px;
+}
+
+.space2 {
+    min-width: 150px;
+    height: 100%;
+    border: 1px solid #aaaaaa;
+    background-color: #e6ffe6;
+}
+
+.body {
+    margin: 0 !important;
+}
+
+.simpleDemo ul[dnd-list],
+.simpleDemo ul[dnd-list] > li {
+    position: relative;
+}
+
+.simpleDemo ul[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+}
+
+            .simpleDemo ul[dnd-list] .dndDraggingSource {
+                display: none;
+            }
+
+            .simpleDemo ul[dnd-list] .dndPlaceholder {
+                display: block;
+                background-color: #ddd;
+                min-height: 42px;
+            }
+
+            .simpleDemo ul[dnd-list] li {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-top-right-radius: 4px;
+                border-top-left-radius: 4px;
+                display: block;
+                padding: 10px 15px;
+                margin-bottom: -1px;
+            }
+
+                .simpleDemo ul[dnd-list] li.selected {
+                    background-color: #dff0d8;
+                    color: #3c763d;
+                }
