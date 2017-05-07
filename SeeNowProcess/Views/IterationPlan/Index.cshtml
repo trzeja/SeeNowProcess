@@ -5,8 +5,94 @@
 @{
     ViewBag.Title = "Index";
 }
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
+    <script src="~/Scripts/iterationPlan.js"></script>
+    <style>
 
-<p>Iteration plan DOESN'T EXIST. </p>
+    </style>
+</head>
 
-<p> Zamiast tego mogę wrzucić element pokazujący magię EKOSU: :)</p>
-<img src="~/img/magia_EKOSu.jpg" alt="Upsik - brakuje obrazka" />
+
+<body  ng-app="iteration" name="iteration" ng-controller="iterationCtrl">
+    <div class="row" ng-repeat="x in iterations">
+        <div class="space2 column"><h5 class="text-center"><strong>{{x.name}}</strong></h5><p>{{x.duration}}</p></div>
+    </div>
+    <div class="row" ng-repeat="x in lists">
+        <div class="space col-sm-2">
+            <ul class="visible list-unstyled text-center" dnd-list="x">
+                <li ng-repeat="item in x"
+                    dnd-draggable="item"
+                    dnd-moved="x.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = item"
+                    ng-class="{'selected': selected === item}">
+                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                </li>
+            </ul>
+        </div>
+@*
+        <div class="space col-sm-2">
+            <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
+                <li ng-repeat="item in models.lists.B"
+                    dnd-draggable="item"
+                    dnd-moved="models.lists.B.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = item"
+                    ng-class="{'selected': models.selected === item}">
+                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                </li>
+            </ul>
+        </div>
+        <div class="space col-sm-2">
+            <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
+                <li ng-repeat="item in models.lists.C"
+                    dnd-draggable="item"
+                    dnd-moved="models.lists.C.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = item"
+                    ng-class="{'selected': models.selected === item}">
+                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                </li>
+            </ul>
+        </div>
+        <div class="space col-sm-2">
+            <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
+                <li ng-repeat="item in models.lists.D"
+                    dnd-draggable="item"
+                    dnd-moved="models.lists.D.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = item"
+                    ng-class="{'selected': models.selected === item}">
+                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                </li>
+            </ul>
+        </div>
+        <div class="space col-sm-2">
+            <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
+                <li ng-repeat="item in models.lists.E"
+                    dnd-draggable="item"
+                    dnd-moved="models.lists.E.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = item"
+                    ng-class="{'selected': models.selected === item}">
+                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                </li>
+            </ul>
+        </div>
+        <div class="space col-sm-2">
+            <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
+                <li ng-repeat="item in models.lists.F"
+                    dnd-draggable="item"
+                    dnd-moved="models.lists.F.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="models.selected = item"
+                    ng-class="{'selected': models.selected === item}">
+                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                </li>
+            </ul>
+        </div>*@
+    </div>
+
+</body>
