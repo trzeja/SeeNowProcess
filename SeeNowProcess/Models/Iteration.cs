@@ -24,6 +24,6 @@ namespace SeeNowProcess.Models
         public DateTime? EndDate { get; set; }
         
         public virtual Project Project { get; set; }
-        public virtual IQueryable<Box> Problems { get; set; }
+        public virtual IQueryable<Box> Boxes { get; set; }
     }
 }
