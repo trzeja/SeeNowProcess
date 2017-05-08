@@ -27,7 +27,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                 //zabezpieczenie przed duplikacją nazw "Unnamed"
                 List<Iteration> unnameds;
                 unnameds = db.Iterations
-                             .Where(i => i.Project == project && i.Name.StartsWith("Unnamed"))
+                             .Where(i => i.Project.ProjectID == project.ProjectID && i.Name.StartsWith("Unnamed"))
                              .OrderBy(i => i.Name)
                              .ToList();
                 int number = 0;
@@ -71,7 +71,13 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             using (db)
             {
                 var problems = db.Problems
-                        .Where(p => p.Box.Iteration.IterationId == id);
+                        .Where(p => p.Box.Iteration.IterationId == id)
+                        .Select(p => new
+                        {
+                            title = p.Title,
+                            description = p.Description
+                            // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
+                        });
                 return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
                /* return Json(
                     db.Problems
