@@ -151,6 +151,9 @@
 
                 for (var x = 0; x < $scope.wholeList.length; x++)
                 {
+                    //switch ($scope.allProblemsList[x].Box.Order) { //moja propozycja (Mikolaj)
+                    //nie dziala, moze nie da sie odwolac do tak zagnizdzonego pola... :c konsola na 
+                    //przegladarce wywala ze nie znapola "Order"
                     switch ($scope.wholeList[x].CurrentState) {
                         case 0:
                             $scope.models.lists.A.push($scope.wholeList[x]);

@@ -67,7 +67,9 @@ namespace SeeNowProcess.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                Problem movedProblem = db.Problems.Find(int.Parse(ProblemID));
+                int problemId = int.Parse(ProblemID);
+
+                Problem movedProblem = db.Problems.Find(problemId);
 
                 if (movedProblem == null)
                 {
@@ -76,32 +78,20 @@ namespace SeeNowProcess.Controllers
 
                 Box oldBox = movedProblem.Box;
 
-                //Iteration iteration = oldBox.Iteration;
+                oldBox.Problems.Remove(movedProblem);
+                db.MarkAsModified(oldBox);
+                //db.SaveChanges();
 
-                //var iterationBoxes = iteration.Boxes.Where(b => b.Order == int.Parse(NewState));
+                Iteration iteration = oldBox.Iteration;
+                Box newBox = iteration.Boxes.Where(b => b.Order == newOrder).FirstOrDefault();
 
-                //Box newBox = iterationBoxes.FirstOrDefault();
+                movedProblem.Box = newBox;
+                db.MarkAsModified(movedProblem);
+                //db.SaveChanges();
 
-                //db.Problems.Find(movedProblem.ProblemID).Box == newBox;
-
-                //db.Problems.Remove(movedProblem);
-
-                //movedProblem.Box = newBox;
-
-                //movedProblem.Box = db.Boxes.Where(b => b.Order == newOrder).FirstOrDefault();
-
-                //db.MarkAsModified<Problem>(movedProblem);
-
-                //trzeba kasowac i dodawac uprzednio tworzac kopie?? moze, inaczej nie widze jak                
-
-
-                //tak sie nie da
-                //oldBox.Problems.Delete(movedProblem);
-                //db.MarkAsModified<Box>(oldBox);
-
-                //newBox.Problems.Add(movedProblem);
-                //db.MarkAsModified<Box>(oldBox);
-
+                newBox.Problems.Add(movedProblem);
+                db.MarkAsModified(newBox);
+                
                 db.SaveChanges();
 
                 return View();
