@@ -35,8 +35,23 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
             $scope.message = response.data;
-            $scope.iterations.push = response.data;
-            getIterationsData();
+            $scope.iterations = response.data;
+            for (var i = 0; i < $scope.iterations.length; ++i) {
+                var id = $scope.iterations[i].id;
+                $http({
+                    method: "POST",
+                    url: "/IterationPlan/GetIteration",
+                    data: $.param({ "id": $scope.iterations[i].id }),
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+                }).then(function mySucces(response) {
+                    var list = [];
+                    list.push(response.data);
+                    $scope.lists.push(response.data);
+                }, function myError(response) {
+                    $scope.message = response.data;
+                })
+            }
         }, function myError(response) {
             $scope.message = response.data;
         })

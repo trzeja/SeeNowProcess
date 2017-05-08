@@ -70,10 +70,13 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         {
             using (db)
             {
-                return Json(
+                var problems = db.Problems
+                        .Where(p => p.Box.Iteration.IterationId == id);
+                return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
+               /* return Json(
                     db.Problems
                         .Where(p => p.Box.Iteration.IterationId == id)
-                    , JsonRequestBehavior.AllowGet);
+                    , JsonRequestBehavior.AllowGet);*/
                     
             }
                 /* tutaj zwracamy taski z konkretnej iteracji (cala ich liste) - iteracja podana jako parametr (id) - 
