@@ -42,6 +42,28 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult MoveTask(int taskId, int newIterationId)
+        {
+            using (db)
+            {
+                Problem problem = db.Problems.Where(p => p.ProblemID == taskId).FirstOrDefault();
+                if(problem == null)
+                    return Json("No such task!", JsonRequestBehavior.AllowGet);
+                //jako że mamy hierarchię problem->box->iteration plus założenie, że każda iteracja ma te same boxy
+                //  to znajdę docelowego boxa po nazwie bieżącego
+                if(!db.Iterations.Where(i => i.IterationId == newIterationId).Any())
+                    return Json("No such iteration!", JsonRequestBehavior.AllowGet);
+                Box newBox = db.Boxes.Where(b => b.Iteration.IterationId == newIterationId && b.Name.Equals(problem.Box.Name)).FirstOrDefault();
+                if(newBox == null)
+                    return Json("Cannot find target box!", JsonRequestBehavior.AllowGet);
+                problem.Box = newBox;
+                db.MarkAsModified(problem);
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult GetNumber()
         {
