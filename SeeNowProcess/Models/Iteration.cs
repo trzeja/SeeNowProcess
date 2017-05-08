@@ -8,6 +8,11 @@ namespace SeeNowProcess.Models
 {
     public class Iteration
     {
+        public Iteration()
+        {
+            Boxes = new List<Box>();
+        }
+
         public int IterationId { get; set; }
         [StringLength(60, MinimumLength = 3)]
         public string Name { get; set; }
@@ -24,6 +29,6 @@ namespace SeeNowProcess.Models
         public DateTime? EndDate { get; set; }
         
         public virtual Project Project { get; set; }
-        public virtual IQueryable<Box> Boxes { get; set; }
+        public virtual ICollection<Box> Boxes { get; set; }
     }
 }

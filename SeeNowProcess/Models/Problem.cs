@@ -11,7 +11,11 @@ namespace SeeNowProcess.Models
 {
     public class Problem
     {
-        
+        public Problem()
+        {
+            AssignedUsers = new List<User>();
+        }
+
         public int ProblemID { get; set; }
         
 

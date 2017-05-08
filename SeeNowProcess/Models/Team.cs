@@ -8,13 +8,17 @@ namespace SeeNowProcess.Models
 {
     public class Team
     {
+        public Team()
+        {
+            Assignments = new List<Assignment>();
+        }
         
         public int TeamID { get; set; }
         
         public string Name { get; set; }
         public virtual User TeamLeader { get; set; }
         public virtual UserStory UserStory { get; set; }
-        public virtual IQueryable<Assignment> Assignments { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
 
     }
 }

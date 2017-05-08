@@ -9,6 +9,10 @@ namespace SeeNowProcess.Models
 {
     public class UserStory
     {
+        public UserStory()
+        {
+            Teams = new List<Team>();
+        }
         
         public int UserStoryID { get; set; }
       
@@ -20,7 +24,7 @@ namespace SeeNowProcess.Models
         public string Unit { get; set; }
         public string Notes { get; set; }
         public virtual User Owner {get;set;}
-        public virtual IQueryable<Team> Teams { get; set; } //to
+        public virtual ICollection<Team> Teams { get; set; } //to
         //public Team Team { get; set; }        //lub to
         public string Criteria { get; set; }
         public virtual Project Project { get; set; }
