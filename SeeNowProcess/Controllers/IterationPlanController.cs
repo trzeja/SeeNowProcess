@@ -37,6 +37,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                     iteration.Name += " (" + number + ")";
                 }
                 db.Iterations.Add(iteration);
+                db.SaveChanges();
                 return new JsonResult { Data = "Success", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
