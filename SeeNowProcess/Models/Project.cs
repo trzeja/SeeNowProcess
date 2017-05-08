@@ -10,7 +10,12 @@ namespace SeeNowProcess.Models
 {
     public class Project
     {
-        
+        public Project()
+        {
+            Stories = new List<UserStory>();
+            Iterations = new List<Iteration>();
+        }
+
         public int ProjectID { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
@@ -29,7 +34,7 @@ namespace SeeNowProcess.Models
         public DateTime? CompletionDate { get; set; }
         public Status? Status { get; set; }
 
-        public virtual IQueryable<UserStory> Stories { get; set; }
-        public virtual IQueryable<Iteration> Iterations { get; set; }
+        public virtual ICollection<UserStory> Stories { get; set; }
+        public virtual ICollection<Iteration> Iterations { get; set; }
     }
 }
