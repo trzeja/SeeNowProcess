@@ -154,8 +154,8 @@ namespace SeeNowProcess.DAL
             Project FirstProject = context.Projects.Where(p => p.Name == "First Project").First();
             List<Iteration> Iterations = new List<Iteration>
             {
-                new Iteration {Name="First Iteration", Description="Our team's first itaration. It must be the fastest!", Project=FirstProject, StartDate=new DateTime(2017, 4, 1, 3, 0, 0),  EndDate=new DateTime(2017, 5, 1, 3, 0, 0) },
-                new Iteration {Name="Backlog", Description="Garbage Collector", Project=FirstProject, StartDate=new DateTime(2017,1,1,0,0,0), EndDate=new DateTime(2017, 5, 1, 3, 0, 0)}
+                new Iteration {Name="Backlog", Description="Garbage Collector", Project=FirstProject, StartDate=new DateTime(2017,1,1,0,0,0), EndDate=new DateTime(2017, 5, 1, 3, 0, 0)},
+                new Iteration {Name="First Iteration", Description="Our team's first itaration. It must be the fastest!", Project=FirstProject, StartDate=new DateTime(2017, 4, 1, 3, 0, 0),  EndDate=new DateTime(2017, 5, 1, 3, 0, 0) }
             };
             Iterations.ForEach(i => context.Iterations.Add(i));
             context.SaveChanges();
