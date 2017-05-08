@@ -10,11 +10,52 @@
     <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
     <script src="~/Scripts/iterationPlan.js"></script>
+
 </head>
 
 
 <body>
 <div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
+    <div><input type="submit" class="btn green_button btn-right" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
+
+    <!--Modal - adding iteration-->
+    <div class="modal fade" id="iterationModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content for adding Iteration without working datepicker :/-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>Add Iteration</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="iterationName"> NAME: </label>
+                            <input class="form-control" type="text" id="iterationName" ng-model="iterationName" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="iterationDescription"> DESCRIPTION: </label>
+                            <input class="form-control" type="text" id="iterationDescription" ng-model="iterationDescription" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="datepickerStart"> START DATE: </label>
+                            <input class="form-control" type="text" id="datepickerStart" ng-model="startDate" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="datepickerEnd"> END DATE: </label>
+                            <input class="form-control" type="text" id="datepickerEnd" ng-model="endDate" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn green_button" data-dismiss="modal" ng-click="addIteration()">Add</button>
+                    <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <div>{{message}}</div>
     <table class="fillIteration">
         <thead>
@@ -22,7 +63,7 @@
         </thead>
         <tbody>
             <td class="space column" ng-repeat="x in lists">
-                <ul class="visible list-unstyled text-center" dnd-list="x">
+                <ul class="visible list-unstyled text-center" dnd-list="x"> @* dnd-drop="dropCallback(item,)"*@
                     <li ng-repeat="item in x"
                         dnd-draggable="item"
                         dnd-moved="x.splice($index, 1)"
@@ -37,6 +78,7 @@
         </tbody>
 
     </table>
+    </div>
    @* <form style="display:inline-block">
         <div class="form-group">Adding NEW iteration:</div>
         <span class="form-group" >

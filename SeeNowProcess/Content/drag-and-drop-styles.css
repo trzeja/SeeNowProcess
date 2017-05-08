@@ -7,9 +7,26 @@
     width: auto;
     height: auto;
 }
+.btn-right {
+    margin-right: 10px;
+    position:center;
+    margin-left: 90%;
+
+}
+
+.black_button {
+  background-color:lightgray; 
+  font-size: 15px;
+  color:white; 
+  padding-top: 5px; 
+  padding-bottom: 5px;
+  text-align:center;
+  margin-left: -10px;
+}
+
 
 .fillIteration {
-    top: 150px;
+    top: 180px;
     left: 195px;
     right: 0;
     bottom: 0;

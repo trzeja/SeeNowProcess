@@ -4,7 +4,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
     $scope.iterations = [];
     $scope.lists = [];
     $scope.selected = null;
-
   /*  $scope.addIteration = function () {
         $http({
             method: "POST",
@@ -49,32 +48,31 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
                     list.push(response.data);
                     $scope.lists.push(response.data);
                 }, function myError(response) {
-                    $scope.message = response.data;
-                })
-            }
-        }, function myError(response) {
-            $scope.message = response.data;
-        })
-
-        $scope.getIterationsData = function () {
-            for (var i = 0; i < iterations.length() ; ++i) {
-                $http({
-                    method: "POST",
-                    url: "/IterationPlan/GetIteration",
-                    data: $.param({ "id": $scope.iterations.id}),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-
-                }).then(function mySucces(response) {
-                    var list=[];
-                    list.push(response.data);
-                    $scope.lists.push(list);
-                }, function myError(response) {
                     $scope.message = "Error";
                 })
             }
+        }, function myError(response) {
+            $scope.message = "Error";
+        })
+
+        $scope.addIteration = function () {
+            $http({
+                method: "POST",
+                url: "/IterationPlan/AddingIteration",
+                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startDate, "endDate": $scope.endDate}),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.message = "Result: " + response.data;
+                if (response.data == "Success")
+                    window.location.href = "/IterationPlan/Index";
+            }, function myError(response) {
+                $scope.message = "Error in adding iteration";
+            })
 
 
         }
+
         //var item = { "Title": "Sierotka Marysia", "Description": "Whatever" };
         //$scope.lists.push({Title: "Sierotka Marysia", Description: "Whatever"});
     /*
