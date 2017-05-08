@@ -8,7 +8,6 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
-
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
     <script src="~/Scripts/iterationPlan.js"></script>
 </head>
@@ -16,31 +15,75 @@
 
 <body>
 <div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
-    <div>
-        <label class="col-sm-10 control-label"></label>
-        <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
-    </div>
-    <div class="row" ng-repeat="x in iterations">
-        <div class="space2 column"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p>{{x.StartDate}} - {{x.EndDate}}</p></div>
-    </div>
-    <div class="row" ng-repeat="x in lists">
-        <div class="space column">
-            <ul class="visible list-unstyled text-center" dnd-list="x">
-                <li ng-repeat="item in x"
-                    dnd-draggable="item"
-                    dnd-moved="x.splice($index, 1)"
-                    dnd-effect-allowed="move"
-                    dnd-selected="selected = item"
-                    ng-class="{'selected': selected === item}">
-                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+    <div>{{message}}</div>
+    <table class="fillIteration">
+        <thead>
+            <th class="space2 column" ng-repeat="x in iterations"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p>{{x.StartDate}} - {{x.EndDate}}</p></th>
+        </thead>
+        <tbody>
+            <td class="space column" ng-repeat="x in lists">
+                <ul class="visible list-unstyled text-center" dnd-list="x">
+                    <li ng-repeat="item in x"
+                        dnd-draggable="item"
+                        dnd-moved="x.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="selected = item"
+                        ng-class="{'selected': selected === item}">
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                    </li>
+                </ul>
+            </td>
+
+        </tbody>
+
+    </table>
+   @* <form style="display:inline-block">
+        <div class="form-group">Adding NEW iteration:</div>
+        <span class="form-group" >
+            <label class="col-sm-2 control-label" for="name"> Name:</label>
+            <input class="form-control" type="text" id="name" ng-model="name" required autofocus ng-class="Submited?'ng-dirty':''">
+       </span>
+        <span class="form-group">
+            <label class="col-sm-2 control-label" for="start"> Start Date: </label>
+            <input class="form-control" type="text" id="start" ng-model="start" required autofocus ng-class="Submited?'ng-dirty':''">
+        </span>
+        <span class="form-group">
+            <label class="col-sm-2 control-label" for="end"> End Date: </label>
+            <input class="form-control" type="text" id="end" ng-model="end" required autofocus ng-class="Submited?'ng-dirty':''">
+        </span>
+        <span class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
+        </span>
+    </form>*@
 </body>
 
+@*KOD ZAKOMENTOWANY PRAWIE DZIAŁAJĄCY
+        <div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
+        <div>
+            <label class="col-sm-10 control-label"></label>
+            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
+        </div>
+        <div class="row" >
+            <div class="space2 col-sm-2" ng-repeat="x in iterations"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p>{{x.StartDate}} - {{x.EndDate}}</p></div>
+        </div>
+        <div class="row" >
+            <div class="space col-sm-2 column" ng-repeat="x in lists">
+                <ul class="visible list-unstyled text-center" dnd-list="x">
+                    <li ng-repeat="item in x"
+                        dnd-draggable="item"
+                        dnd-moved="x.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="selected = item"
+                        ng-class="{'selected': selected === item}">
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
+*@
 
 
 @*  KOD Z PLIKÓW OD ROKSANY (jeszcze nie wyrzucać)

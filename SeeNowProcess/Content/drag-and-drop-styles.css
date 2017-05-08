@@ -8,6 +8,16 @@
     height: auto;
 }
 
+.fillIteration {
+    top: 850px;
+    left: 195px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
 table, th, td {          
     border: 1px solid black;
 }
@@ -17,10 +27,11 @@ table, th, td {
 }
 
 .column {
-    min-width:1vw;
-    max-width:20vw;
-    height:12vh;
-    width:20vw;
+    min-width:25vw;
+    max-width:40vw;
+    width:40vw;
+    height:auto;
+    min-height: 200px;
 }
 
 
@@ -30,8 +41,8 @@ table, th, td {
     /*width: 150px;*/
     width:12vw;
     padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 5px;
+    margin-right: 5px;
     margin-top: 5px;
     text-align: center;
     font-size: 12px;
