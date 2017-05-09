@@ -50,14 +50,13 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                 Problem problem = db.Problems.Where(p => p.ProblemID == taskId).FirstOrDefault();
                 if(problem == null)
                     return Json("No such task!", JsonRequestBehavior.AllowGet);
+
+                var newIteration = db.Iterations.Where(i => i.IterationId == newIterationId).FirstOrDefault();
                 //jako że mamy hierarchię problem->box->iteration plus założenie, że każda iteracja ma te same boxy
                 //  to znajdę docelowego boxa po nazwie bieżącego
-                if(!db.Iterations.Where(i => i.IterationId == newIterationId).Any())
+                if(newIteration == null)
                     return Json("No such iteration!", JsonRequestBehavior.AllowGet);
-                Box newBox = db.Boxes.Where(b => b.Iteration.IterationId == newIterationId && b.Name.Equals(problem.Box.Name)).FirstOrDefault();
-                if(newBox == null)
-                    return Json("Cannot find target box!", JsonRequestBehavior.AllowGet);
-                problem.Box = newBox;
+                problem.Iteration = newIteration;
                 db.MarkAsModified(problem);
                 db.SaveChanges();
                 return Json("Success", JsonRequestBehavior.AllowGet);
@@ -88,30 +87,6 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                             */
         }
 
-        [HttpPost]
-        public ActionResult GetIteration(int id)
-        {
-            using (db)
-            {
-                var problems = db.Problems
-                        .Where(p => p.Box.Iteration.IterationId == id)
-                        .Select(p => new
-                        {
-                            title = p.Title,
-                            description = p.Description
-                            // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
-                        });
-                return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
-               /* return Json(
-                    db.Problems
-                        .Where(p => p.Box.Iteration.IterationId == id)
-                    , JsonRequestBehavior.AllowGet);*/
-                    
-            }
-                /* tutaj zwracamy taski z konkretnej iteracji (cala ich liste) - iteracja podana jako parametr (id) - 
-                            z wszystkich boxow same taski poprosze bo inaczej to sie widok zakopie totalnie...*/
-        }
-
         [HttpGet]
         public ActionResult GetAllIterations()
         {
@@ -123,7 +98,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                             id = p.ProblemID,
                             title = p.Title,
                             description = p.Description,
-                            id_iteracji = p.Box.Iteration.IterationId
+                            id_iteracji = p.Iteration.IterationId
                             // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
                         });
                 return Json(problems.ToList(), JsonRequestBehavior.AllowGet);

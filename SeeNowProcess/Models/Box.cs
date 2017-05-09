@@ -16,7 +16,7 @@ namespace SeeNowProcess.Models
         public int BoxID { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
-        public virtual  Iteration Iteration { get; set; }
+        public virtual  Project Project { get; set; }
         public virtual ICollection<Problem> Problems { get; set; }
     }
 }

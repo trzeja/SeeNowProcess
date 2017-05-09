@@ -63,7 +63,7 @@ namespace SeeNowProcess.Models
             try {
                 newSalt = CryptoServices.GenerateSalt();
                 newHash = CryptoServices.Encrypt(newPassword, newSalt);
-            } catch (Exception e)
+            } catch (Exception)
             {
                 return false;
             }

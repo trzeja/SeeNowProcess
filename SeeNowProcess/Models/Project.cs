@@ -14,6 +14,7 @@ namespace SeeNowProcess.Models
         {
             Stories = new List<UserStory>();
             Iterations = new List<Iteration>();
+            Boxes = new List<Box>();
         }
 
         public int ProjectID { get; set; }
@@ -36,5 +37,6 @@ namespace SeeNowProcess.Models
 
         public virtual ICollection<UserStory> Stories { get; set; }
         public virtual ICollection<Iteration> Iterations { get; set; }
+        public virtual ICollection<Box> Boxes { get; set; }
     }
 }

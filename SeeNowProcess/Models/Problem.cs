@@ -33,6 +33,7 @@ namespace SeeNowProcess.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? CreationDate { get; set; }
         public virtual Box Box { get; set; }
+        public virtual Iteration Iteration { get; set; }
 
         [Display(Name = "Parent Problem")]
         public virtual Problem ParentProblem { get; set; }

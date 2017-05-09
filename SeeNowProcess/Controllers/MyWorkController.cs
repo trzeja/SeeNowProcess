@@ -47,6 +47,23 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
+        public ActionResult UpdateDatabase(int ProblemID, int NewState)
+        {
+            using (db)
+            {
+                var problem = db.Problems.Where(p => p.ProblemID == ProblemID).FirstOrDefault();
+                var newBox = db.Boxes.Where(b => b.Order == NewState).FirstOrDefault();
+                if(problem == null)
+                    return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
+                if(newBox == null)
+                    return Json("Error - no such box!", JsonRequestBehavior.AllowGet);
+                problem.Box = newBox;
+                db.MarkAsModified(problem);
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+        /*
         public ActionResult UpdateDatabase()
         {
             using (db)
@@ -94,6 +111,7 @@ namespace SeeNowProcess.Controllers
                 return View();
             }
         }
+        */
 
     }
 }

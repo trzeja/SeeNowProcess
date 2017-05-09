@@ -10,7 +10,7 @@ namespace SeeNowProcess.Models
     {
         public Iteration()
         {
-            Boxes = new List<Box>();
+            
         }
 
         public int IterationId { get; set; }
@@ -29,6 +29,5 @@ namespace SeeNowProcess.Models
         public DateTime? EndDate { get; set; }
         
         public virtual Project Project { get; set; }
-        public virtual ICollection<Box> Boxes { get; set; }
     }
 }
