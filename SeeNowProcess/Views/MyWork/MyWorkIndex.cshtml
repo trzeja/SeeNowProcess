@@ -167,8 +167,12 @@
                         case 3:
                             $scope.models.lists.D.push($scope.wholeList[x]);
                             break;
-                        default:
+                        case 4:
                             $scope.models.lists.E.push($scope.wholeList[x]);
+                            break;
+                        case 5:
+                        default:
+                            $scope.models.lists.F.push($scope.wholeList[x]);
                             break;
                     }
                 }
@@ -276,7 +280,7 @@
                 </ul>
             </div>
             <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.E" dnd-drop="dropCallback(item,null)">
+                <ul class="visible list-unstyled text-center" dnd-list="models.lists.E" dnd-drop="dropCallback(item,4)">
                     <li ng-repeat="item in models.lists.E"
                         dnd-draggable="item"
                         dnd-moved="models.lists.E.splice($index, 1)"
@@ -288,7 +292,7 @@
                 </ul>
             </div>
             <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.F" dnd-drop="dropCallback(item,null)">
+                <ul class="visible list-unstyled text-center" dnd-list="models.lists.F" dnd-drop="dropCallback(item,5)">
                     <li ng-repeat="item in models.lists.F"
                         dnd-draggable="item"
                         dnd-moved="models.lists.F.splice($index, 1)"
