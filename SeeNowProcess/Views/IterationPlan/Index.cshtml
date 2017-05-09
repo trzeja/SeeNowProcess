@@ -63,10 +63,10 @@
         </thead>
         <tbody>
             <td class="space column" ng-repeat="x in lists">
-                <ul class="visible list-unstyled text-center" dnd-list="x"> @* dnd-drop="dropCallback(item,)"*@
-                    <li ng-repeat="item in x"
+                <ul class="visible list-unstyled text-center" dnd-list="x.data" dnd-drop="dropCallback(item,x.id)"> @* dnd-drop="dropCallback(item,)"*@
+                    <li ng-repeat="item in x.data"
                         dnd-draggable="item"
-                        dnd-moved="x.splice($index, 1)"
+                        dnd-moved="x.data.splice($index, 1)"
                         dnd-effect-allowed="move"
                         dnd-selected="selected = item"
                         ng-class="{'selected': selected === item}">
@@ -79,25 +79,6 @@
 
     </table>
     </div>
-   @* <form style="display:inline-block">
-        <div class="form-group">Adding NEW iteration:</div>
-        <span class="form-group" >
-            <label class="col-sm-2 control-label" for="name"> Name:</label>
-            <input class="form-control" type="text" id="name" ng-model="name" required autofocus ng-class="Submited?'ng-dirty':''">
-       </span>
-        <span class="form-group">
-            <label class="col-sm-2 control-label" for="start"> Start Date: </label>
-            <input class="form-control" type="text" id="start" ng-model="start" required autofocus ng-class="Submited?'ng-dirty':''">
-        </span>
-        <span class="form-group">
-            <label class="col-sm-2 control-label" for="end"> End Date: </label>
-            <input class="form-control" type="text" id="end" ng-model="end" required autofocus ng-class="Submited?'ng-dirty':''">
-        </span>
-        <span class="form-group">
-            <label class="col-sm-2 control-label"></label>
-            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
-        </span>
-    </form>*@
 </body>
 
 @*KOD ZAKOMENTOWANY PRAWIE DZIAŁAJĄCY
