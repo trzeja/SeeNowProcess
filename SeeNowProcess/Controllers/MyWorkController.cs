@@ -39,7 +39,8 @@ namespace SeeNowProcess.Controllers
                 {
                     ProblemID = a.ProblemID,
                     Title = a.Title,
-                    Description = a.Description
+                    Description = a.Description,
+                    BoxOrder = a.Box.Order
                     /*CurrentState = a.CurrentState*/
                 });
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
