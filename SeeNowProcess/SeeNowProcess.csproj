@@ -328,7 +328,7 @@
     <Content Include="Views\MyWork\MyWorkIndex.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
     <Content Include="Views\ReleasePlan\Index.cshtml" />
-    <Content Include="Views\TaskBoard\Index.cshtml" />
+    <Content Include="Views\TaskBoard\TaskBoardIndex.cshtml" />
     <Content Include="Views\WorkByPerson\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />

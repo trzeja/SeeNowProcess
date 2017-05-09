@@ -1,0 +1,187 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <style>
+        .fill {
+            top: 70px;
+            left: 195px;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            width: auto;
+            height: auto;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        .wid {
+            width: 200px;
+        }
+
+        .element {
+            border-radius: 20px;
+            background-color: #33cc33;
+            /*width: 150px;*/
+            width: 12vw;
+            padding: 5px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            text-align: center;
+            font-size: 12px;
+            min-height: 100px;
+        }
+
+        .element2 {
+            border-radius: 30px;
+            background-color: #79ff4d;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding: 5px;
+            width: 10vw;
+            /*width: 120px;*/
+        }
+
+        .space {
+            height: 100px;
+            /*height: 100%;*/
+            padding-top: 15px;
+            width: 200px;
+            border: 1px solid #aaaaaa;
+            background-color: #e6ffe6;
+            min-height: 400px;
+            max-height: 1000px;
+            min-width: 150px;
+        }
+
+        .visible {
+            min-height: 500px;
+            min-width: 50px;
+        }
+
+        .space2 {
+            min-width: 150px;
+            height: 100%;
+            border: 1px solid #aaaaaa;
+            background-color: #e6ffe6;
+        }
+
+        .body {
+            margin: 0 !important;
+        }
+
+        .simpleDemo ul[dnd-list],
+        .simpleDemo ul[dnd-list] > li {
+            position: relative;
+        }
+
+        .simpleDemo ul[dnd-list] {
+            min-height: 42px;
+            padding-left: 0px;
+        }
+
+            .simpleDemo ul[dnd-list] .dndDraggingSource {
+                display: none;
+            }
+
+            .simpleDemo ul[dnd-list] .dndPlaceholder {
+                display: block;
+                background-color: #ddd;
+                min-height: 42px;
+            }
+
+            .simpleDemo ul[dnd-list] li {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-top-right-radius: 4px;
+                border-top-left-radius: 4px;
+                display: block;
+                padding: 10px 15px;
+                margin-bottom: -1px;
+            }
+
+                .simpleDemo ul[dnd-list] li.selected {
+                    background-color: #dff0d8;
+                    color: #3c763d;
+                }
+    </style>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    @*<link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">*@
+    @*<script src="~/Scripts/taskBoard.js"></script>*@
+    <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
+    
+</head>
+@*<p>Task Board not implement yet. </p>*@
+
+@*<div>
+    <img src="~/img/IwSK.jpg" alt="Upsik - brakuje obrazka" />
+</div>*@
+<body>
+    <script>
+        angular.module("taskBoardPart", ['dndLists']).controller("taskBoardCtrl", function ($scope, $http) {
+            $scope.message = "DZIALAAA";
+            $http({
+                method: "GET",
+                url: "/TaskBoard/GetBoxes",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function success(result) {
+                //pobrac tu trzeba tez do ktorego nalezy 
+                //$scope.models.lists.A = result.data;
+                $scope.boxes = result.data;
+
+            }).catch(function fail(result) {
+                $scope.boxes = ":(";
+            })
+            $http({
+                method: "GET",
+                url: "/TaskBoard/GetUserStories",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function success(result) {
+                //pobrac tu trzeba tez do ktorego nalezy 
+                //$scope.models.lists.A = result.data;
+                $scope.userstories = result.data;
+
+            }).catch(function fail(result) {
+                $scope.userstories = ":(";
+            })
+        });
+        </script>
+
+    <div class="fillTaskBoard" ng-app="taskBoardPart" name="taskBoardPart" ng-controller="taskBoardCtrl">
+        <div>{{message}}</div>
+        <table>
+            <tr>
+                <th class="space2 column"><h5 class="text-center"><strong>User Stories</strong></h5></th>
+                <th class="space2 column" ng-repeat="x in boxes"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
+            </tr>
+            <tr ng-repeat="x in userstories">
+                <td class="space column">{{x.Title}} </td>
+            <td class="space column" ng-repeat="y in boxes">
+                @*<ul class="visible list-unstyled text-center" dnd-list="x">
+                     dnd-drop="dropCallback(item,)"
+                    <li ng-repeat="item in x"
+                        dnd-draggable="item"
+                        dnd-moved="x.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="selected = item"
+                        ng-class="{'selected': selected === item}">
+                        <div class="element">{{item.title}}<p class="element2">{{item.description}}</p></div>
+                    </li>
+                </ul>*@
+            </td>
+            </tr>
+
+        </table>
+    </div>
+</body>
