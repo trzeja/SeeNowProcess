@@ -26,14 +26,29 @@
 
 
 .fillIteration {
-    top: 180px;
+    top: 100px;
+    /*top: 100px;*/
     left: 195px;
     right: 0;
     bottom: 0;
-    position: absolute;
+    position:absolute;
     width: auto;
     height: auto;
+    z-index: -1;
 }
+
+.fillTaskBoard {
+    top: 100px;
+    /*top: 100px;*/
+    left: 195px;
+    right: 0;
+    bottom: 0;
+    position:absolute;
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+
 
 table, th, td {          
     border: 1px solid black;
@@ -44,7 +59,7 @@ table, th, td {
 }
 
 .column {
-    min-width:25vw;
+    min-width:30vw;
     max-width:40vw;
     width:40vw;
     height:auto;
@@ -56,10 +71,12 @@ table, th, td {
     border-radius: 20px;
     background-color: #33cc33;
     /*width: 150px;*/
-    width:12vw;
+    max-width:18vw;
+    width:18vw;
+    min-width:12vw;
     padding: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 5px;
     text-align: center;
     font-size: 12px;
@@ -73,7 +90,7 @@ table, th, td {
     margin-right: auto;
     text-align: center;
     padding: 5px;
-    width: 10vw;
+    width: 13vw;
     /*width: 120px;*/
 }
 

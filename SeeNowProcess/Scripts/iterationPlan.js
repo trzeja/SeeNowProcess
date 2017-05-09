@@ -1,6 +1,6 @@
 ﻿var iterationApp = angular.module("iterationPart", ['dndLists']);
 iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $http) {
-    $scope.message = '';
+    $scope.message = 'Cos';
     $scope.iterations = [];
     $scope.lists = [];
     $scope.selected = null;
@@ -47,6 +47,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
                     var list = [];
                     list.push(response.data);
                     $scope.lists.push(response.data);
+                    $scope.message = response.data;
                 }, function myError(response) {
                     $scope.message = "Error";
                 })

@@ -15,7 +15,7 @@
 
 
 <body>
-<div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
+<div class="fillIteration" ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
     <div><input type="submit" class="btn green_button btn-right" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
 
     <!--Modal - adding iteration-->
@@ -57,7 +57,7 @@
         </div>
     </div>
     <div>{{message}}</div>
-    <table class="fillIteration">
+    <table >
         <thead>
             <th class="space2 column" ng-repeat="x in iterations"><h5 class="text-center"><strong>{{x.name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
         </thead>
@@ -70,7 +70,7 @@
                         dnd-effect-allowed="move"
                         dnd-selected="selected = item"
                         ng-class="{'selected': selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        <div class="element">{{item.title}}<p class="element2">{{item.description}}</p></div>
                     </li>
                 </ul>
             </td>
