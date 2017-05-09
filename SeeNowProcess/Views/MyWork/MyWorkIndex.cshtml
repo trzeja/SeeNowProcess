@@ -135,7 +135,7 @@
                     }),
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
                 }).then(function success(response) {}, function failure(response) {});
-                //item.CurrentState = number;
+                item.BoxID = number;
                 return item;
             };
             
@@ -147,7 +147,6 @@
             .then(function success(result) {
                 //pobrac tu trzeba tez do ktorego nalezy 
                 //$scope.models.lists.A = result.data;
-                console.log(result);
                 $scope.wholeList = result.data;
 
                 for (var x = 0; x < $scope.wholeList.length; x++)
@@ -155,7 +154,6 @@
                     //switch ($scope.allProblemsList[x].Box.Order) { //moja propozycja (Mikolaj)
                     //nie dziala, moze nie da sie odwolac do tak zagnizdzonego pola... :c konsola na 
                     //przegladarce wywala ze nie znapola "Order"
-                    console.log($scope.wholeList[x]);
                     switch ($scope.wholeList[x].BoxOrder) {
                         case 0:
                             $scope.models.lists.A.push($scope.wholeList[x]);
