@@ -76,7 +76,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                     .Where(i => i.Project.ProjectID == project.ProjectID)
                     .Select(i => new
                     {
-                        id=i.IterationId,
+                        id = i.IterationId,
                         name = i.Name,
                         duration = (i.StartDate == null ? "?" : i.StartDate.ToString()) + " - " + (i.EndDate == null ? "?" : i.EndDate.ToString())
                     });
@@ -110,6 +110,31 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             }
                 /* tutaj zwracamy taski z konkretnej iteracji (cala ich liste) - iteracja podana jako parametr (id) - 
                             z wszystkich boxow same taski poprosze bo inaczej to sie widok zakopie totalnie...*/
+        }
+
+        [HttpGet]
+        public ActionResult GetAllIterations()
+        {
+            using (db)
+            {
+                var problems = db.Problems
+                        .Select(p => new
+                        {
+                            id = p.ProblemID,
+                            title = p.Title,
+                            description = p.Description,
+                            id_iteracji = p.Box.Iteration.IterationId
+                            // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
+                        });
+                return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
+                /* return Json(
+                     db.Problems
+                         .Where(p => p.Box.Iteration.IterationId == id)
+                     , JsonRequestBehavior.AllowGet);*/
+
+            }
+            /* tutaj zwracamy taski z konkretnej iteracji (cala ich liste) - iteracja podana jako parametr (id) - 
+                        z wszystkich boxow same taski poprosze bo inaczej to sie widok zakopie totalnie...*/
         }
 
     }

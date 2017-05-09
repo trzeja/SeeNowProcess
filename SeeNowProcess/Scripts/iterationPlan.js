@@ -28,7 +28,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
             $scope.lists.push(lista_pomocnicza);
            // $scope.lists.i.push({ Title: "Sierotka Marysia", Description: "Whatever" });
         }*/
-        $http({
+        /*$http({
             method: "GET",
             url: "/IterationPlan/GetNumber",
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
@@ -44,17 +44,69 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
                 }).then(function mySucces(response) {
-                    var list = [];
-                    list.push(response.data);
-                    $scope.lists.push(response.data);
-                    $scope.message = response.data;
+                    var object = { "id":/* $scope.iterations[i].id i, "data": response.data };
+                    $scope.lists.push(object);
+                  //  $scope.message = response.data;
                 }, function myError(response) {
                     $scope.message = "Error";
                 })
             }
         }, function myError(response) {
             $scope.message = "Error";
+        })*/
+        
+    
+    $http({
+        method: "GET",
+        url: "/IterationPlan/GetNumber",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySucces(response) {
+        $scope.iterations = response.data;
+
+        $http({
+            method: "GET",
+            url: "/IterationPlan/GetAllIterations",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySuccess(response) {
+            var list = response.data;
+            for (var i = 0; i < $scope.iterations.length; ++i) {
+                var object = { "id": $scope.iterations[i].id, "data": [] };
+                $scope.lists.push(object);
+            }
+            for (var j = 0; j < list.length; ++j) {
+                for (var i = 0; i < $scope.lists.length; ++i) {
+                    if (list[j].id_iteracji == $scope.lists[i].id) {
+                        $scope.lists[i].data.push(list[j]);
+                    }
+                }
+            }
+        }, function myError(response) {
+            $scope.message = "Error All";
+        });
+        }, function myError(response) {
+            $scope.message = "Error";
         })
+
+        $scope.dropCallback = function (item, x) {
+            $scope.message = "DropCallback: " + x;
+            $http({
+                method: "POST",
+                url: "/IterationPlan/MoveTask",
+                data: $.param({ "taskId": item.id, "newIterationId": x}),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.message = "Result: " + response.data;
+                if (response.data == "Success")
+                    window.location.href = "/IterationPlan/Index";
+            }, function myError(response) {
+                     $scope.message = "Error in moving task";
+            })
+
+
+
+            return item;
+        }
 
         $scope.addIteration = function () {
             $http({
@@ -68,7 +120,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
                 if (response.data == "Success")
                     window.location.href = "/IterationPlan/Index";
             }, function myError(response) {
-                $scope.message = "Error in adding iteration";
+           //     $scope.message = "Error in adding iteration";
             })
 
 
