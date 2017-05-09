@@ -15,6 +15,7 @@
             position: absolute;
             width: auto;
             height: auto;
+            z-index: -1;
         }
 
         table, th, td {
@@ -158,9 +159,9 @@
         });
         </script>
 
-    <div class="fillTaskBoard" ng-app="taskBoardPart" name="taskBoardPart" ng-controller="taskBoardCtrl">
-        <div>{{message}}</div>
-        <table>
+    <div ng-app="taskBoardPart" name="taskBoardPart" ng-controller="taskBoardCtrl">
+       @* <div>{{message}}</div>*@
+        <table class="fill">
             <tr>
                 <th class="space2 column"><h5 class="text-center"><strong>User Stories</strong></h5></th>
                 <th class="space2 column" ng-repeat="x in boxes"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
