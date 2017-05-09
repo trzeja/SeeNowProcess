@@ -30,7 +30,6 @@ namespace SeeNowProcess.Controllers
         }
 
 
-
         public ActionResult IndexJS()
         {
             using (db)
@@ -80,21 +79,18 @@ namespace SeeNowProcess.Controllers
                 Box oldBox = movedProblem.Box;
 
                 oldBox.Problems.Remove(movedProblem);
-                db.MarkAsModified(oldBox);
-                //db.SaveChanges();
+                db.MarkAsModified(oldBox);                
 
                 Iteration iteration = oldBox.Iteration;
                 Box newBox = iteration.Boxes.Where(b => b.Order == newOrder).FirstOrDefault();
 
                 movedProblem.Box = newBox;
                 db.MarkAsModified(movedProblem);
-                //db.SaveChanges();
-
+                
                 newBox.Problems.Add(movedProblem);
                 db.MarkAsModified(newBox);
                 
                 db.SaveChanges();
-
                 return View();
             }
         }
