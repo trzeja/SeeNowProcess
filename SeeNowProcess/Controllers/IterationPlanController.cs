@@ -17,17 +17,18 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddingIteration()
+        //Create([Bind(Include = "Id,SupervisorId,LastName,FirstName")] Worker worker)
+        public ActionResult AddingIteration([Bind(Include = "Name,Description,StartDate,EndDate")] Iteration iteration)
         {
             using (db)
             {
                 // chyba teraz nie rozrozniamy projektu
                 Project project = db.Projects.FirstOrDefault();
-                Iteration iteration = new Iteration() {Description="", Name="Unnamed", Project=project};
+                iteration.Project = project;
                 //zabezpieczenie przed duplikacją nazw "Unnamed"
                 List<Iteration> unnameds;
                 unnameds = db.Iterations
-                             .Where(i => i.Project.ProjectID == project.ProjectID && i.Name.StartsWith("Unnamed"))
+                             .Where(i => i.Project.ProjectID == project.ProjectID && i.Name.StartsWith(iteration.Name))
                              .OrderBy(i => i.Name)
                              .ToList();
                 int number = 0;
