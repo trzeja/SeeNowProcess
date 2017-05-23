@@ -19,16 +19,6 @@
 <body>
     <!--przesuwa wszystko niewiadomo czemu-->
     <form ng-app="taskForm" name="taskForm" ng-controller="taskCtrl" class="form-horizontal" method="post">
-        <ul>
-            <li ng-repeat="x in tasks">
-                {{x.title}}<br>
-                {{x.description}}<br>
-                {{x.status}}<br>
-                {{x.importance}}<br>
-                {{x.estimated_time}}<br>
-                {{x.parent}}
-            </li>
-        </ul>
         <div>{{message}}</div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="title"> TITLE: </label>

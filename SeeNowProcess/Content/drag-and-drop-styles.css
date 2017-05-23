@@ -3,11 +3,11 @@
     max-width:40vw;
     width:40vw;
     height:auto;
-    min-height: 200px;
+    min-height: 100px;
 }
 
 .fillIteration {
-    top: 180px;
+    top: 20%;
     /*top: 100px;*/
     left: 195px;
     right: 0;
@@ -31,9 +31,19 @@
 }
 
 .btn-right {
-    margin-right: 10px;
+    margin-right: 2vw;
     position:center;
-    margin-left: 90%;
+    margin-left:20vw;
+   /* margin-left: 60%;*/
+
+}
+
+.btn-add {
+    margin-right: 2vw;
+    position:fixed;
+    margin-left:60vw;
+    z-index: -1;
+   /* margin-left: 60%;*/
 
 }
 
@@ -99,7 +109,7 @@ table, th, td {
 }
 
 .space {
-    height: 900px;
+    height:auto;
     /*height: 100%;*/
     padding-top: 15px;
     width: 200px;

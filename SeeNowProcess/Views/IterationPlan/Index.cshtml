@@ -7,17 +7,20 @@
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
     <script src="~/Scripts/iterationPlan.js"></script>
-
 </head>
 
 
-<body>
-<div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
+<body ng-app="iterationPart" name="iterationPart" >
+
+
+
+<div ng-controller="iterationCtrl">
     <div>{{message}}</div>
-    <div><input type="submit" class="btn green_button btn-right" style="margin-bottom:20px" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
+    <div><input type="submit" class="btn green_button btn-add" style="margin-bottom:20px" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
 
     <!--Modal - adding iteration-->
     <div class="modal fade" id="iterationModal" role="dialog">
@@ -41,11 +44,11 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="datepickerStart"> START DATE: </label>
-                            <input class="form-control" type="text" id="datepickerStart" ng-model="startDate" required>
+                            <input class="form-control" type="date" id="datepickerStart" ng-model="startDate" required>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="datepickerEnd"> END DATE: </label>
-                            <input class="form-control" type="text" id="datepickerEnd" ng-model="endDate" required>
+                            <input class="form-control" type="date" id="datepickerEnd" ng-model="endDate" required>
                         </div>
                     </form>
                 </div>
@@ -58,12 +61,17 @@
         </div>
     </div>
 
+    
+    
+
+
     <table class="fillIteration">
         <thead>
             <th class="space2 column" ng-repeat="x in iterations"><h5 class="text-center"><strong>{{x.name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
         </thead>
         <tbody>
             <td class="space column" ng-repeat="x in lists">
+                <div><input type="submit" class="btn green_button btn-right" style="margin-bottom:20px" value="+" data-toggle="modal" data-target="#taskModal"></div>
                 <ul class="visible list-unstyled text-center" dnd-list="x.data" dnd-drop="dropCallback(item,x.id)"> @* dnd-drop="dropCallback(item,)"*@
                     <li ng-repeat="item in x.data"
                         dnd-draggable="item"
@@ -75,11 +83,64 @@
                     </li>
                 </ul>
             </td>
-
         </tbody>
-
     </table>
     </div>
+
+    <!--Modal - adding task-->
+     <div class="modal fade" id="taskModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content for addingTask :/-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><strong>Add Task</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="taskForm" ng-controller="taskCtrl" class="form-horizontal" method="post">
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label" for="title"> TITLE: </label>
+                                <input name="taskTitle" class="form-control" type="text" id="task_title" ng-model="title" required>
+                                <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span>-->
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label" for="description"> DESCRIPTION: </label>
+                                <textarea class="form-control" rows="5" id="task_description" ng-model="description" required> </textarea>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label" for="status"> STATUS: </label>
+                                <select class="form-control" name="task_status" ng-model="status" ng-options="x.description for x in status_options"></select>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3" for="importance"> IMPORTANCE: </label>
+                                <select class="form-control" name="task_importance" ng-model="importance" ng-options="x.description for x in importance_options"></select>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label" for="estimated_time"> ESTIMATED TIME: </label>
+                                <input class="form-control" type="text" id="task_estimated_time" ng-model="estimated_time" required>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label selectContainer" for="task_parent"> PARENT TASK: </label>
+                                <select class="form-control" name="task_parent" ng-model="parent" ng-options="x.description for x in parent_options"></select>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-10 control-label"></label>
+                                <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" <!--ng-click="addTask()"-->>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+
+
+
 </body>
 
 @*KOD ZAKOMENTOWANY PRAWIE DZIAŁAJĄCY
