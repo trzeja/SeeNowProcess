@@ -155,10 +155,6 @@ iterationApp.controller("taskCtrl", function ($scope,$http) {
              { value: "xl", description: "Extra large (XL)" },
         ];
     $scope.addTask = function () {
-        $scope.tasks.push({
-            title: $scope.title, description: $scope.description, status: $scope.status.value,
-            importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
-        });
         $http({
             method: "POST",
             url: "/Add/IndexAdd",
@@ -170,6 +166,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
             $scope.message = "Did it!";
+            window.location.href = "/IterationPlan/Index";
         },
         function failure(response)
         {

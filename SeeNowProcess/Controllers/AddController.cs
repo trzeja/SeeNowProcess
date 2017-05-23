@@ -34,7 +34,7 @@ namespace SeeNowProcess.Controllers
                     //return RedirectToAction("/MyWork/Index");
             }
             // return View(problem);
-            return View();
+            return Json("Success",JsonRequestBehavior.AllowGet);
         }
 
 

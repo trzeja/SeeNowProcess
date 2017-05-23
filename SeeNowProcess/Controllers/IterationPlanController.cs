@@ -99,7 +99,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                             id = p.ProblemID,
                             title = p.Title,
                             description = p.Description,
-                            id_iteracji = p.Iteration.IterationId
+                            id_iteracji = p.Iteration==null ? 1 : p.Iteration.IterationId
                             // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
                         });
                 return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
