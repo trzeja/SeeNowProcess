@@ -14,6 +14,21 @@ namespace SeeNowProcess.Controllers
             return View();
         }
 
+        public ActionResult GetProblems()
+        {
+            using (db)
+            {
+                var resultJ = db.Problems.Select(a => new
+                {
+                    BoxOrder = a.Box.Order,
+                    UserSID = a.Story.UserStoryID,
+                    Id = a.ProblemID,
+                    Title = a.Title
+                });
+                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
         public ActionResult GetBoxes()
         {
             using (db)
@@ -22,7 +37,7 @@ namespace SeeNowProcess.Controllers
                 {
                     BoxOrder = a.Order,
                     Name = a.Name
-                });
+                }).Distinct();
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }

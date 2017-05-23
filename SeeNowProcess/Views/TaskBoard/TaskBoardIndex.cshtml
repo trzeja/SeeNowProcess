@@ -55,7 +55,7 @@
             height: 100px;
             /*height: 100%;*/
             padding-top: 15px;
-            width: 200px;
+            width: 170px;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
             min-height: 400px;
@@ -69,7 +69,7 @@
         }
 
         .space2 {
-            min-width: 150px;
+            min-width: 100px;
             height: 100%;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
@@ -140,22 +140,31 @@
                 //pobrac tu trzeba tez do ktorego nalezy 
                 //$scope.models.lists.A = result.data;
                 $scope.boxes = result.data;
-
+                $http({
+                    method: "GET",
+                    url: "/TaskBoard/GetUserStories",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                }).then(function success(result) {
+                    //pobrac tu trzeba tez do ktorego nalezy -> nie wiem o co mi chodzilo...
+                    //$scope.models.lists.A = result.data;
+                    $scope.userstories = result.data;
+                    $http({
+                        method: "GET",
+                        url: "/TaskBoard/GetProblems",
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                    }).then(function success(result) {
+                        $scope.problems = result.data;
+                        //tutaj rozdzial na listy
+                    }).catch(function fail(result) {
+                        $scope.problems = ":(";
+                    })
+                }).catch(function fail(result) {
+                    $scope.userstories = ":(";
+                })
             }).catch(function fail(result) {
                 $scope.boxes = ":(";
             })
-            $http({
-                method: "GET",
-                url: "/TaskBoard/GetUserStories",
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-            }).then(function success(result) {
-                //pobrac tu trzeba tez do ktorego nalezy 
-                //$scope.models.lists.A = result.data;
-                $scope.userstories = result.data;
-
-            }).catch(function fail(result) {
-                $scope.userstories = ":(";
-            })
+            
         });
         </script>
 
