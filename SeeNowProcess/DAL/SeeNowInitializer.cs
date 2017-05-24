@@ -142,6 +142,7 @@ namespace SeeNowProcess.DAL
                 new Problem {Title="Analyse generated classes",                 Description="Ask Kaj for details",                                                                                  Importance=Importance.Regular,  Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Waiting for Tests").First(),CreationDate=new DateTime(2017,4,1, 9,0,0), Iteration=Iteration,  Progress=50,  EstimatedTime=new TimeSpan(12,0,0) },
                 new Problem {Title="Learn how to use VS",                       Description="Google for VS tutorial",                                                                               Importance=Importance.Trivial,  Story=userStory, Box=projectBoxes.Where(b=>b.Name=="Approved").First(),         CreationDate=new DateTime(2017,4,1,10,0,0), Iteration=Iteration,  Progress=100, EstimatedTime=new TimeSpan( 4,0,0), FinalTime=new TimeSpan(2,0,0) }
             };
+            //TODO nie mamy seeda na przypisania User<->Problem
             Problems[2].ParentProblem = Problems[0];
             Problems[3].ParentProblem = Problems[0];
             Problems.ForEach(p => context.Problems.Add(p));
