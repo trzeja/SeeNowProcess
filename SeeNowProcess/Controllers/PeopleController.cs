@@ -67,6 +67,84 @@ namespace SeeNowProcess.Controllers
                 };
             }
         }
+        [HttpPost]
+        public ActionResult AssignTask(int userId, int taskId)
+        {
+            using (db)
+            {
+                Problem problem = db.Problems.Where(p => p.ProblemID == taskId).FirstOrDefault();
+                User user = db.Users.Where(u => u.UserID == userId).FirstOrDefault();
+                if (problem == null)
+                    return Json("Invalid Task", JsonRequestBehavior.AllowGet);
+                if (user == null)
+                    return Json("Invalid User", JsonRequestBehavior.AllowGet);
+                user.Problems.Add(problem);
+                db.MarkAsModified(problem);
+                db.MarkAsModified(user);
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult RevokeTask(int userId, int taskId)
+        {
+            using (db)
+            {
+                Problem problem = db.Problems.Where(p => p.ProblemID == taskId).FirstOrDefault();
+                User user = db.Users.Where(u => u.UserID == userId).FirstOrDefault();
+                if (problem == null)
+                    return Json("Invalid Task", JsonRequestBehavior.AllowGet);
+                if (user == null)
+                    return Json("Invalid User", JsonRequestBehavior.AllowGet);
+                if (!user.Problems.Contains(problem))
+                    return Json("Given user isn't assigned to given task", JsonRequestBehavior.AllowGet);
+                user.Problems.Remove(problem);
+                db.MarkAsModified(problem);
+                db.MarkAsModified(user);
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult AssignTeam(int userId, int teamId)
+        {
+            using (db)
+            {
+                Team team = db.Teams.Where(p => p.TeamID == teamId).FirstOrDefault();
+                User user = db.Users.Where(u => u.UserID == userId).FirstOrDefault();
+                if (team == null)
+                    return Json("Invalid Team", JsonRequestBehavior.AllowGet);
+                if (user == null)
+                    return Json("Invalid User", JsonRequestBehavior.AllowGet);
+                user.Assignments.Add(new Assignment{Team=team, User=user});
+                db.MarkAsModified(team);
+                db.MarkAsModified(user);
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult RevokeTeam(int userId, int teamId)
+        {
+            using (db)
+            {
+                Team team = db.Teams.Where(p => p.TeamID == teamId).FirstOrDefault();
+                User user = db.Users.Where(u => u.UserID == userId).FirstOrDefault();
+                if (team == null)
+                    return Json("Invalid Team", JsonRequestBehavior.AllowGet);
+                if (user == null)
+                    return Json("Invalid User", JsonRequestBehavior.AllowGet);
+                Assignment assignment = user.Assignments.Where(a => a.TeamID == team.TeamID).FirstOrDefault();
+                if (assignment == null)
+                    return Json("Given user isn't assigned to given team", JsonRequestBehavior.AllowGet);
+                user.Assignments.Remove(assignment);
+                db.MarkAsModified(team);
+                db.MarkAsModified(user);
+                db.MarkAsModified(assignment); // to tu ma być czy nie? - wyjdzie na testach jak będzie front
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult GetAllTasks()
         {
             using (db)
