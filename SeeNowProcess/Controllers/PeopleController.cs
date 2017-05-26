@@ -19,7 +19,7 @@ namespace SeeNowProcess.Controllers
          [HttpPost]*/
         public PeopleController(ISeeNowContext context):base(context) {}
 
-        public ActionResult Index(int? count)
+        public ActionResult IndexPeople(int? count)
         {
             using (db)
             {
@@ -32,6 +32,39 @@ namespace SeeNowProcess.Controllers
                 return View(allUsers.ToList());
             }
         }
+        [HttpGet]
+        public ActionResult AllPeople()
+        {
+            using (db)
+            {
+                var people = db.Users
+                        .Select(p => new
+                        {
+                            id = p.UserID,
+                            NAME = p.Name,
+                        });
+                return Json(people.ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetUserInfo(int id)
+        {
+            using (db)
+            {
+                var people = db.Users.Where (u => u.UserID == id)
+                        .Select(p => new
+                        {
+                            id = p.UserID,
+                            name = p.Name,
+                            email = p.Email,
+                            phone = p.PhoneNumber,
+                            role = p.role
+                        });
+                return Json(people.ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [Route("{id}")]
         public ActionResult Show(int id)
         {

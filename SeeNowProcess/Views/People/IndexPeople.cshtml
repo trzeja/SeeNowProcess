@@ -1,0 +1,52 @@
+﻿
+@model IEnumerable<SeeNowProcess.Models.User>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "IndexPeople";
+}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/PeopleStyles.css">
+    <!--<script src="~/Scripts/angular-drag-and-drop-lists.js"></script>-->
+    <script src="~/Scripts/angularPeople.js"></script>
+   <!-- <style>
+        .userInterface {
+            display:block;
+            font-size:25px;
+            font-weight:bold;
+            padding-bottom: 20px;
+            color:rgb(67,147,47);    
+}
+    </style>-->
+</head>
+
+<body ng-app="peoplePart" ng-controller="peopleCtrl">
+<!--by Ania :D Jestem z siebie dumna xD-->
+    <div>
+        <h4>People</h4>
+        <div>{{message}}</div>
+        <hr />
+    </div>
+    <div >
+        <ul class="people-list">
+            <li ng-repeat="x in lists"><a class="my-btn my-button" data-toggle="collapse" ng-click="showUser(x.id, x.NAME)">{{x.NAME}}</a><hr/></li>
+        </ul>
+    </div>
+    <div class="people-information">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="userInterface">{{userName}}</div>
+                <div><label class="infoTag">{{info.e}}</label>{{currentUser.email}}</div> 
+                <div><label class="infoTag">{{info.n}}</label> {{currentUser.phone}}</div>
+                <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentUser.role}}</h4></div>
+            </div>
+        </div>
+        <img class="img-responsive" src="~/img/whatever.jpg" alt="Upsik - brakuje obrazka" />
+    </div>
+
+</body>
