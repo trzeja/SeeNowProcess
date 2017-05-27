@@ -30,6 +30,8 @@ namespace SeeNowProcess.DAL
                 AddAssignments(context);
                 method = "AddProblems";
                 AddProblems(context);
+                method = "AssignUsersToProblems";
+                AssignUsersToProblems(context);
             }
             catch(Exception e)
             {
@@ -161,6 +163,18 @@ namespace SeeNowProcess.DAL
             };
             Iterations.ForEach(i => context.Iterations.Add(i));
             context.SaveChanges();
+        }
+        private void AssignUsersToProblems(SeeNowContext context)
+        {
+            // userow mamy 7, taski mamy 4
+            // kazdy user bedzie mial przypisane taski o IDkach bedacych dzielnikami jego ID
+            // np. user #6 -> taski 1, 2, 3, user #3 -> taski 1,3 itp
+            context.Problems.ToList().ForEach(p =>
+            {
+                User user;
+                for (int i = 1; (user = context.Users.Where(u => u.UserID == i * p.ProblemID).FirstOrDefault()) != null; ++i)
+                    p.AssignedUsers.Add(user);
+            });
         }
     }
 }
