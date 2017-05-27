@@ -75,6 +75,7 @@ namespace SeeNowProcess.Controllers
                 //db.MarkAsModified<User>(allUsers.FirstOrDefault()); //Sample of mark as modified 
             }
         }
+        [HttpPost]
         public ActionResult GetTasks(int userId)
         {
             using (db)
@@ -100,6 +101,38 @@ namespace SeeNowProcess.Controllers
                 };
             }
         }
+
+        [HttpPost]
+        public ActionResult GetUserStories(int userId)
+        {
+            //Krzysiu potrzebuję tego kontrolera ;)
+
+            return Json("Cannot get UserStories", JsonRequestBehavior.AllowGet);
+            /*using (db)
+            {
+                var resultJ = db.Problems
+                    .Where(p => p.AssignedUsers.Select(u => u.UserID).Contains(userId))
+                    .Select(p => new
+                    {
+                        ProblemID = p.ProblemID,
+                        Title = p.Title,
+                        Description = p.Description,
+                        BoxOrder = p.Box.Order,
+                        AssignedUsers = p.AssignedUsers.Select(u => u.UserID).ToList()
+                    });
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        UserID = userId,
+                        Tasks = resultJ.ToList()
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }*/
+        }
+
+
         [HttpPost]
         public ActionResult AssignTask(int userId, int taskId)
         {
@@ -178,6 +211,7 @@ namespace SeeNowProcess.Controllers
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpGet]
         public ActionResult GetAllTasks()
         {
             using (db)

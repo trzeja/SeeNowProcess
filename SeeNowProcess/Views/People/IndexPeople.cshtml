@@ -25,7 +25,7 @@
     </style>-->
 </head>
 
-<body ng-app="peoplePart" ng-controller="peopleCtrl">
+<body ng-app="peoplePart" ng-controller="peopleCtrl" class="my-body">
 <!--by Ania :D Jestem z siebie dumna xD-->
     <div>
         <h4>People</h4>
@@ -44,7 +44,34 @@
                 <div><label class="infoTag">{{info.e}}</label>{{currentUser.email}}</div> 
                 <div><label class="infoTag">{{info.n}}</label> {{currentUser.phone}}</div>
                 <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentUser.role}}</h4></div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
+                    <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab">Account Settings</a></li>
+                    <li class="my-tabs"><a href="#ProjectsTeams" role="tab" data-toggle="tab">Projects & Teams</a></li>
+                    <!--<li class="my-tabs"><a href="#4zakladka" role="tab" data-toggle="tab">4 zakładka</a></li>-->
+                </ul>
             </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="OpenAssignments">
+                Tasks
+                <hr/>
+             @*   <ul class="list-unstyled">*@ <!--class="visible list-unstyled text-center"-->
+                    <div ng-repeat="item in userTasks">
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                    </div>
+                @*</ul>*@
+                User Stories
+                <hr/>
+                <ul ><!-- class="visible list-unstyled text-center">-->
+                    <li ng-repeat="item in userStories">
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="AccountSettings">Zawartość drugiej zakładki</div>
+            <div class="tab-pane" id="ProjectsTeams">Zawartość trzeciej zakładki</div>
+            <!--<div class="tab-pane" id="4zakladka">Zawartość czwartej zakładki</div>-->
         </div>
         <img class="img-responsive" src="~/img/whatever.jpg" alt="Upsik - brakuje obrazka" />
     </div>

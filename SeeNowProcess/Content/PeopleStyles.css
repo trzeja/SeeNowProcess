@@ -105,3 +105,66 @@
     width: 150px;
     margin-left: 30px;
 }
+
+.my-tabs {
+    width: 18vw;
+}
+
+.my-body {
+    /*position:absolute;*/
+    /*min-width:1500px;*/
+    overflow:auto;
+}
+
+
+.element {
+    border-radius: 20px;
+    background-color: #33cc33;
+    /*width: 150px;*/
+    max-width:18vw;
+    width:18vw;
+    min-width:12vw;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 12px;
+    min-height: 100px;
+}
+
+.element2 {
+    border-radius: 30px;
+    background-color: #79ff4d;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 5px;
+    width: 13vw;
+    /*width: 120px;*/
+}
+
+.space {
+    height:auto;
+    /*height: 100%;*/
+    padding-top: 15px;
+    width: 200px;
+    border: 1px solid #aaaaaa;
+    background-color: #e6ffe6;
+    min-height: 400px;
+    max-height: 1000px;
+    min-width: 150px;
+}
+
+.visible {
+    min-height: 500px;
+    min-width: 50px;
+}
+
+.space2 {
+    min-width: 150px;
+    height: 100%;
+    border: 1px solid #aaaaaa;
+    background-color: #e6ffe6;
+}
+

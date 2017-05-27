@@ -1,8 +1,9 @@
 ﻿var peopleApp = angular.module("peoplePart", []);
 peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) {
     $scope.message = '';
-    $scope.iterations = [];
-    $scope.lists = [];
+    $scope.lists = [];  //people from database
+    $scope.userTasks = [];
+    $scope.userStories = [];
     $scope.selected = null;
     $scope.userName = 'Select user to show content.';
     $scope.currentUser;
@@ -55,7 +56,32 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             }
             $scope.message = $scope.currentUser.id;
             $scope.info = {e: "Email: ", n: "Phone Number: ", r: "Role: "};
-            
+            $http({
+                method: "POST",
+                url: "/People/GetTasks",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTasks = response.data.Tasks;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying tasks";
+            })
+
+            $http({
+                method: "POST",
+                url: "/People/GetUserStories",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userStories = response.data.Stories;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+
         }, function myError(response) {
             $scope.message = "Error taking User";
         })
@@ -77,10 +103,22 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
         }, function myError(response) {
             $scope.message = "Error in moving task";
         })
-
-
-
         return item;
+    }
+
+    getUserData = function (ID) {
+        $http({
+            method: "POST",
+            url: "/People/GetTasks",
+            data: $.param({ "userId": item.id}),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = "Result: " + response.data;
+           
+        }, function myError(response) {
+            $scope.message = "Error in moving task";
+        })
     }
 
     $scope.addIteration = function () {

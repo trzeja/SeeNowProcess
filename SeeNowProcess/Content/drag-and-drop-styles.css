@@ -39,9 +39,9 @@
 }
 
 .btn-add {
-    margin-right: 2vw;
+    margin-right: 1vw;
     position:fixed;
-    margin-left:60vw;
+    margin-left:30%;
     z-index: -1;
    /* margin-left: 60%;*/
 
