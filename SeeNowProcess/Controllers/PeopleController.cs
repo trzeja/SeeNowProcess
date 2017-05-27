@@ -241,6 +241,7 @@ namespace SeeNowProcess.Controllers
                     {
                         TeamID = t.TeamID,
                         Name = t.Name,
+                        UserStory = t.UserStory == null ? "Unassigned" : t.UserStory.Title,
                         Leader = t.TeamLeader.Name
                     });
                 //przypisań do projektu chyba nie robimy?
