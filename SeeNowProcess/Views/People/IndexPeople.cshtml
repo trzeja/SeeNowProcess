@@ -56,18 +56,14 @@
             <div class="tab-pane active" id="OpenAssignments">
                 Tasks
                 <hr/>
-             @*   <ul class="list-unstyled">*@ <!--class="visible list-unstyled text-center"-->
                     <div ng-repeat="item in userTasks">
                         <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </div>
-                @*</ul>*@
                 User Stories
                 <hr/>
-                <ul ><!-- class="visible list-unstyled text-center">-->
-                    <li ng-repeat="item in userStories">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
+                    <div ng-repeat="item in userTeams">
+                        <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
+                    </div>
             </div>
             <div class="tab-pane" id="AccountSettings">Zawartość drugiej zakładki</div>
             <div class="tab-pane" id="ProjectsTeams">Zawartość trzeciej zakładki</div>

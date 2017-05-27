@@ -3,7 +3,7 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.message = '';
     $scope.lists = [];  //people from database
     $scope.userTasks = [];
-    $scope.userStories = [];
+    $scope.userTeams = [];
     $scope.selected = null;
     $scope.userName = 'Select user to show content.';
     $scope.currentUser;
@@ -71,12 +71,12 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
 
             $http({
                 method: "POST",
-                url: "/People/GetUserStories",
+                url: "/People/GetAssignments",
                 data: $.param({ "userId": $scope.currentUser.id }),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
-                $scope.userStories = response.data.Stories;
+                $scope.userTeams = response.data.Teams;
 
             }, function myError(response) {
                 $scope.message = "Error in displaying User Stories.";

@@ -130,41 +130,20 @@
     margin-top: 5px;
     text-align: center;
     font-size: 12px;
-    min-height: 100px;
+    min-height: 50px;
 }
 
 .element2 {
-    border-radius: 30px;
+    border-radius: 10px;
     background-color: #79ff4d;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    padding: 5px;
-    width: 13vw;
+    padding: 5px;    
+    max-width:16vw;
+    width:16vw;
+    min-width:10vw;
     /*width: 120px;*/
 }
 
-.space {
-    height:auto;
-    /*height: 100%;*/
-    padding-top: 15px;
-    width: 200px;
-    border: 1px solid #aaaaaa;
-    background-color: #e6ffe6;
-    min-height: 400px;
-    max-height: 1000px;
-    min-width: 150px;
-}
-
-.visible {
-    min-height: 500px;
-    min-width: 50px;
-}
-
-.space2 {
-    min-width: 150px;
-    height: 100%;
-    border: 1px solid #aaaaaa;
-    background-color: #e6ffe6;
-}
 
