@@ -1,13 +1,23 @@
 ﻿var taskApp = angular.module("taskForm", []);
 taskApp.controller("taskCtrl", function ($scope,$http) {
-    $scope.tasks =
-        [
-            {
-                title: "Aaa", description: "Bbb",
-                status: "open", importance: "trivial",
-                estimated_time: "2 weeks", parent: "s"
-            }
-        ];
+    $scope.tasks = [];
+
+    $scope.response = [];
+    $scope.parent_options = [];
+
+    $http({
+        method: "GET",
+        url: "/Add/GetStories",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySucces(response) {
+        $scope.response = response.data.stories;
+        for (var i = 0; i < $scope.response.length; ++i) {
+            $scope.parent_options.push({ value: $scope.response[i].UserStory, description: $scope.response[i].UserStory })
+        }
+
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
     /* Roksana:
     1. Nie dodaję na razie "Choose an option" które dodała Ania, zostaje puste pole które po wyborze opcji
     znika z listy wyboru. Nie wiem na razie czy to dobry pomysł, zależy czy to będzie obowiązkowe pole (?)
@@ -26,13 +36,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
              { value: "important", description: "Important" },
              { value: "critical", description: "Critical" }
         ];
-    $scope.parent_options =
-        [
-             { value: "s", description: "Small (S)" },
-             { value: "m", description: "Medium (M)" },
-             { value: "l", description: "Large (L)" },
-             { value: "xl", description: "Extra large (XL)" },
-        ];
+
     $scope.addTask = function () {
         $scope.tasks.push({
             title: $scope.title, description: $scope.description, status: $scope.status.value,

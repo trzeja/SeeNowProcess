@@ -37,6 +37,26 @@ namespace SeeNowProcess.Controllers
             return Json("Success",JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetStories()
+        {
+            using (db)
+            {
+                var stories = db.UserStories
+                    .Select(t => new
+                    {
+                        UserStory = t.Title
+                    });
+                //przypisań do projektu chyba nie robimy?
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        stories = stories.ToList()
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
 
         //
         // POST: /Account/Login
