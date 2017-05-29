@@ -30,7 +30,7 @@
             border-radius: 20px;
             background-color: #33cc33;
             /*width: 150px;*/
-            width: 12vw;
+            width: 10vw;
             padding: 5px;
             margin-left: auto;
             margin-right: auto;
@@ -47,7 +47,7 @@
             margin-right: auto;
             text-align: center;
             padding: 5px;
-            width: 10vw;
+            width: 8vw;
             /*width: 120px;*/
         }
 
@@ -55,7 +55,7 @@
             height: 100px;
             /*height: 100%;*/
             padding-top: 15px;
-            width: 170px;
+            width: 11vw;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
             min-height: 400px;
@@ -64,7 +64,7 @@
         }
 
         .visible {
-            min-height: 500px;
+            min-height: 250px;
             min-width: 50px;
         }
 
@@ -148,13 +148,36 @@
                     //pobrac tu trzeba tez do ktorego nalezy -> nie wiem o co mi chodzilo...
                     //$scope.models.lists.A = result.data;
                     $scope.userstories = result.data;
+
                     $http({
                         method: "GET",
                         url: "/TaskBoard/GetProblems",
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
                     }).then(function success(result) {
                         $scope.problems = result.data;
+                        $scope.list = [];
                         //tutaj rozdzial na listy
+                        for (var i = 0; i < $scope.userstories.length; i++) {
+                            var userstory = { id: $scope.userstories[i].UserSID, title: $scope.userstories[i].Title, boxes: [] };
+                            $scope.list.push(userstory);
+                            for (var j = 0; j < $scope.boxes.length; j++) {
+                                var box = { order: $scope.boxes[j].BoxOrder, name: $scope.boxes[j].Name, tasks: [] };
+                                $scope.list[i].boxes.push(box);
+                            }
+                        }
+                        for (var i = 0; i < $scope.problems.length; i++) {
+                            for (var j = 0; j < $scope.list.length; j++) {
+                                if ($scope.problems[i].UserSID == $scope.list[j].id) //czy jest w tym userstory
+                                {
+                                    for (var k = 0; k < $scope.list[j].boxes.length; k++) {
+                                        if ($scope.problems[i].BoxOrder == $scope.list[j].boxes[k].order) //czy w tym boxie
+                                        {
+                                            $scope.list[j].boxes[k].tasks.push($scope.problems[i]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }).catch(function fail(result) {
                         $scope.problems = ":(";
                     })
@@ -175,20 +198,20 @@
                 <th class="space2 column"><h5 class="text-center"><strong>User Stories</strong></h5></th>
                 <th class="space2 column" ng-repeat="x in boxes"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
             </tr>
-            <tr ng-repeat="x in userstories">
-                <td class="space column">{{x.Title}} </td>
-            <td class="space column" ng-repeat="y in boxes">
-                @*<ul class="visible list-unstyled text-center" dnd-list="x">
-                     dnd-drop="dropCallback(item,)"
-                    <li ng-repeat="item in x"
+            <tr ng-repeat="x in list">
+                <td class="space column">{{x.title}} </td>
+            <td class="space column" ng-repeat="y in x.boxes">
+                <ul class="visible list-unstyled text-center" dnd-list="y.tasks">
+                     @*dnd-drop="dropCallback(item,)"*@
+                    <li ng-repeat="item in y.tasks"
                         dnd-draggable="item"
-                        dnd-moved="x.splice($index, 1)"
+                        dnd-moved="y.tasks.splice($index, 1)"
                         dnd-effect-allowed="move"
-                        dnd-selected="selected = item"
-                        ng-class="{'selected': selected === item}">
-                        <div class="element">{{item.title}}<p class="element2">{{item.description}}</p></div>
+                        @*dnd-selected="selected = item"
+                        ng-class="{'selected': selected === item}"*@>
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
-                </ul>*@
+                </ul>
             </td>
             </tr>
 

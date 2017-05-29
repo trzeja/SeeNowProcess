@@ -23,7 +23,8 @@ namespace SeeNowProcess.Controllers
                     BoxOrder = a.Box.Order,
                     UserSID = a.Story.UserStoryID,
                     Id = a.ProblemID,
-                    Title = a.Title
+                    Title = a.Title,
+                    Description = a.Description
                 });
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
