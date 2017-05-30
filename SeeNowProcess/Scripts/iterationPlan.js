@@ -4,6 +4,8 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
     $scope.iterations = [];
     $scope.lists = [];
     $scope.selected = null;
+    $scope.startDate = '';
+    $scope.endDate = '';
     $scope.startingDate;
     $scope.endingDate;
   /*  $scope.addIteration = function () {
@@ -112,10 +114,12 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
         }
 
         $scope.addIteration = function () {
+            $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDay().toString();
+            $scope.endingDate = $scope.endDategetFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDay().toString();
             $http({
                 method: "POST",
                 url: "/IterationPlan/AddingIteration",
-                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startDate, "endDate": $scope.endDate}),
+                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startingDate, "endDate": $scope.endingDate}),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
