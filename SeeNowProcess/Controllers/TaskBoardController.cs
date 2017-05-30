@@ -55,5 +55,26 @@ namespace SeeNowProcess.Controllers
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
+
+        [HttpPost]
+        public ActionResult UpdateDatabase(int ProblemID, int UserStoryID, int BoxOrder)
+        {
+            using (db)
+            {
+                //                           TO DO
+                // czy nie powinnam też oprocz boxorder przesylac boxid? - R.
+
+                //var problem = db.Problems.Where(p => p.ProblemID == ProblemID).FirstOrDefault();
+                //var newBox = db.Boxes.Where(b => b.Order == NewState).FirstOrDefault();
+                //if (problem == null)
+                //    return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
+                //if (newBox == null)
+                //    return Json("Error - no such box!", JsonRequestBehavior.AllowGet);
+                //problem.Box = newBox;
+                //db.MarkAsModified(problem);
+                //db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

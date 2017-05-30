@@ -60,7 +60,7 @@
             background-color: #e6ffe6;
             min-height: 400px;
             max-height: 1000px;
-            min-width: 150px;
+            /*min-width: 150px;*/
         }
 
         .visible {
@@ -188,6 +188,21 @@
                 $scope.boxes = ":(";
             })
             
+            $scope.dropCallback = function (item, userstory, box) { //userstory->id, box->order
+                //w item mamy jaki był poprzednio - w number jaki ma byc nowy
+                $http({
+                    method: "POST",
+                    url: "/TaskBoard/UpdateDatabase",
+                    data: $.param({
+                        'ProblemID': item.ProblemID, 'UserStoryID': userstory, 'BoxOrder': box
+                    }),
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                }).then(function success(response) { }, function failure(response) { });
+                //item.BoxID = number;
+                //tu problem ze zmienianiem boxid a nie boxorder
+                return item;
+            };
+
         });
         </script>
 
@@ -201,7 +216,7 @@
             <tr ng-repeat="x in list">
                 <td class="space column">{{x.title}} </td>
             <td class="space column" ng-repeat="y in x.boxes">
-                <ul class="visible list-unstyled text-center" dnd-list="y.tasks">
+                <ul class="visible list-unstyled text-center" dnd-list="y.tasks" dnd-drop="dropCallback(item,x.id,y.order)">
                      @*dnd-drop="dropCallback(item,)"*@
                     <li ng-repeat="item in y.tasks"
                         dnd-draggable="item"
