@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    ViewBag.Title = "BacklogIndex";
+}
+
+@*<p>BACKLOG DOESEN'T EXIST. </p>
+<img src="~/img/mem_mowa_pogrzebowa_v2.jpg" alt="Upsik - brakuje obrazka" />*@
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/PeopleStyles.css">
+    <script src="~/Scripts/angularBacklog.js"></script>
+    <style>
+    .my-tabs {
+    width: 18vw;
+    }
+    </style>
+</head>
+
+<body ng-app="backlog" ng-controller="backlogCtrl">
+    <div>
+        <h4>User Stories</h4>
+        <hr>
+    </div>
+    
+    @*lista userstories*@
+    <div>
+        <ul class="people-list">
+            <li ng-repeat="x in userstories"><a class="my-btn my-button" data-toggle="collapse" ng-click="showUserStory(x.UserSID,x.Title)">{{x.Title}}</a><hr></li>
+        </ul>
+    </div>
+
+
+    <div class="people-information">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="userInterface">{{userstory}}</div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active my-tabs"><a href="#Description" role="tab" data-toggle="tab">Description</a></li>
+                    <li class="my-tabs"><a href="#Tasks" role="tab" data-toggle="tab">Tasks</a></li>
+                    <li class="my-tabs"><a href="#Information" role="tab" data-toggle="tab">Information</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="Description">
+                <h4><strong>{{info.description}}</strong></h4><hr>
+                {{currentUS.Description}} <hr>
+                <h4><strong>{{info.notes}}</strong></h4><hr>
+                {{currentUS.Notes}} <hr>
+                <h4><strong>{{info.criteria}}</strong></h4><hr>
+                {{currentUS.Criteria}} <hr>
+            </div>
+            
+            <div class="tab-pane" id="Tasks">
+                <ul class="visible list-unstyled text-center">
+                    <li ng-repeat="item in tasksUS">
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tab-pane" id="Information">
+                <div><label class="infoTag">{{info.owner}}</label>{{currentUS.Owner}}</div>
+                <div><label class="infoTag">{{info.project}}</label>{{currentUS.Project}}</div>
+                <div><label class="infoTag">{{info.size}}</label>{{currentUS.Size}}{{currentUS.Unit}}</div>
+            </div>
+        </div>
+    </div>
+</body>

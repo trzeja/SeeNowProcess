@@ -286,6 +286,7 @@
     <Content Include="img\whatever.jpg" />
     <Content Include="img\zwolnienie.jpg" />
     <Content Include="Scripts\angular-drag-and-drop-lists.js" />
+    <Content Include="Scripts\angularBacklog.js" />
     <Content Include="Scripts\angularLogin.js" />
     <Content Include="Scripts\angularPeople.js" />
     <Content Include="Scripts\angularRegister.js" />
@@ -325,7 +326,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Add\Index.cshtml" />
-    <Content Include="Views\Backlog\Index.cshtml" />
+    <Content Include="Views\Backlog\BacklogIndex.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Create\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
