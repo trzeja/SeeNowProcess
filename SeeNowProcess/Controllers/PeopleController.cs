@@ -235,8 +235,39 @@ namespace SeeNowProcess.Controllers
                 User user = db.Users.Where(u => u.UserID == id).FirstOrDefault();
                 if (user == null)
                     return Json("No such user!", JsonRequestBehavior.AllowGet);
+                foreach(Problem problem in user.Problems)
+                {
+//                    problem.AssignedUsers.Remove(user);
+                    db.MarkAsModified(problem);
+                }
+                foreach(User subordinate in user.Subordinates)
+                {
+//                    subordinate.Supervisor = user.Supervisor;
+                    db.MarkAsModified(subordinate);
+                }
+                IEnumerable<Assignment> assignments = db.Assignments.Where(a => a.UserID == user.UserID).ToList();
+                db.Assignments.RemoveRange(assignments);
+                IEnumerable<Team> teams = db.Teams.Where(t => t.TeamLeader.UserID == user.UserID).ToList();
+                foreach(Team team in teams)
+                {
+                    team.TeamLeader = null;
+                    db.MarkAsModified(team);
+                }
+
+                user.Problems.Clear();
+                //userstories?
+                //user.Stories.Clear();
+                user.Subordinates.Clear();
+                //user.Assignments.Clear();
                 db.Users.Remove(user);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    var x = e.InnerException;
+                }
             }
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
