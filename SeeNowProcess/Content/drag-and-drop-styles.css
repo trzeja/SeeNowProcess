@@ -53,10 +53,31 @@
   color:white; 
   padding-top: 5px; 
   padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
   text-align:center;
   margin-left: -10px;
 }
 
+.green_button {
+  background-color:chartreuse; 
+  font-size: 15px;
+  color:white; 
+  padding-top: 5px; 
+  padding-bottom: 5px;
+  text-align:center;
+}
+
+
+
+.red_button {
+  background-color:firebrick; 
+  font-size: 15px;
+  color:white; 
+  padding-top: 5px; 
+  padding-bottom: 5px;
+  text-align:center;
+}
 
 .fill {
     top: 70px;

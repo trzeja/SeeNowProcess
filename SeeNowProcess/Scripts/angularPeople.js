@@ -87,6 +87,67 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
         })
     }
 
+    $scope.updateUser = function (id) {
+        if ($scope.newPassword === $scope.confirmPassword && $scope.newPassword !== "") {
+            $http({
+                method: "POST",
+                url: "/People/updateUserPassword",
+                data: $.param({ "id": $scope.currentUser.id, "oldPassword": $scope.password, "newPassword": $scope.newPassword }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.message = "Success";
+                $http({
+                    method: "POST",
+                    url: "/People/updateUserData",
+                    data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.name, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone }),
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+                }).then(function mySucces(response) {
+                    $scope.userTeams = response.data.Teams;
+
+                }, function myError(response) {
+                    $scope.message = "Error in displaying User Stories.";
+                })
+
+            }, function myError(response) {
+                $scope.message = "Error in passwords.";
+            })
+
+        } else if ($scope.newPassword === "") {
+            $http({
+                method: "POST",
+                url: "/People/updateUserData",
+                data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.name, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.message ="Success";
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+        }
+        else
+            $scope.message = "Passwords don't match";
+    }
+
+    $scope.deleteUser = function (id) {
+        $http({
+            method: "POST",
+            url: "/People/deleteUser",
+            data: $.param({ "id": $scope.currentUser.id }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = "Success";
+
+        }, function myError(response) {
+            $scope.message = "Error in displaying User Stories.";
+        })
+    }
+
+
     $scope.dropCallback = function (item, x) {
         $scope.message = "DropCallback: " + x;
         $http({
@@ -106,35 +167,6 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
         return item;
     }
 
-    getUserData = function (ID) {
-        $http({
-            method: "POST",
-            url: "/People/GetTasks",
-            data: $.param({ "userId": item.id}),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-
-        }).then(function mySucces(response) {
-            $scope.message = "Result: " + response.data;
-           
-        }, function myError(response) {
-            $scope.message = "Error in moving task";
-        })
-    }
-
-    $scope.addIteration = function () {
-        $http({
-            method: "POST",
-            url: "/IterationPlan/AddingIteration",
-            data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startDate, "endDate": $scope.endDate }),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-
-        }).then(function mySucces(response) {
-            $scope.message = "Result: " + response.data;
-            if (response.data == "Success")
-                window.location.href = "/IterationPlan/Index";
-        }, function myError(response) {
-        })
 
 
-    }
 }]);

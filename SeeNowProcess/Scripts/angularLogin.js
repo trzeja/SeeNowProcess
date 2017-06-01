@@ -1,14 +1,7 @@
 ﻿var loginApp = angular.module("loginForm", []);
 loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
 
-    $scope.logins =
-    [
-        {
-            Login: "logins",
-            Password: "passwords"
-        }
-    ];
-    $scope.myWelcome = "Still Waiting";
+    $scope.myWelcome = "";
 
     $scope.loginCheck = function () {
         var objUser = $.param({

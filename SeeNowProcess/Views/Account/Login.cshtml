@@ -9,12 +9,6 @@
 <h2>Login</h2>
 
 <form ng-app="loginForm" name="loginForm" ng-controller="loginCtrl" class="form-horizontal" ng-submit="loginCheck()">
-    <ul>
-        <li ng-repeat="x in logins">
-            {{x.Login}}<br>
-            {{x.Password}}<br>
-        </li>
-    </ul>
     <div>{{myWelcome}}</div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="login"> Login: </label>

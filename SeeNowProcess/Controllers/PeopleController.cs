@@ -56,6 +56,7 @@ namespace SeeNowProcess.Controllers
                         .Select(p => new
                         {
                             id = p.UserID,
+                            login = p.Login,
                             name = p.Name,
                             email = p.Email,
                             phone = p.PhoneNumber,
@@ -225,5 +226,25 @@ namespace SeeNowProcess.Controllers
                 };
             }
         }
+
+
+        [HttpPost]
+        public ActionResult deleteUser(int id) {
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult updateUserData(int id, string name, string login, string email,string phone)
+        {
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult updateUserPassword(int id, string oldPassword, string newPassword)
+        {
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
