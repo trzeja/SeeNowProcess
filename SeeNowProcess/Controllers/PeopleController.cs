@@ -230,19 +230,53 @@ namespace SeeNowProcess.Controllers
 
         [HttpPost]
         public ActionResult deleteUser(int id) {
+            using (db)
+            {
+                User user = db.Users.Where(u => u.UserID == id).FirstOrDefault();
+                if (user == null)
+                    return Json("No such user!", JsonRequestBehavior.AllowGet);
+                db.Users.Remove(user);
+                db.SaveChanges();
+            }
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpPost]
-        public ActionResult updateUserData(int id, string name, string login, string email,string phone)
+        public ActionResult updateUserData(int id, string name, string login, string email, string phone)
         {
+            using (db)
+            {
+                User user = db.Users.Where(u => u.UserID == id).FirstOrDefault();
+                if (user == null)
+                    return Json("No such user!", JsonRequestBehavior.AllowGet);
+                if (user.Login != login)
+                    if (db.Users.Any(u => u.Login.Equals(login)))
+                        return Json("Given login is busy!", JsonRequestBehavior.AllowGet);
+                user.Login = login;
+                user.Name = name;
+                user.Email = email;
+                user.PhoneNumber = phone;
+                db.MarkAsModified(user);
+                db.SaveChanges();
+            }
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult updateUserPassword(int id, string oldPassword, string newPassword)
         {
+            using (db)
+            {
+                User user = db.Users.Where(u => u.UserID == id).FirstOrDefault();
+                if (user == null)
+                    return Json("No such user!", JsonRequestBehavior.AllowGet);
+                if (!user.ComparePassword(oldPassword))
+                    return Json("Invalid password!", JsonRequestBehavior.AllowGet);
+                user.Password = newPassword;
+                db.MarkAsModified(user);
+                db.SaveChanges();
+            }
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
