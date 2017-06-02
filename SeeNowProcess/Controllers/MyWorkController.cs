@@ -29,6 +29,18 @@ namespace SeeNowProcess.Controllers
             }
         }
 
+        public ActionResult GetBoxOrder()
+        {
+            using (db)
+            {
+                var resultJ = db.Boxes.Select(a => new
+                {
+                    BoxOrder = a.Order,
+                    Name = a.Name
+                }).Distinct();
+                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
 
         public ActionResult IndexJS()
         {

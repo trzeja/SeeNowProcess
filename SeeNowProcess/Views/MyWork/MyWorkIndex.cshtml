@@ -19,6 +19,7 @@
     position: absolute;
     width: auto;
     height: auto;
+    z-index: -1;
 }
         table, th, td {
           
@@ -31,7 +32,7 @@
             border-radius: 20px;
             background-color: #33cc33;
             /*width: 150px;*/
-            width:12vw;
+            width:10vw;
             padding: 5px;
             margin-left: auto;
             margin-right: auto;
@@ -48,7 +49,7 @@
             margin-right: auto;
             text-align: center;
             padding: 5px;
-            width: 10vw;
+            width: 8vw;
             /*width: 120px;*/
         }
 
@@ -56,21 +57,21 @@
             height: 900px;
             /*height: 100%;*/
             padding-top: 15px;
-            width: 200px;
+            /*width: 200px;*/
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
             min-height: 400px;
             max-height: 1000px;
-            min-width: 150px;
+            width: 12.3vw;
         }
 
         .visible {
-            min-height: 500px;
+            min-height: 250px;
             min-width: 50px;
         }
 
         .space2 {
-            min-width: 150px;
+            min-width: 12.3vw;
             height: 100%;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
@@ -139,77 +140,81 @@
                 return item;
             };
             
+
             $http({
                 method: "GET",
-                url: "/MyWork/IndexJS",
+                url: "/MyWork/GetBoxOrder",
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             })
             .then(function success(result) {
+                $scope.boxOrder = result.data;
+
+                //utworzenie listy na przechowywanie taskow
+                $scope.lists = [];
+                for (var i = 0; i < $scope.boxOrder.length; i++) 
+                {
+                    $scope.lists.push({Order: $scope.boxOrder[i].BoxOrder, Tasks:[]});
+                }
+                $http({
+                    method: "GET",
+                    url: "/MyWork/IndexJS",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                })
+                .then(function success(result) {
                 //pobrac tu trzeba tez do ktorego nalezy 
                 //$scope.models.lists.A = result.data;
                 $scope.wholeList = result.data;
 
-                for (var x = 0; x < $scope.wholeList.length; x++)
-                {
+                for (var x = 0; x < $scope.wholeList.length; x++) {
                     //switch ($scope.allProblemsList[x].Box.Order) { //moja propozycja (Mikolaj)
                     //nie dziala, moze nie da sie odwolac do tak zagnizdzonego pola... :c konsola na 
                     //przegladarce wywala ze nie znapola "Order"
-                    switch ($scope.wholeList[x].BoxOrder) {
-                        case 0:
-                            $scope.models.lists.A.push($scope.wholeList[x]);
-                            break;
-                        case 1:
-                            $scope.models.lists.B.push($scope.wholeList[x]);
-                            break;
-                        case 2:
-                            $scope.models.lists.C.push($scope.wholeList[x]);
-                            break;
-                        case 3:
-                            $scope.models.lists.D.push($scope.wholeList[x]);
-                            break;
-                        case 4:
-                            $scope.models.lists.E.push($scope.wholeList[x]);
-                            break;
-                        case 5:
-                        default:
-                            $scope.models.lists.F.push($scope.wholeList[x]);
-                            break;
+
+                    for (var j = 0; j < $scope.lists.length; j++) {
+                        if ($scope.wholeList[x].BoxOrder == $scope.lists[j].Order) {
+                            $scope.lists[j].Tasks.push($scope.wholeList[x]);
+                        }
                     }
+                    //switch ($scope.wholeList[x].BoxOrder) {
+                    //    case 0:
+                    //        $scope.models.lists.A.push($scope.wholeList[x]);
+                    //        break;
+                    //    case 1:
+                    //        $scope.models.lists.B.push($scope.wholeList[x]);
+                    //        break;
+                    //    case 2:
+                    //        $scope.models.lists.C.push($scope.wholeList[x]);
+                    //        break;
+                    //    case 3:
+                    //        $scope.models.lists.D.push($scope.wholeList[x]);
+                    //        break;
+                    //    case 4:
+                    //        $scope.models.lists.E.push($scope.wholeList[x]);
+                    //        break;
+                    //    case 5:
+                    //    default:
+                    //        $scope.models.lists.F.push($scope.wholeList[x]);
+                    //        break;
+                    //}
                 }
 
-                //for (x in $scope.list.data) {
-                //    $scope.models.lists.A.push({ProblemID:x.ProblemID, Title:x.Title, Description:x.Description});
-                //} 
 
-                
+                }).catch(function fail(result) {
+                    $scope.list = ":(";
+                })
             }).catch(function fail(result) {
-                $scope.list = ":(";
+                $scope.boxOrder = ":(";
             })
 
-            $scope.wholeList = [];
 
-            $scope.models = {
-                selected: null,
-                lists: { "A": [], "B": [], "C": [], "D":[], "E":[], "F":[] }
-            };
+            
+
+            $scope.wholeList = [];
 
             $scope.addTask = function (title,description) {
                 $scope.models.lists.A.push({title, description});
             }
-            // Generate initial model
-            //for (var i = 1; i <= 3; ++i) {
-            //    $scope.models.lists.A.push({ label: "Item A" + i });
-            //    $scope.models.lists.B.push({ label: "Item B" + i });
-            //}
-
-
-            //$scope.$watch('list', function (modeling) {
-            //    $scope.modelAsJson = angular.toJson(modeling, true);
-            //}, true);
-            // Model to JSON for demo purpose
-            //$scope.$watch('models', function (model) {
-            //    $scope.modelAsJson = angular.toJson(model, true);
-            //}, true);
+            
 
         });
 
@@ -219,92 +224,109 @@
 
 
 
-    <div class="container-fluid fill" ng-app="dragAndDrop" ng-controller="dragging">
+    <div ng-app="dragAndDrop" ng-controller="dragging">
        <p>{{hello}}</p>
-        <div class="row">
-            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
-            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Planned</strong></h5></div>
-            <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Progress</strong></h5></div>
-            <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Testing</strong></h5></div>
-            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Done</strong></h5></div>
-            <div class="space2 col-sm-2"><h5 class="text-center"><strong>Cancelled</strong></h5></div>
-        </div>
-        <div class="row">
-            <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.A" dnd-drop="dropCallback(item,0)">
-                    <li ng-repeat="item in models.lists.A"
+        <table class="fill">
+            <tr>
+                <th class="space2 column" ng-repeat="x in boxOrder"><h5 class="text-center"><strong>{{x.Name}}</strong></h5></th>
+            </tr>
+            <tr>
+                <td valign="top" class="space column" ng-repeat="y in lists">
+                <ul class="visible list-unstyled text-center" dnd-list="y.Tasks" dnd-drop="dropCallback(item,y.Order)">
+                    <li ng-repeat="item in y.Tasks"
                         dnd-draggable="item"
-                        dnd-moved="models.lists.A.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="models.selected = item"
-                        ng-class="{'selected': models.selected === item}">
+                        dnd-moved="y.Tasks.splice($index, 1)"
+                        dnd-effect-allowed="move">
                         <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
-            </div>
+            </td>
+            </tr>
+        </table>
+            @*<div class="row">
+                <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
+                <div class="space2 col-sm-2"><h5 class="text-center"><strong>Planned</strong></h5></div>
+                <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Progress</strong></h5></div>
+                <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Testing</strong></h5></div>
+                <div class="space2 col-sm-2"><h5 class="text-center"><strong>Done</strong></h5></div>
+                <div class="space2 col-sm-2" ng-repeat="x in boxOrder"><h5 class="text-center"><strong>{{x.Name}}</strong></h5></div>
+            </div>*@
+            @*<div class="row">
+                <div class="space col-sm-2">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.A" dnd-drop="dropCallback(item,0)">
+                        <li ng-repeat="item in models.lists.A"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.A.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.B" dnd-drop="dropCallback(item,1)">
-                    <li ng-repeat="item in models.lists.B"
-                        dnd-draggable="item"
-                        dnd-moved="models.lists.B.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="models.selected = item"
-                        ng-class="{'selected': models.selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.C" dnd-drop="dropCallback(item,2)">
-                    <li ng-repeat="item in models.lists.C"
-                        dnd-draggable="item"
-                        dnd-moved="models.lists.C.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="models.selected = item"
-                        ng-class="{'selected': models.selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.D" dnd-drop="dropCallback(item,3)">
-                    <li ng-repeat="item in models.lists.D"
-                        dnd-draggable="item"
-                        dnd-moved="models.lists.D.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="models.selected = item"
-                        ng-class="{'selected': models.selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.E" dnd-drop="dropCallback(item,4)">
-                    <li ng-repeat="item in models.lists.E"
-                        dnd-draggable="item"
-                        dnd-moved="models.lists.E.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="models.selected = item"
-                        ng-class="{'selected': models.selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="space col-sm-2">
-                <ul class="visible list-unstyled text-center" dnd-list="models.lists.F" dnd-drop="dropCallback(item,5)">
-                    <li ng-repeat="item in models.lists.F"
-                        dnd-draggable="item"
-                        dnd-moved="models.lists.F.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="models.selected = item"
-                        ng-class="{'selected': models.selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                <div class="space col-sm-2">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.B" dnd-drop="dropCallback(item,1)">
+                        <li ng-repeat="item in models.lists.B"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.B.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space col-sm-2">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.C" dnd-drop="dropCallback(item,2)">
+                        <li ng-repeat="item in models.lists.C"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.C.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space col-sm-2">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.D" dnd-drop="dropCallback(item,3)">
+                        <li ng-repeat="item in models.lists.D"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.D.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space col-sm-2">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.E" dnd-drop="dropCallback(item,4)">
+                        <li ng-repeat="item in models.lists.E"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.E.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space col-sm-2">
+                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.F" dnd-drop="dropCallback(item,5)">
+                        <li ng-repeat="item in models.lists.F"
+                            dnd-draggable="item"
+                            dnd-moved="models.lists.F.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
+</div>
 </body>
 
 @*<table class="fill">
