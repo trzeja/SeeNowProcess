@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SeeNowProcess.Models;
 using SeeNowProcess.DAL;
 using System.Data.Entity.Infrastructure;
+using SeeNowProcess.Models.Enums;
 
 namespace SeeNowProcess.Controllers
 {
@@ -274,7 +275,7 @@ namespace SeeNowProcess.Controllers
 
 
         [HttpPost]
-        public ActionResult updateUserData(int id, string name, string login, string email, string phone, int role)
+        public ActionResult updateUserData(int id, string name, string login, string email, string phone, Role role)
         {
             using (db)
             {
@@ -288,7 +289,7 @@ namespace SeeNowProcess.Controllers
                 user.Name = name;
                 user.Email = email;
                 user.PhoneNumber = phone;
-                /*user.role = role; <= nie umiem tego przypisać - Krzysiu napraw xD*/
+                user.role = role;
                 db.MarkAsModified(user);
                 db.SaveChanges();
             }
