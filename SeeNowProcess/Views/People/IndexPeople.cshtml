@@ -48,7 +48,7 @@
                 <div class="userInterface">{{userName}}</div>
                 <div><label class="infoTag">{{info.e}}</label>{{currentUser.email}}</div> 
                 <div><label class="infoTag">{{info.n}}</label> {{currentUser.phone}}</div>
-                <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentUser.role}}</h4></div>
+                <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentRole}}</h4></div>
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
                     <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab">Account Settings</a></li>
@@ -86,12 +86,16 @@
                     <hr />
                     Password (If you want to change it):
                     <div class="form-group row">
-                        <label class="col-sm-1 control-label" for="password"> Old password: </label>
-                        <input class="col-sm-1 form-control" type="password" id="password" ng-model="password" autofocus ng-class="Submited?'ng-dirty':''">
-                        <label class="col-sm-1 control-label" for="newPassword"> New password: </label>
-                        <input class="col-sm-1 form-control" type="password" id="newPassword" ng-model="newPassword" autofocus ng-class="Submited?'ng-dirty':''">
-                        <label class="col-sm-1 control-label" for="confirmPassword"> Confirm Password: </label>
-                        <input class="col-sm-1 form-control" type="password" id="confirmPassword" ng-model="confirmPassword" autofocus ng-class="Submited?'ng-dirty':''">
+                        <label class="col-sm-2 control-label" for="passwords.oldPassword"> Old password: </label>
+                        <input class="form-control" type="password" id="passwords.oldPassword" ng-model="passwords.oldPassword" autofocus ng-class="Submited?'ng-dirty':''">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label" for="passwords.newPassword"> New password: </label>
+                        <input class="form-control" type="password" id="passwords.newPassword" ng-model="passwords.newPassword" autofocus ng-class="Submited?'ng-dirty':''">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label" for="paswords.confirmPassword"> Confirm Password: </label>
+                        <input class="form-control" type="password" id="paswords.confirmPassword" ng-model="passwords.confirmPassword" autofocus ng-class="Submited?'ng-dirty':''">
                     </div>
                     <hr />
                     E-mail:
@@ -105,6 +109,40 @@
                         <label class="col-sm-2 control-label" for="phone"> Phone number: </label>
                         <input class="form-control" type="tel" id="phone" ng-model="currentUser.phone" required autofocus ng-class="Submited?'ng-dirty':''">
                     </div>
+                    <div>
+                        <hr />
+                        Role:
+                        <br/>
+                        <label>
+                            <input type="radio" ng-model="role" value="admin">
+                            Admin
+                        </label><br />
+                        <label>
+                            <input type="radio" ng-model="role" value="headMaster">
+                            Head Master
+                        </label><br />
+                        <label>
+                            <input type="radio" ng-model="role" value="seniorDev">
+                            Senior Developer
+                        </label><br />
+                        <label>
+                            <input type="radio" ng-model="role" value="juniorDev">
+                            Junior Developer
+                        </label><br />
+                        <label>
+                            <input type="radio" ng-model="role" value="intern">
+                            Intern
+                        </label><br />
+                        <label>
+                            <input type="radio" ng-model="role" value="tester">
+                            Tester
+                        </label><br />
+                        <label>
+                            <input type="radio" ng-model="role" value="client">
+                            Client
+                        </label><br />
+                    </div>
+
                 </form>
                 <hr/>
                 <div>
@@ -115,73 +153,5 @@
             <div class="tab-pane" id="ProjectsTeams">Zawartość trzeciej zakładki</div>
         </div>
         <img class="img-responsive" src="~/img/whatever.jpg" alt="Upsik - brakuje obrazka" />
-    </div>
-
-
-
-    <!--Modal - update settings-->
-    <div class="modal fade" id="updateModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content for adding Iteration without working datepicker :/-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><strong>Update settings</strong></h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        Change login:
-                        <div class="form-group row">
-                            <label class="col-sm-4 control-label" for="login"> Login: </label>
-                            <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 control-label" for="newLogin"> New login: </label>
-                            <input class="form-control" type="text" id="login" ng-model="newLogin" required autofocus ng-class="Submited?'ng-dirty':''">
-                        </div>
-                        <hr />
-                        Change password:
-                        <div class="form-group row">
-                            <label class="col-sm-4 control-label" for="password"> Old password: </label>
-                            <input class="form-control" type="password" id="password" ng-model="password" required autofocus ng-class="Submited?'ng-dirty':''">
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 control-label" for="newPassword"> New password: </label>
-                            <input class="form-control" type="password" id="newPassword" ng-model="newPassword" required autofocus ng-class="Submited?'ng-dirty':''">
-                        </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 control-label" for="confirmPassword"> Confirm Password: </label>
-                        <input class="form-control" type="password" id="confirmPassword" ng-model="confirmPassword" required autofocus ng-class="Submited?'ng-dirty':''">
-                    </div>
-                    <hr />
-                    Change e-mail:
-                    <div class="form-group row">
-                        <label class="control-label col-sm-4" for="email"> E-mail adress: </label>
-                        <input class="form-control" type="email" id="email" ng-model="email" required autofocus ng-class="Submited?'ng-dirty':''">
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-4" for="newEmail"> New e-mail adress: </label>
-                        <input class="form-control" type="email" id="newEmail" ng-model="newEmail" required autofocus ng-class="Submited?'ng-dirty':''">
-                    </div>
-                    <hr />
-                    Change phone number:
-                    <div class="form-group row">
-                        <label class="col-sm-4 control-label" for="phone"> Phone number: </label>
-                        <input class="form-control" type="tel" id="phone" ng-model="phone" required autofocus ng-class="Submited?'ng-dirty':''">
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 control-label" for="newPhone"> New phone number: </label>
-                        <input class="form-control" type="tel" id="newPhone" ng-model="newPhone" required autofocus ng-class="Submited?'ng-dirty':''">
-                    </div>
-               </form>
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn green_button" data-dismiss="modal" ng-submit="changeUserData()">Update</button>
-                    <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
     </div>
 </body>

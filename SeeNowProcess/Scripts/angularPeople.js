@@ -8,6 +8,8 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.userName = 'Select user to show content.';
     $scope.currentUser;
     $scope.info;
+    $scope.passwords = { "oldPassword": "", "newPassword": "", "confirmPassword": "" };
+
 
     
     $http({
@@ -33,25 +35,32 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             $scope.currentUser = response.data[0];
             switch ($scope.currentUser.role) {
                 case 0:
-                    $scope.currentUser.role = "Admin";
+                    $scope.currentRole = "Admin";
+                    $scope.role = "admin";
                     break;
                 case 1:
-                    $scope.currentUser.role = "Head Master";
+                    $scope.currentRole = "Head Master";
+                    $scope.role = "headMaster";
                     break;
                 case 2:
-                    $scope.currentUser.role = "Senior Developer";
+                    $scope.currentRole = "Senior Developer";
+                    $scope.role = "seniorDev";
                     break;
                 case 3:
-                    $scope.currentUser.role = "Junior Developer";
+                    $scope.currentRole = "Junior Developer";
+                    $scope.role = "juniorDev";
                     break;
                 case 4:
-                    $scope.currentUser.role = "Intern";
+                    $scope.currentRole = "Intern";
+                    $scope.role = "intern";
                     break;
                 case 5:
-                    $scope.currentUser.role = "Tester";
+                    $scope.currentRole = "Tester";
+                    $scope.role = "tester";
                     break;
                 case 6:
-                    $scope.currentUser.role = "Client";
+                    $scope.currentRole = "Client";
+                    $scope.role = "client";
                     break;
             }
             $scope.message = $scope.currentUser.id;
@@ -81,14 +90,46 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             }, function myError(response) {
                 $scope.message = "Error in displaying User Stories.";
             })
-
+            $http({
+                method: "GET",
+                url: "/People/AllPeople",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.lists = response.data;
+            }, function myError(response) {
+                $scope.message = "Error";
+            })
         }, function myError(response) {
             $scope.message = "Error taking User";
         })
     }
 
     $scope.updateUser = function (id) {
-        if ($scope.newPassword === $scope.confirmPassword && $scope.newPassword !== "") {
+        switch ($scope.role) {
+            case "admin":
+                $scope.roleNumber = 0;
+                break;
+            case "headMaster":
+                $scope.roleNumber = 1;
+                $scope.role = "";
+                break;
+            case "seniorDev":
+                $scope.roleNumber = 2;
+                break;
+            case "juniorDev":
+                $scope.roleNumber = 3;
+                break;
+            case "intern":
+                $scope.roleNumber = 4;
+                break;
+            case  "tester":
+                $scope.roleNumber = 5;
+                break;
+            case "client":
+                $scope.roleNumber = 6;
+                break;
+        }
+        if ($scope.passwords.newPassword == $scope.passwords.confirmPassword && $scope.passwords.newPassword != "") {
             $http({
                 method: "POST",
                 url: "/People/updateUserPassword",
@@ -100,7 +141,7 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
                 $http({
                     method: "POST",
                     url: "/People/updateUserData",
-                    data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.name, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone }),
+                    data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.login, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone, "role": $scope.roleNumber }),
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
                 }).then(function mySucces(response) {
@@ -114,15 +155,18 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
                 $scope.message = "Error in passwords.";
             })
 
-        } else if ($scope.newPassword === "") {
+        } else if ($scope.passwords.newPassword == "") {
+
             $http({
                 method: "POST",
                 url: "/People/updateUserData",
-                data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.name, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone }),
+                data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.login, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone, "role": $scope.roleNumber }),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
-                $scope.message ="Success";
+                $scope.message = "Success";
+
+
 
             }, function myError(response) {
                 $scope.message = "Error in displaying User Stories.";
@@ -130,6 +174,12 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
         }
         else
             $scope.message = "Passwords don't match";
+        $scope.passwords.oldPassword = "";
+        $scope.passwords.newPassword = "";
+        $scope.passwords.confirmPassword = "";
+        $scope.showUser($scope.currentUser.id);
+        $scope.userName = $scope.currentUser.name;
+
     }
 
     $scope.deleteUser = function (id) {
@@ -141,6 +191,19 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
 
         }).then(function mySucces(response) {
             $scope.message = "Success";
+            $http({
+                method: "GET",
+                url: "/People/AllPeople",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.lists = response.data;
+                $scope.currentUser = null;
+                $scope.userName = 'Select user to show content.';
+                $scope.role = null;
+            }, function myError(response) {
+                $scope.message = "Error";
+            })
+
 
         }, function myError(response) {
             $scope.message = "Error in displaying User Stories.";

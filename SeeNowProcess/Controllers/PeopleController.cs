@@ -274,7 +274,7 @@ namespace SeeNowProcess.Controllers
 
 
         [HttpPost]
-        public ActionResult updateUserData(int id, string name, string login, string email, string phone)
+        public ActionResult updateUserData(int id, string name, string login, string email, string phone, int role)
         {
             using (db)
             {
@@ -288,6 +288,7 @@ namespace SeeNowProcess.Controllers
                 user.Name = name;
                 user.Email = email;
                 user.PhoneNumber = phone;
+                /*user.role = role; <= nie umiem tego przypisać - Krzysiu napraw xD*/
                 db.MarkAsModified(user);
                 db.SaveChanges();
             }
