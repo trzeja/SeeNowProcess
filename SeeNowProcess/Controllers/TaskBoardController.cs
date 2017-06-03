@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SeeNowProcess.Models;
+using SeeNowProcess.DAL;
+using SeeNowProcess.Controllers;
+using System.Net;
 
 namespace SeeNowProcess.Controllers
 {
