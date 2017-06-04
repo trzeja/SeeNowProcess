@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SeeNowProcess.Models;
+using SeeNowProcess.DAL;
+using SeeNowProcess.Controllers;
+using System.Net;
 
 namespace SeeNowProcess.Controllers
 {
@@ -52,28 +56,45 @@ namespace SeeNowProcess.Controllers
                     UserSID = a.UserStoryID,
                     Title = a.Title
                 });
+                var data = resultJ.ToList();
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 
         [HttpPost]
-        public ActionResult UpdateDatabase(int ProblemID, int UserStoryID, int BoxOrder)
+        public ActionResult UpdateDatabase(int problemID, int newUserStoryID, int newBoxOrder)
         {
             using (db)
             {
                 //                           TO DO
                 // czy nie powinnam też oprocz boxorder przesylac boxid? - R.
+                // zwrocic Roksanie id boxa do ktorego przeniesiono taska?
 
-                //var problem = db.Problems.Where(p => p.ProblemID == ProblemID).FirstOrDefault();
-                //var newBox = db.Boxes.Where(b => b.Order == NewState).FirstOrDefault();
-                //if (problem == null)
-                //    return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
-                //if (newBox == null)
-                //    return Json("Error - no such box!", JsonRequestBehavior.AllowGet);
-                //problem.Box = newBox;
-                //db.MarkAsModified(problem);
-                //db.SaveChanges();
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
+                var newUserStory = db.UserStories.Where(u => u.UserStoryID == newUserStoryID).FirstOrDefault();                
+                var newBox = newUserStory.Project.Boxes.Where(b => b.Order == newBoxOrder).FirstOrDefault();
+                
+                if (problem == null)
+                    return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
+                if (newUserStory == null)
+                    return Json("Error - no such story!", JsonRequestBehavior.AllowGet);
+                if (newBox == null)
+                    return Json("Error - no such box!", JsonRequestBehavior.AllowGet);
+
+                var oldBox = problem.Box;
+                
+                problem.Box = newBox;
+                newBox.Problems.Add(problem);
+
+                oldBox.Problems.Remove(problem); // moze nie trza
+
+                db.MarkAsModified(problem);
+                db.MarkAsModified(newBox);
+                db.MarkAsModified(oldBox);
+                db.MarkAsModified(newUserStory);
+                db.SaveChanges();
+                
+                return new JsonResult { Data = newBox.BoxID, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
     }
