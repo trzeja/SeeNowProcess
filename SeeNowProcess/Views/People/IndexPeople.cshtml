@@ -62,7 +62,9 @@
                 Tasks
                 <hr/>
                     <div ng-repeat="item in userTasks">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
+
+                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+
                     </div>
                 User Stories
                 <hr/>
@@ -150,8 +152,18 @@
                     <button type="button" class="btn red_button" ng-click="deleteUser(currentUser.id)">Delete User</button>
                 </div>
             </div>
-            <div class="tab-pane" id="ProjectsTeams">Zawartość trzeciej zakładki</div>
+            <div class="tab-pane" id="ProjectsTeams">
+                Teams
+                <hr />
+                <div ng-repeat="item in userTeams">
+                    <div class="element">Team: {{item.Name}}<p class="element2">Team leader: {{item.Leader}}</p></div>
+                </div>
+               <!-- Projects
+                <hr />
+                <div ng-repeat="item in userTeams">
+                    <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
+                </div>-->
+            </div>
         </div>
-        <img class="img-responsive" src="~/img/whatever.jpg" alt="Upsik - brakuje obrazka" />
     </div>
 </body>
