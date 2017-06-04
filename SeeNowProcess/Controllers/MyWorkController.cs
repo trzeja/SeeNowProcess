@@ -14,6 +14,13 @@ namespace SeeNowProcess.Controllers
     {
         // public MyWorkController(ISeeNowContext context) : base(context) { }
 
+
+        //public ActionResult GetCurrentUser()
+        //{
+        //    var user = Session["user"];
+        //    return new JsonResult { Data = user.ToString(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        //}
+
         // GET: MyWork
         public ActionResult MyWorkIndex(int? count)
         {

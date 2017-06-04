@@ -126,6 +126,15 @@
 
     <script>
         angular.module("dragAndDrop", ['dndLists']).controller("dragging", function ($scope, $http) {
+
+            //$http({
+            //    method: "GET",
+            //    url: "/MyWork/GetCurrentUser",
+            //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            //}).then(function success(result) {
+            //    $scope.user = result.data;
+            //}).catch(function fail(result) { });
+
             $scope.dropCallback = function (item,number) {
                 //w item mamy jaki był poprzednio - w number jaki ma byc nowy
                 $http({
