@@ -16,7 +16,7 @@ loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
 
         }).then(function mySucces(response) {
             if (response.data === "Success")
-                window.location.href = "/People/Index";
+                window.location.href = "/People/PeopleIndex";
             else
                 $scope.myWelcome = "Error - incorrect data!";
                 $scope.login = "";

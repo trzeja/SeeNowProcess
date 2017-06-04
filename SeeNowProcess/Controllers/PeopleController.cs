@@ -20,7 +20,7 @@ namespace SeeNowProcess.Controllers
          [HttpPost]*/
         public PeopleController(ISeeNowContext context):base(context) {}
 
-        public ActionResult IndexPeople(int? count)
+        public ActionResult PeopleIndex(int? count)
         {
             using (db)
             {

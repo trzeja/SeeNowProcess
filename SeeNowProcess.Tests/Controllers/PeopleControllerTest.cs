@@ -21,7 +21,7 @@ namespace SeeNowProcess.Tests.Controllers
             var context =GetTestContextDemo();            
 
             var controller = new PeopleController(context);
-            var result = controller.IndexPeople(null) as ViewResult;
+            var result = controller.PeopleIndex(null) as ViewResult;
             var users = (List<User>)result.ViewData.Model;
 
             Assert.IsNotNull(result);
