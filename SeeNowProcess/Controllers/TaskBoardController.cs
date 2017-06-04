@@ -73,7 +73,12 @@ namespace SeeNowProcess.Controllers
                 var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
                 var newUserStory = db.UserStories.Where(u => u.UserStoryID == newUserStoryID).FirstOrDefault();                
                 var newBox = newUserStory.Project.Boxes.Where(b => b.Order == newBoxOrder).FirstOrDefault();
+                //var oneBoxFromBoxesFromNewUserStory = newUserStory.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault().Box
+                //var boxes = newUserStory.Problems.GroupBy(p=>p.Box.Order == newBoxOrder).
                 
+
+
+
                 if (problem == null)
                     return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
                 if (newUserStory == null)
@@ -85,13 +90,14 @@ namespace SeeNowProcess.Controllers
                 
                 problem.Box = newBox;
                 newBox.Problems.Add(problem);
-
-                oldBox.Problems.Remove(problem); // moze nie trza
-
                 db.MarkAsModified(problem);
-                db.MarkAsModified(newBox);
-                db.MarkAsModified(oldBox);
-                db.MarkAsModified(newUserStory);
+
+                //oldBox.Problems.Remove(problem); // moze nie trza
+
+
+                //db.MarkAsModified(newBox);
+                //db.MarkAsModified(oldBox);
+                //db.MarkAsModified(newUserStory);
                 db.SaveChanges();
                 
                 return new JsonResult { Data = newBox.BoxID, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
