@@ -194,10 +194,14 @@
                     method: "POST",
                     url: "/TaskBoard/UpdateDatabase",
                     data: $.param({
-                        'ProblemID': item.ProblemID, 'UserStoryID': userstory, 'BoxOrder': box
+                        'ProblemID': item.Id, 'UserStoryID': userstory, 'BoxOrder': box
                     }),
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-                }).then(function success(response) { }, function failure(response) { });
+                }).then(function success(response) {
+                    $scope.hello = ":)";
+                }, function failure(response) {
+                    $scope.hello = ":(";
+                });
                 //item.BoxID = number;
                 //tu problem ze zmienianiem boxid a nie boxorder
                 return item;
