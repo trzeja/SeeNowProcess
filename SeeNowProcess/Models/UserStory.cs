@@ -25,6 +25,7 @@ namespace SeeNowProcess.Models
         public string Notes { get; set; }
         public virtual User Owner {get;set;}
         public virtual ICollection<Team> Teams { get; set; } //to
+        public virtual ICollection<Problem> Problems { get; set; } 
         //public Team Team { get; set; }        //lub to
         public string Criteria { get; set; }
         public virtual Project Project { get; set; }
