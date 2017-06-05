@@ -177,11 +177,10 @@ namespace SeeNowProcess.Controllers
                 Assignment assignment = user.Assignments.Where(a => a.TeamID == team.TeamID).FirstOrDefault();
                 if (assignment == null)
                     return Json("Given user isn't assigned to given team", JsonRequestBehavior.AllowGet);
-                user.Assignments.Remove(assignment);
+                db.Assignments.Remove(assignment);
                 db.MarkAsModified(team);
                 db.MarkAsModified(user);
-                db.MarkAsModified(assignment); // to tu ma być czy nie? - wyjdzie na testach jak będzie front
-                db.SaveChanges();
+                    db.SaveChanges();
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }
