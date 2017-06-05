@@ -34,6 +34,8 @@ namespace SeeNowProcess.Controllers
                 if (user != null && user.ComparePassword(password))
                 {
                     Session["user"] = user;
+                    //Session.SetDataToSession<string>("user", user.ToString());
+                    //Session["user"] = user.Login.ToString();
                     return new JsonResult { Data = "Success"/*"Username: " + user.Name + " Login: " + user.Login*/, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
                 else {

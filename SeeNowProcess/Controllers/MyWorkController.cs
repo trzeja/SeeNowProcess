@@ -17,6 +17,8 @@ namespace SeeNowProcess.Controllers
 
         //public ActionResult GetCurrentUser()
         //{
+        //    //string user = Session.GetDataFromSession<string>("user");
+        //    //ViewData["sessionStringByExtensions"] = user;
         //    var user = Session["user"];
         //    return new JsonResult { Data = user.ToString(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         //}

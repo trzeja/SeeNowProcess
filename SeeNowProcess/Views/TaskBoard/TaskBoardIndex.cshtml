@@ -221,7 +221,7 @@
                 <td class="space column">{{x.title}} </td>
             <td class="space column" valign="top" ng-repeat="y in x.boxes">
                 <ul class="visible list-unstyled text-center" dnd-list="y.tasks" dnd-drop="dropCallback(item,x.id,y.order)">
-                     @*dnd-drop="dropCallback(item,)"*@
+          
                     <li ng-repeat="item in y.tasks"
                         dnd-draggable="item"
                         dnd-moved="y.tasks.splice($index, 1)"
