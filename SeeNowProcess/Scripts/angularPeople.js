@@ -11,6 +11,7 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.passwords = { "oldPassword": "", "newPassword": "", "confirmPassword": "" };
     $scope.roles = ["admin", "headMaster", "seniorDev", "juniorDev", "intern", "tester", "client"];
     $scope.fullRoles = ["Admin", "Head Master", "Senior Developer", "Junior Developer", "Intern", "Tester", "Client"];
+    $scope.importance = ["None", "Trivial", "Regular", "Important", "Critical"];
 
     
     $http({
@@ -77,6 +78,10 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
 
             }).then(function mySucces(response) {
                 $scope.userTasks = response.data.Tasks;
+                for (var i = 0; i < $scope.userTasks.length; ++i) {
+                    $scope.userTasks[i].Importance = $scope.importance[$scope.userTasks[i].Importance];
+                }
+                
 
             }, function myError(response) {
                 $scope.message = "Error in displaying tasks";
@@ -232,6 +237,108 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             $scope.message = "Error in moving task";
         })
         return item;
+    }
+
+    $scope.deleteTask = function (UserID, TaskID) {
+        /*$scope.message = ID;*/
+        $http({
+            method: "POST",
+            url: "/People/RevokeTask",
+            data: $.param({ "userId": UserID, "taskId": TaskID }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = response.data;
+            $http({
+                method: "POST",
+                url: "/People/GetTasks",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTasks = response.data.Tasks;
+                for (var i = 0; i < $scope.userTasks.length; ++i) {
+                    $scope.userTasks[i].Importance = $scope.importance[$scope.userTasks[i].Importance];
+                }
+            }, function myError(response) {
+                $scope.message = "Error in displaying tasks";
+            })
+
+            $http({
+                method: "POST",
+                url: "/People/GetAssignments",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTeams = response.data.Teams;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+            $http({
+                method: "GET",
+                url: "/People/AllPeople",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.lists = response.data;
+            }, function myError(response) {
+                $scope.message = "Error";
+            })
+        }, function myError(response) {
+            $scope.message = "Error taking User";
+        })
+    }
+
+    $scope.deleteStory = function (UserID, StoryID) {
+        /*$scope.message = ID;*/
+        $http({
+            method: "POST",
+            url: "/People/RevokeStory",
+            data: $.param({ "userId": UserID, "storyId": StoryID }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = response.data;
+            $http({
+                method: "POST",
+                url: "/People/GetTasks",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTasks = response.data.Tasks;
+                for (var i = 0; i < $scope.userTasks.length; ++i) {
+                    $scope.userTasks[i].Importance = $scope.importance[$scope.userTasks[i].Importance];
+                }
+            }, function myError(response) {
+                $scope.message = "Error in displaying tasks";
+            })
+
+            $http({
+                method: "POST",
+                url: "/People/GetAssignments",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTeams = response.data.Teams;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+            $http({
+                method: "GET",
+                url: "/People/AllPeople",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.lists = response.data;
+            }, function myError(response) {
+                $scope.message = "Error";
+            })
+        }, function myError(response) {
+            $scope.message = "Error taking User";
+        })
     }
 
 
