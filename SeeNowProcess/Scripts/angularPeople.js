@@ -341,6 +341,41 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
         })
     }
 
+    $scope.deleteTeam = function (UserID, TeamID) {
+        /*$scope.message = ID;*/
+        $http({
+            method: "POST",
+            url: "/People/RevokeTeam",
+            data: $.param({ "userId": UserID, "teamId": TeamID }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = response.data;
+            $http({
+                method: "POST",
+                url: "/People/GetAssignments",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTeams = response.data.Teams;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+          /*  $http({
+                method: "GET",
+                url: "/People/AllPeople",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.lists = response.data;
+            }, function myError(response) {
+                $scope.message = "Error";
+            })*/
+        }, function myError(response) {
+            $scope.message = "Error taking User";
+        })
+    }
 
 
 }]);
