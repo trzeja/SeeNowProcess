@@ -14,11 +14,66 @@ namespace SeeNowProcess.Controllers
             return View();
         }
 
+        public ActionResult ChangeCurrentProject(string id)
+        {
+            if (Session["project"] == null)
+            {
+                if (id == "")
+                {
+                    return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    Session["project"] = id;
+                    return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    //return RedirectToAction("BacklogIndex", "Backlog");
+                }
+            }
+            else if (!Session["project"].Equals(id))
+            {
+                Session["project"] = id;
+                return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                //return RedirectToAction("BacklogIndex", "Backlog");
+            }
+            return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            
+
+        }
+
+        public ActionResult GetCurrentProject()
+        {
+            using (db)
+            {
+                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                    return new JsonResult { Data = "", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                else
+                    return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        public ActionResult GetProjects()
+        {
+            using (db)
+            {
+                var resultJ = db.Projects.Select(a => new
+                {
+                    id = a.ProjectID,
+                    name = a.Name
+                });
+                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
         public ActionResult GetUserStories()
         {
             using (db)
             {
-                var resultJ = db.UserStories.Select(a => new
+                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                {
+                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                int id = Int32.Parse(Session["project"].ToString());
+                var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
                 {
                     UserSID = a.UserStoryID,
                     Title = a.Title

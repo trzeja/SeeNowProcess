@@ -22,6 +22,11 @@
 </head>
 
 <body ng-app="backlog" ng-controller="backlogCtrl">
+    <div align="right" >
+        <label >Current project: {{currentProject}}</label><br>
+        <select ng-model="currentProject" ng-options="x.id as x.name for x in projects"></select>
+    </div>
+
     <div>
         <h4>User Stories</h4>
         <hr>
