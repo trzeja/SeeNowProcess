@@ -89,6 +89,9 @@ namespace SeeNowProcess.Controllers
                         ProblemID = p.ProblemID,
                         Title = p.Title,
                         Description = p.Description,
+                        Importance = p.Importance,
+                        Creation = p.CreationDate,
+                        Story = p.Story.Title,
                         BoxOrder = p.Box.Order,
                         AssignedUsers = p.AssignedUsers.Select(u => u.UserID).ToList()
                     });
@@ -174,11 +177,10 @@ namespace SeeNowProcess.Controllers
                 Assignment assignment = user.Assignments.Where(a => a.TeamID == team.TeamID).FirstOrDefault();
                 if (assignment == null)
                     return Json("Given user isn't assigned to given team", JsonRequestBehavior.AllowGet);
-                user.Assignments.Remove(assignment);
+                db.Assignments.Remove(assignment);
                 db.MarkAsModified(team);
                 db.MarkAsModified(user);
-                db.MarkAsModified(assignment); // to tu ma być czy nie? - wyjdzie na testach jak będzie front
-                db.SaveChanges();
+                    db.SaveChanges();
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }
@@ -212,7 +214,12 @@ namespace SeeNowProcess.Controllers
                     {
                         TeamID = t.TeamID,
                         Name = t.Name,
-                        UserStory = t.UserStory == null ? "Unassigned" : t.UserStory.Title,
+                        UserStoryID = t.UserStory == null ? -1 : t.UserStory.UserStoryID,
+                        UserStoryTitle = t.UserStory == null ? "Unassigned" : t.UserStory.Title,
+                        UserStoryDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Description,
+                        /*UserStorySize = t.UserStory == null ? "Unassigned" : t.UserStory.Size,*/
+                        UserStoryUnit = t.UserStory == null ? "Unassigned" : t.UserStory.Unit,
+                        UserStoryProject = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
                         Leader = t.TeamLeader.Name
                     });
                 //przypisań do projektu chyba nie robimy?
@@ -312,6 +319,29 @@ namespace SeeNowProcess.Controllers
             }
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult RevokeStory(int userId, int storyId)
+        {
+            /*     using (db)
+                 {
+                     Problem problem = db.Problems.Where(p => p.ProblemID == taskId).FirstOrDefault();
+                     User user = db.Users.Where(u => u.UserID == userId).FirstOrDefault();
+                     if (problem == null)
+                         return Json("Invalid Task", JsonRequestBehavior.AllowGet);
+                     if (user == null)
+                         return Json("Invalid User", JsonRequestBehavior.AllowGet);
+                     if (!user.Problems.Contains(problem))
+                         return Json("Given user isn't assigned to given task", JsonRequestBehavior.AllowGet);
+                     user.Problems.Remove(problem);
+                     db.MarkAsModified(problem);
+                     db.MarkAsModified(user);
+                     db.SaveChanges();
+                     return Json("Success", JsonRequestBehavior.AllowGet);
+                 }*/
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

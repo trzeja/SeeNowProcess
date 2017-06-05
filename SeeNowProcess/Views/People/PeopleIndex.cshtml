@@ -52,7 +52,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
                     <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab">Account Settings</a></li>
-                    <li class="my-tabs"><a href="#ProjectsTeams" role="tab" data-toggle="tab">Projects & Teams</a></li>
+                    <li class="my-tabs"><a href="#Teams" role="tab" data-toggle="tab">Teams</a></li>
                     <!--<li class="my-tabs"><a href="#4zakladka" role="tab" data-toggle="tab">4 zakładka</a></li>-->
                 </ul>
             </div>
@@ -61,16 +61,53 @@
             <div class="tab-pane active" id="OpenAssignments">
                 Tasks
                 <hr/>
-                    <div ng-repeat="item in userTasks">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 15vw"> Title</th>
+                            <th style="width: 30vw"> Description</th>
+                            <th style="width: 5vw"> Importance</th>
+                            <th style="width: 8vw"> User Story</th>
+                            <th style="width: 2vw"> Delete </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in userTasks">
+                            <td>{{item.Title}}</td>
+                            <td>{{item.Description}}</td>
+                            <td>{{item.Importance}}</td>
+                            <td>{{item.Story}}</td>
+                            <td><button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button></td>
+                            <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+                        </tr>
+                    </tbody>
+
+                </table>
+                <br />
                 User Stories
                 <hr/>
-                    <div ng-repeat="item in userTeams">
-                        <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
-                    </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 15vw"> Title</th>
+                            <th style="width: 30vw"> Description</th>
+                            <th style="width: 15vw"> Project</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in userTeams">
+                            <td>{{item.UserStoryTitle}}</td>
+                            <td>{{item.UserStoryDescription}}</td>
+                            <td>{{item.UserStoryProject}}</td>
+                          <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+                        </tr>
+                    </tbody>
+
+                </table>
             </div>
-            <div class="tab-pane" id="AccountSettings">
+            <div class="tab-pane" style="margin-left: 20px; width: 70%; margin-bottom: 100px;" id="AccountSettings">
                 <form class="form-horizontal">
                     Name:
                     <div class="form-group row">
@@ -150,8 +187,34 @@
                     <button type="button" class="btn red_button" ng-click="deleteUser(currentUser.id)">Delete User</button>
                 </div>
             </div>
-            <div class="tab-pane" id="ProjectsTeams">Zawartość trzeciej zakładki</div>
+            <div class="tab-pane" id="Teams">
+                Teams
+                <hr />
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 15vw"> Name </th>
+                            <th style="width: 15vw"> Team Leader </th>
+                            <th style="width: 2vw"> Delete </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in userTeams">
+                            <td>{{item.Name}}</td>
+                            <td>{{item.Leader}}</td>
+                            <td><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">-</button></td>
+                            <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+                        </tr>
+                    </tbody>
+
+                </table>
+               <!-- Projects
+                <hr />
+                <div ng-repeat="item in userTeams">
+                    <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
+                </div>-->
+            </div>
         </div>
-        <img class="img-responsive" src="~/img/whatever.jpg" alt="Upsik - brakuje obrazka" />
     </div>
 </body>
