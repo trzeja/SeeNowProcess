@@ -5,7 +5,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     $scope.tasksUS;
     $scope.info;
 
-
+    //nie lubie angulara :( -R
     $scope.show = 0;
     $scope.currentProject;
     $scope.projects;
