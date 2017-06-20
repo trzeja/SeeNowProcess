@@ -65,10 +65,10 @@ namespace SeeNowProcess.Controllers
         // GET: TaskBoard
         public ActionResult TaskBoardIndex()
         {
-            if (Session["user"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            //if (Session["user"] == null)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
             return View();
         }
 
@@ -135,23 +135,11 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                //                           TO DO
-                // czy nie powinnam też oprocz boxorder przesylac boxid? - R.
-                // zwrocic Roksanie id boxa do ktorego przeniesiono taska?
-                int id = Int32.Parse(Session["project"].ToString());
-
-                //pobranie newBoxId
-                var newBoxId = db.Boxes.Where(p => p.Project.ProjectID == id && p.Order == newBoxOrder);
-                //i prosze zwroc mi to boxid z tego kontolera bo potrzebuje w widoku :D
-
+                int projectId = int.Parse(Session["project"].ToString());                
+                var newBoxId = db.Boxes.Where(b => b.Project.ProjectID == projectId && b.Order == newBoxOrder).FirstOrDefault().BoxID;  
                 var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
+                var newBox = db.Boxes.Where(b => b.BoxID == newBoxId).FirstOrDefault();
                 var newUserStory = db.UserStories.Where(u => u.UserStoryID == newUserStoryID).FirstOrDefault();                
-                var newBox = newUserStory.Project.Boxes.Where(b => b.Order == newBoxOrder).FirstOrDefault();
-                //var oneBoxFromBoxesFromNewUserStory = newUserStory.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault().Box
-                //var boxes = newUserStory.Problems.GroupBy(p=>p.Box.Order == newBoxOrder).
-                
-
-
 
                 if (problem == null)
                     return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
@@ -164,17 +152,24 @@ namespace SeeNowProcess.Controllers
                 
                 problem.Box = newBox;
                 newBox.Problems.Add(problem);
+                oldBox.Problems.Remove(problem);
+
+                db.MarkAsModified(newBox);
+                db.MarkAsModified(oldBox);
+
+                var oldUserStory = problem.Story;
+
+                problem.Story = newUserStory;
+                newUserStory.Problems.Add(problem);
+                oldUserStory.Problems.Remove(problem);
+
                 db.MarkAsModified(problem);
-
-                //oldBox.Problems.Remove(problem); // moze nie trza
-
-
-                //db.MarkAsModified(newBox);
-                //db.MarkAsModified(oldBox);
-                //db.MarkAsModified(newUserStory);
+                db.MarkAsModified(newUserStory);
+                db.MarkAsModified(oldUserStory);
+                                
                 db.SaveChanges();
                 
-                return new JsonResult { Data = newBox.BoxID, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new JsonResult { Data = newBoxId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
     }
