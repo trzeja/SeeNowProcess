@@ -13,10 +13,10 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         // GET: IterationPlan
         public ActionResult Index()
         {
-            if (Session["user"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            //if (Session["user"] == null)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
             return View();
         }
 

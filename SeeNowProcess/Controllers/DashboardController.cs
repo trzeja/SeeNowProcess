@@ -11,10 +11,10 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            if (Session["user"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            //if (Session["user"] == null)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
             return View();
         }
     }
