@@ -66,9 +66,9 @@
         }
 
         .column {
-            min-width:30vw;
+            min-width:10vw;
             max-width:40vw;
-            width:40vw;
+            width:10vw;
             height:auto;
             min-height: 100px;
         }
@@ -169,7 +169,7 @@
             <tr ng-repeat="x in list">
                 <td class="space text">{{x.name}} </td>
                 <td class="space column" valign="top" ng-repeat="y in x.boxes">
-                    <ul class="visible list-unstyled text-center" dnd-list="y.tasks" dnd-drop="dropCallback(item,x.id,y.order)">
+                    <ul class="visible list-unstyled text-center" dnd-list="y.tasks" dnd-drop="dropCallback(item,item.User,x.id,y.order)">
 
                         <li ng-repeat="item in y.tasks"
                             dnd-draggable="item"

@@ -109,6 +109,10 @@ namespace SeeNowProcess.Controllers
 
         public ActionResult GetUsers()
         {
+            if ((Session["project"] == null) || (Session["project"].Equals("")))
+            {
+                return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
             int projectId = int.Parse(Session["project"].ToString());
             using (db)
             {

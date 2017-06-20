@@ -4,6 +4,7 @@
     $scope.currentProject;
     $scope.currentName;
     $scope.list = [];
+    $scope.lists = [];
     $scope.projects;
 
     $scope.$watch('currentProject', function () {
@@ -67,8 +68,12 @@
             $scope.users = result.data;
             for (var i = 0; i < $scope.users.length; i++) {
                 var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
-                $scope.list.push(user);
+                $scope.lists.push(user);
             }
+            /*for (var i = 0; i < $scope.lists.length; i++) {
+                var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
+                $scope.lists.push(user);
+            }*/
            $http({
                 method: "GET",
                 url: "/WorkByPerson/GetProblems",
@@ -77,20 +82,22 @@
                 $scope.problems = result.data;
                // $scope.list = [];
                 //tutaj rozdzial na listy
-                for (var i = 0; i < $scope.list.length; i++) {
+                for (var i = 0; i < $scope.lists.length; i++) {
                     for (var j = 0; j < $scope.boxes.length; j++) {
                         var box = { order: $scope.boxes[j].BoxOrder, name: $scope.boxes[j].Name, tasks: [] };
-                        $scope.list[i].boxes.push(box);
+                        $scope.lists[i].boxes.push(box);
                     }
                 }
                 for (var i = 0; i < $scope.problems.length; i++) {
-                    for (var j = 0; j < $scope.list.length; j++) {
+                    for (var j = 0; j < $scope.lists.length; j++) {
                         for (var k = 0; k < $scope.problems[i].AssignedUsers.length; k++) {
-                            if ($scope.problems[i].AssignedUsers[k]== $scope.list[j].id) {
-                                for (var k = 0; k < $scope.list[j].boxes.length; k++) {
-                                    if ($scope.problems[i].BoxOrder == $scope.list[j].boxes[k].order) //czy w tym boxie
+                            if ($scope.problems[i].AssignedUsers[k]== $scope.lists[j].id) {
+                                for (var k = 0; k < $scope.lists[j].boxes.length; k++) {
+                                    if ($scope.problems[i].BoxOrder == $scope.lists[j].boxes[k].order) //czy w tym boxie
                                     {
-                                        $scope.list[j].boxes[k].tasks.push($scope.problems[i]);
+                                        var task = {Id: $scope.problems[i].Id, Title: $scope.problems[i].Title, Description: $scope.problems[i].Description, UserId: $scope.lists[j].id};
+                                        $scope.lists[i].boxes[k].tasks.push(task);
+                                        //$scope.lists[j].boxes[k].tasks.push({$scope.problems[i]});
                                     }
                                 }
                             }
@@ -106,6 +113,20 @@
                         }*/
                     }
                 }
+                var ok = 0;
+                for (var i = 0; i < $scope.lists.length; i++) {
+                    var ok = 0;
+                    for (var j = 0; j <$scope.boxes.length; j++) {
+                        if ($scope.lists[i].boxes[j].tasks.length > 0) {
+                            ok = 1;
+                        }
+                    }
+                    if (ok == 1)
+                        $scope.list.push($scope.lists[i]);
+                    ok = 0;
+                        //if ($scope.lists[i].boxes[j].tasks)
+                    //}
+                }
             }).catch(function fail(result) {
                 $scope.problems = ":(";
             })
@@ -116,13 +137,13 @@
         $scope.boxes = ":(";
     })
 
-    $scope.dropCallback = function (item, userstory, box) { //userstory->id, box->order
+    $scope.dropCallback = function (item, oldUser, newUser, box) { //userstory->id, box->order
         //w item mamy jaki był poprzednio - w number jaki ma byc nowy
         $http({
             method: "POST",
             url: "/WorkByPerson/UpdateDatabase",
-            data: $.param({
-                'problemID': item.Id, 'newUserStoryID': userstory, 'newBoxOrder': box
+            data: $.param({//int problemID, int oldUserID, int newUserID, int newBoxOrder
+                'problemID': item.Id, 'oldUserID': oldUser, 'newUserID': newUser, 'newBoxOrder': box
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
