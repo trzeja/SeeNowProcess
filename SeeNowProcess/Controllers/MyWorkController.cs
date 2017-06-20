@@ -59,7 +59,8 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                var resultJ = db.Problems.Select(a => new
+                int id = Int32.Parse(Session["user"].ToString());
+                var resultJ = db.Problems.Where(p => p.AssignedUsers.Select(u=>u.UserID).Contains(id)).Select(a => new
                 {
                     ProblemID = a.ProblemID,
                     Title = a.Title,
