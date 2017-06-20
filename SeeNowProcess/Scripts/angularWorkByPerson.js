@@ -96,7 +96,7 @@
                                     if ($scope.problems[i].BoxOrder == $scope.lists[j].boxes[k].order) //czy w tym boxie
                                     {
                                         var task = {Id: $scope.problems[i].Id, Title: $scope.problems[i].Title, Description: $scope.problems[i].Description, UserId: $scope.lists[j].id};
-                                        $scope.lists[i].boxes[k].tasks.push(task);
+                                        $scope.lists[j].boxes[k].tasks.push(task);
                                         //$scope.lists[j].boxes[k].tasks.push({$scope.problems[i]});
                                     }
                                 }
@@ -137,16 +137,17 @@
         $scope.boxes = ":(";
     })
 
-    $scope.dropCallback = function (item, oldUser, newUser, box) { //userstory->id, box->order
+    $scope.dropCallback = function (item, newUser, box) { //userstory->id, box->order
         //w item mamy jaki był poprzednio - w number jaki ma byc nowy
         $http({
             method: "POST",
             url: "/WorkByPerson/UpdateDatabase",
             data: $.param({//int problemID, int oldUserID, int newUserID, int newBoxOrder
-                'problemID': item.Id, 'oldUserID': oldUser, 'newUserID': newUser, 'newBoxOrder': box
+                'problemID': item.Id, 'oldUserID': item.UserId, 'newUserID': newUser, 'newBoxOrder': box
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
+            item.UserId = newUser;
             $scope.hello = ":)";
         }, function failure(response) {
             $scope.hello = ":(";
