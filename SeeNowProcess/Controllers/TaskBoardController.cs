@@ -152,18 +152,21 @@ namespace SeeNowProcess.Controllers
                 
                 problem.Box = newBox;
                 newBox.Problems.Add(problem);
-                oldBox.Problems.Remove(problem); 
+                oldBox.Problems.Remove(problem);
+
+                db.MarkAsModified(newBox);
+                db.MarkAsModified(oldBox);
 
                 var oldUserStory = problem.Story;
 
                 problem.Story = newUserStory;
                 newUserStory.Problems.Add(problem);
-                db.MarkAsModified(problem);
                 oldUserStory.Problems.Remove(problem);
 
-                //db.MarkAsModified(newBox);
-                //db.MarkAsModified(oldBox);
-                //db.MarkAsModified(newUserStory);
+                db.MarkAsModified(problem);
+                db.MarkAsModified(newUserStory);
+                db.MarkAsModified(oldUserStory);
+                                
                 db.SaveChanges();
                 
                 return new JsonResult { Data = newBoxId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
