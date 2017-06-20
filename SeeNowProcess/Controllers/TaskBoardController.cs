@@ -138,6 +138,11 @@ namespace SeeNowProcess.Controllers
                 //                           TO DO
                 // czy nie powinnam też oprocz boxorder przesylac boxid? - R.
                 // zwrocic Roksanie id boxa do ktorego przeniesiono taska?
+                int id = Int32.Parse(Session["project"].ToString());
+
+                //pobranie newBoxId
+                var newBoxId = db.Boxes.Where(p => p.Project.ProjectID == id && p.Order == newBoxOrder);
+                //i prosze zwroc mi to boxid z tego kontolera bo potrzebuje w widoku :D
 
                 var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
                 var newUserStory = db.UserStories.Where(u => u.UserStoryID == newUserStoryID).FirstOrDefault();                
