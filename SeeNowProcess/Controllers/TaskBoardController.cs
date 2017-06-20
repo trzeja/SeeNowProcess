@@ -152,7 +152,7 @@ namespace SeeNowProcess.Controllers
                 
                 problem.Box = newBox;
                 newBox.Problems.Add(problem);
-                oldBox.Problems.Remove(problem);
+                //oldBox.Problems.Remove(problem);
 
                 db.MarkAsModified(newBox);
                 db.MarkAsModified(oldBox);
@@ -161,7 +161,7 @@ namespace SeeNowProcess.Controllers
 
                 problem.Story = newUserStory;
                 newUserStory.Problems.Add(problem);
-                oldUserStory.Problems.Remove(problem);
+                //oldUserStory.Problems.Remove(problem);
 
                 db.MarkAsModified(problem);
                 db.MarkAsModified(newUserStory);
