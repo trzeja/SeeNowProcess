@@ -22,10 +22,10 @@ namespace SeeNowProcess.Controllers
 
         public ActionResult PeopleIndex(int? count)
         {
-            //if (Session["user"] == null)
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             using (db)
             {
                 var allUsers = db.Users;

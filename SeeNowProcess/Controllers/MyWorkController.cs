@@ -26,10 +26,10 @@ namespace SeeNowProcess.Controllers
         // GET: MyWork
         public ActionResult MyWorkIndex(int? count)
         {
-            //if (Session["user"] == null)
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             using (db)
             { 
                 var all = db.Problems.ToList();
