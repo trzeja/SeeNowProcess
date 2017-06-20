@@ -82,7 +82,8 @@ namespace SeeNowProcess.Controllers
                     UserSID = a.Story.UserStoryID,
                     Id = a.ProblemID,
                     Title = a.Title,
-                    Description = a.Description
+                    Description = a.Description,
+                    AssignedUsers = a.AssignedUsers.Select(u => u.UserID).ToList()
                 });
                 return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
@@ -110,8 +111,13 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                var resultJ = db.Users.ToList();
-                return new JsonResult { Data = resultJ, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                var resultJ = db.Users.Select(p => new
+                {
+                    UserID = p.UserID,
+                    Name = p.Name
+                });
+
+                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 

@@ -3,8 +3,7 @@
     $scope.show = 0;
     $scope.currentProject;
     $scope.currentName;
-
-
+    $scope.list = [];
     $scope.projects;
 
     $scope.$watch('currentProject', function () {
@@ -65,19 +64,20 @@
         }).then(function success(result) {
             //pobrac tu trzeba tez do ktorego nalezy -> nie wiem o co mi chodzilo...
             //$scope.models.lists.A = result.data;
-            $scope.userstories = result.data;
-
-            $http({
+            $scope.users = result.data;
+            for (var i = 0; i < $scope.users.length; i++) {
+                var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
+                $scope.list.push(user);
+            }
+           $http({
                 method: "GET",
                 url: "/WorkByPerson/GetProblems",
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function success(result) {
                 $scope.problems = result.data;
-                $scope.list = [];
+               // $scope.list = [];
                 //tutaj rozdzial na listy
-                for (var i = 0; i < $scope.userstories.length; i++) {
-                    var userstory = { id: $scope.userstories[i].UserSID, title: $scope.userstories[i].Title, boxes: [] };
-                    $scope.list.push(userstory);
+                for (var i = 0; i < $scope.list.length; i++) {
                     for (var j = 0; j < $scope.boxes.length; j++) {
                         var box = { order: $scope.boxes[j].BoxOrder, name: $scope.boxes[j].Name, tasks: [] };
                         $scope.list[i].boxes.push(box);
@@ -85,7 +85,17 @@
                 }
                 for (var i = 0; i < $scope.problems.length; i++) {
                     for (var j = 0; j < $scope.list.length; j++) {
-                        if ($scope.problems[i].UserSID == $scope.list[j].id) //czy jest w tym userstory
+                        for (var k = 0; k < $scope.problems[i].AssignedUsers.length; k++) {
+                            if ($scope.problems[i].AssignedUsers[k]== $scope.list[j].id) {
+                                for (var k = 0; k < $scope.list[j].boxes.length; k++) {
+                                    if ($scope.problems[i].BoxOrder == $scope.list[j].boxes[k].order) //czy w tym boxie
+                                    {
+                                        $scope.list[j].boxes[k].tasks.push($scope.problems[i]);
+                                    }
+                                }
+                            }
+                        }
+                        /*if ($scope.problems[i].UserSID == $scope.list[j].id) //czy jest w tym userstory
                         {
                             for (var k = 0; k < $scope.list[j].boxes.length; k++) {
                                 if ($scope.problems[i].BoxOrder == $scope.list[j].boxes[k].order) //czy w tym boxie
@@ -93,14 +103,14 @@
                                     $scope.list[j].boxes[k].tasks.push($scope.problems[i]);
                                 }
                             }
-                        }
+                        }*/
                     }
                 }
             }).catch(function fail(result) {
                 $scope.problems = ":(";
             })
         }).catch(function fail(result) {
-            $scope.userstories = ":(";
+            $scope.users = ":(";
         })
     }).catch(function fail(result) {
         $scope.boxes = ":(";
