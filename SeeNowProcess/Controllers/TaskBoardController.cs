@@ -15,6 +15,10 @@ namespace SeeNowProcess.Controllers
         // GET: TaskBoard
         public ActionResult TaskBoardIndex()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 

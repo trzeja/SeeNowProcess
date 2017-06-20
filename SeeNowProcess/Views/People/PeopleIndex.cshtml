@@ -32,9 +32,10 @@
 
 <body ng-app="peoplePart" ng-controller="peopleCtrl" class="my-body">
 <!--by Ania :D Jestem z siebie dumna xD-->
-    <div>
+    <div style="color: white;" align="right"><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">-</button></div>
+     <div>
         <h4>People</h4>
-        <div>{{message}}</div>
+        @*<div>{{message}}</div>*@
         <hr />
     </div>
     <div >
@@ -59,8 +60,8 @@
         </div>
         <div class="tab-content">
             <div class="tab-pane active" id="OpenAssignments">
-                Tasks
-                <hr/>
+                <h4><strong>Tasks</strong></h4>
+                <hr />
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -85,27 +86,27 @@
 
                 </table>
                 <br />
-                User Stories
-                <hr/>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th style="width: 15vw"> Title</th>
-                            <th style="width: 30vw"> Description</th>
-                            <th style="width: 15vw"> Project</th>
-                        </tr>
+                <h4><strong>User Stories</strong></h4>
+                        <hr />
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15vw"> Title</th>
+                                    <th style="width: 30vw"> Description</th>
+                                    <th style="width: 15vw"> Project</th>
+                                </tr>
 
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in userTeams">
-                            <td>{{item.UserStoryTitle}}</td>
-                            <td>{{item.UserStoryDescription}}</td>
-                            <td>{{item.UserStoryProject}}</td>
-                          <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
-                        </tr>
-                    </tbody>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in userTeams">
+                                    <td>{{item.UserStoryTitle}}</td>
+                                    <td>{{item.UserStoryDescription}}</td>
+                                    <td>{{item.UserStoryProject}}</td>
+                                    <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+                                </tr>
+                            </tbody>
 
-                </table>
+                        </table>
             </div>
             <div class="tab-pane" style="margin-left: 20px; width: 70%; margin-bottom: 100px;" id="AccountSettings">
                 <form class="form-horizontal">
@@ -188,33 +189,36 @@
                 </div>
             </div>
             <div class="tab-pane" id="Teams">
-                Teams
-                <hr />
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th style="width: 15vw"> Name </th>
-                            <th style="width: 15vw"> Team Leader </th>
-                            <th style="width: 2vw"> Delete </th>
-                        </tr>
+                <h4><strong>Teams</strong></h4>
+                        <hr />
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15vw"> Name </th>
+                                    <th style="width: 15vw"> Team Leader </th>
+                                    <th style="width: 2vw"> Delete </th>
+                                </tr>
 
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in userTeams">
-                            <td>{{item.Name}}</td>
-                            <td>{{item.Leader}}</td>
-                            <td><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">-</button></td>
-                            <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
-                        </tr>
-                    </tbody>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in userTeams">
+                                    <td>{{item.Name}}</td>
+                                    <td>{{item.Leader}}</td>
+                                    <td><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">D)-n></button></td>
+                                            <!--<div c
+                                    lass="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+                                    </tr>
+                                </tr>
+                            </tbody>
 
-                </table>
-               <!-- Projects
-                <hr />
-                <div ng-repeat="item in userTeams">
-                    <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
-                </div>-->
+                        </table>
+                        <!-- Projects
+                 <hr />
+                 <div ng-repeat="item in userTeams">
+                     <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
+                 </div>-->
             </div>
         </div>
     </div>
+    <div style="color: white; margin-left: -15vw; z-index:15;"><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">-</button></div>
 </body>

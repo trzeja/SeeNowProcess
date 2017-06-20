@@ -11,6 +11,10 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         // GET: Create
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
     }
