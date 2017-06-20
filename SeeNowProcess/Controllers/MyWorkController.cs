@@ -31,7 +31,7 @@ namespace SeeNowProcess.Controllers
                 return RedirectToAction("Login", "Account");
             }
             using (db)
-            {
+            { 
                 var all = db.Problems.ToList();
                 if (count == null)
                 {

@@ -76,7 +76,7 @@ namespace SeeNowProcess.Controllers
         public ActionResult Logout()
         {
             Session["user"] = null;
-            return View();
+            return RedirectToAction("Login", "Account");
         }
 
     }
