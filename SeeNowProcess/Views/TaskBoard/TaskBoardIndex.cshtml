@@ -254,10 +254,12 @@
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
                 }).then(function success(response) {
                     $scope.hello = ":)";
+                    item.BoxID = response.data[0];
                 }, function failure(response) {
                     $scope.hello = ":(";
                 });
-                item.BoxID = number;
+                
+                item.UserSID = userstory;
                 //tu problem ze zmienianiem boxid a nie boxorder
                 return item;
             };
