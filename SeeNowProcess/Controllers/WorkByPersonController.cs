@@ -109,6 +109,7 @@ namespace SeeNowProcess.Controllers
 
         public ActionResult GetUsers()
         {
+            int projectId = int.Parse(Session["project"].ToString());
             using (db)
             {
                 var resultJ = db.Users.Select(p => new
@@ -148,30 +149,24 @@ namespace SeeNowProcess.Controllers
                 };
             }
         }
-       
+
 
         [HttpPost]
-        public ActionResult UpdateDatabase(int problemID, int newUserStoryID, int newBoxOrder)
+        public ActionResult UpdateDatabase(int problemID, int oldUserID, int newUserID, int newBoxOrder)
         {
             using (db)
             {
-                //                           TO DO
-                // czy nie powinnam też oprocz boxorder przesylac boxid? - R.
-                // zwrocic Roksanie id boxa do ktorego przeniesiono taska?
-
+                int projectId = int.Parse(Session["project"].ToString());
+                var newBoxId = db.Boxes.Where(b => b.Project.ProjectID == projectId && b.Order == newBoxOrder).FirstOrDefault().BoxID;
                 var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
-                var newUserStory = db.UserStories.Where(u => u.UserStoryID == newUserStoryID).FirstOrDefault();
-                var newBox = newUserStory.Project.Boxes.Where(b => b.Order == newBoxOrder).FirstOrDefault();
-                //var oneBoxFromBoxesFromNewUserStory = newUserStory.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault().Box
-                //var boxes = newUserStory.Problems.GroupBy(p=>p.Box.Order == newBoxOrder).
-
-
-
+                var newBox = db.Boxes.Where(b => b.BoxID == newBoxId).FirstOrDefault();
+                var newUser = db.Users.Where(u => u.UserID == newUserID).FirstOrDefault();
+                var oldUser = db.Users.Where(u => u.UserID == oldUserID).FirstOrDefault();
 
                 if (problem == null)
                     return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
-                if (newUserStory == null)
-                    return Json("Error - no such story!", JsonRequestBehavior.AllowGet);
+                if (newUser == null)
+                    return Json("Error - no such user!", JsonRequestBehavior.AllowGet);
                 if (newBox == null)
                     return Json("Error - no such box!", JsonRequestBehavior.AllowGet);
 
@@ -179,17 +174,20 @@ namespace SeeNowProcess.Controllers
 
                 problem.Box = newBox;
                 newBox.Problems.Add(problem);
+                
+                db.MarkAsModified(newBox);
+                db.MarkAsModified(oldBox);
+
+                problem.AssignedUsers.Add(newUser);
+                newUser.Problems.Add(problem);                
+
                 db.MarkAsModified(problem);
+                db.MarkAsModified(newUser);
+                db.MarkAsModified(oldUser);
 
-                //oldBox.Problems.Remove(problem); // moze nie trza
-
-
-                //db.MarkAsModified(newBox);
-                //db.MarkAsModified(oldBox);
-                //db.MarkAsModified(newUserStory);
                 db.SaveChanges();
 
-                return new JsonResult { Data = newBox.BoxID, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new JsonResult { Data = newBoxId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
     }
