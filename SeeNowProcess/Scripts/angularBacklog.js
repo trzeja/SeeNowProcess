@@ -1,5 +1,6 @@
 ﻿var backlogAngular = angular.module("backlog", []);
 backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $http) {
+    $scope.importance = ["None", "Trivial", "Regular", "Important", "Critical"];
     $scope.userstory = "Select user story to show content";
     $scope.currentUS;
     $scope.tasksUS;
@@ -103,6 +104,10 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(result) {
             $scope.tasksUS = result.data;
+            for (var i = 0; i < $scope.tasksUS.length; ++i) {
+                $scope.tasksUS[i].Importance = $scope.importance[$scope.tasksUS[i].Importance];
+            }
+
         }).catch(function fail(result) {
             $scope.problems = ":(";
         })

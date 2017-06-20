@@ -15,6 +15,11 @@
     <link rel="stylesheet" type="text/css" href="~/Content/PeopleStyles.css">
     <script src="~/Scripts/angularBacklog.js"></script>
     <style>
+        .topped {
+            top: 80px;
+            position: absolute;
+            left: 80vw;
+        }
     .my-tabs {
     width: 18vw;
     }
@@ -25,7 +30,7 @@
 </head>
 
 <body ng-app="backlog" ng-controller="backlogCtrl">
-    <div align="right" >
+    <div class="topped" align="right" >
         <label >Current project:</label>
         <p @*class="moveLeft"*@>{{currentName}}</p>
         <select ng-model="currentProject" ng-options="x.id as x.name for x in projects"></select>
@@ -67,11 +72,32 @@
             </div>
             
             <div class="tab-pane" id="Tasks">
-                <ul class="visible list-unstyled text-center">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 15vw"> Title</th>
+                            <th style="width: 30vw"> Description</th>
+                            <th style="width: 5vw"> Importance</th>
+                            <th style="width: 2vw"> Delete </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in tasksUS">
+                            <td>{{item.Title}}</td>
+                            <td>{{item.Description}}</td>
+                            <td>{{item.Importance}}</td>
+                            <td><button type="button" class="btn red_button" @*ng-click="deleteTask(currentUser.id, item.ProblemID)"*@>-</button></td>
+                            <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
+                        </tr>
+                    </tbody>
+
+                </table>
+                @*<ul class="visible list-unstyled text-center">
                     <li ng-repeat="item in tasksUS">
                         <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
-                </ul>
+                </ul>*@
             </div>
             
             <div class="tab-pane" id="Information">

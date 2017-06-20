@@ -115,7 +115,8 @@ namespace SeeNowProcess.Controllers
                         .Select(p => new
                         {
                             Title = p.Title,
-                            Description = p.Description
+                            Description = p.Description,
+                            Importance = p.Importance
                             //wysylac jeszcze inne informacje o tasku potem, np. order
                         });
                 return Json(tasks.ToList(), JsonRequestBehavior.AllowGet);
