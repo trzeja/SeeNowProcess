@@ -13,10 +13,10 @@ namespace SeeNowProcess.Controllers
         // GET: Add
         public ActionResult Index()
         {
-            if (Session["user"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            //if (Session["user"] == null)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
             return View();
         }
 

@@ -11,10 +11,10 @@ namespace SeeNowProcess.Controllers
         // GET: Backlog
         public ActionResult BacklogIndex()
         {
-            if (Session["user"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            //if (Session["user"] == null)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
             return View();
         }
 
