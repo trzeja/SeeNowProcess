@@ -12,6 +12,56 @@ namespace SeeNowProcess.Controllers
 {
     public class TaskBoardController : DIContextBaseController
     {
+
+        public ActionResult ChangeCurrentProject(string id)
+        {
+            if (Session["project"] == null)
+            {
+                if (id == "")
+                {
+                    return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    Session["project"] = id;
+                    return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    //return RedirectToAction("BacklogIndex", "Backlog");
+                }
+            }
+            else if (!Session["project"].Equals(id))
+            {
+                Session["project"] = id;
+                return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                //return RedirectToAction("BacklogIndex", "Backlog");
+            }
+            return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
+        }
+
+        public ActionResult GetCurrentProject()
+        {
+            using (db)
+            {
+                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                    return new JsonResult { Data = "", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                else
+                    return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        public ActionResult GetProjects()
+        {
+            using (db)
+            {
+                var resultJ = db.Projects.Select(a => new
+                {
+                    id = a.ProjectID,
+                    name = a.Name
+                });
+                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
         // GET: TaskBoard
         public ActionResult TaskBoardIndex()
         {
@@ -26,7 +76,12 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                var resultJ = db.Problems.Select(a => new
+                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                {
+                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                int id = Int32.Parse(Session["project"].ToString());
+                var resultJ = db.Problems.Where(u => u.Box.Project.ProjectID == id).Select(a => new
                 {
                     BoxOrder = a.Box.Order,
                     UserSID = a.Story.UserStoryID,
@@ -42,7 +97,12 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                var resultJ = db.Boxes.Select(a => new
+                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                {
+                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                int id = Int32.Parse(Session["project"].ToString());
+                var resultJ = db.Boxes.Where(u => u.Project.ProjectID == id).Select(a => new
                 {
                     BoxOrder = a.Order,
                     Name = a.Name
@@ -55,7 +115,12 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                var resultJ = db.UserStories.Select(a => new
+                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                {
+                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                int id = Int32.Parse(Session["project"].ToString());
+                var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
                 {
                     UserSID = a.UserStoryID,
                     Title = a.Title

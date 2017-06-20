@@ -7,8 +7,13 @@
 }
 <head>
     <style>
+        .topped {
+            top: 80px;
+            position: absolute;
+            left: 90vw;
+        }
         .fill {
-            top: 70px;
+            top: 160px;
             left: 195px;
             right: 0;
             bottom: 0;
@@ -132,6 +137,56 @@
     <script>
         angular.module("taskBoardPart", ['dndLists']).controller("taskBoardCtrl", function ($scope, $http) {
             $scope.message = "DZIALAAA";
+            $scope.show = 0;
+            $scope.currentProject;
+            $scope.currentName;
+
+
+            $scope.projects;
+
+            $scope.$watch('currentProject', function () {
+                if ($scope.show != 0) {
+                    $http({
+                        method: "POST",
+                        url: "/TaskBoard/ChangeCurrentProject",
+                        data: $.param({ id: $scope.currentProject }),
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                    }).then(function mySucces(response) {
+                        if (response.data == "Change") {
+                            window.location.href = "/TaskBoard/TaskBoardIndex";
+                        }
+                    }, function myError(response) {
+                    })
+
+                } else {
+                    $scope.show = 1;
+                    //za pierwszym razem wysyła zawsze, gdy nie mamy ustalonego jeszcze currentProject - dlatego są błędy. 
+                }
+
+            });
+
+            $http({
+                method: "GET",
+                url: "/TaskBoard/GetProjects",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.projects = response.data;
+                $http({
+                    method: "GET",
+                    url: "/TaskBoard/GetCurrentProject",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                }).then(function mySucces(response) {
+                    $scope.currentProject = response.data;
+                    for (var i = 0; i < $scope.projects.length; i++) {
+                        if ($scope.projects[i].id == $scope.currentProject) {
+                            $scope.currentName = $scope.projects[i].name;
+                        }
+                    }
+                }, function myError(response) {
+                })
+
+            }, function myError(response) {
+            })
             $http({
                 method: "GET",
                 url: "/TaskBoard/GetBoxes",
@@ -212,6 +267,12 @@
 
     <div ng-app="taskBoardPart" name="taskBoardPart" ng-controller="taskBoardCtrl">
        @* <div>{{message}}</div>*@
+
+        <div class="topped" align="right">
+            <label>Current project:</label>
+            <p @*class="moveLeft"*@>{{currentName}}</p>
+            <select ng-model="currentProject" ng-options="x.id as x.name for x in projects"></select>
+        </div>
         <table class="fill">
             <tr>
                 <th class="space2 column"><h5 class="text-center"><strong>User Stories</strong></h5></th>

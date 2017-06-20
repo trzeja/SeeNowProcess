@@ -18,12 +18,16 @@
     .my-tabs {
     width: 18vw;
     }
+    /*.moveLeft {
+        left: 20px;
+    }*/
     </style>
 </head>
 
 <body ng-app="backlog" ng-controller="backlogCtrl">
     <div align="right" >
-        <label >Current project: {{currentProject}}</label><br>
+        <label >Current project:</label>
+        <p @*class="moveLeft"*@>{{currentName}}</p>
         <select ng-model="currentProject" ng-options="x.id as x.name for x in projects"></select>
     </div>
 

@@ -5,9 +5,11 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     $scope.tasksUS;
     $scope.info;
 
-    //nie lubie angulara :( -R
     $scope.show = 0;
     $scope.currentProject;
+    $scope.currentName;
+    
+
     $scope.projects;
 
     $scope.$watch('currentProject', function () {
@@ -28,6 +30,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             $scope.show = 1;
             //za pierwszym razem wysyła zawsze, gdy nie mamy ustalonego jeszcze currentProject - dlatego są błędy. 
         }
+
     });
 
     $http({
@@ -36,17 +39,38 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
     }).then(function mySucces(response) {
         $scope.projects = response.data;
+        $http({
+            method: "GET",
+            url: "/Backlog/GetCurrentProject",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySucces(response) {
+            $scope.currentProject = response.data;
+            for (var i = 0; i < $scope.projects.length;i++) {
+                if ($scope.projects[i].id == $scope.currentProject) {
+                    $scope.currentName = $scope.projects[i].name;
+                }
+            }
+        }, function myError(response) {
+        })
+
     }, function myError(response) {
     })
 
-    $http({
-        method: "GET",
-        url: "/Backlog/GetCurrentProject",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    }).then(function mySucces(response) {
-        $scope.currentProject = response.data;
-    }, function myError(response) {
-    })
+    //$http({
+    //    method: "GET",
+    //    url: "/Backlog/GetCurrentProject",
+    //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    //}).then(function mySucces(response) {
+    //    $scope.currentProject = response.data;
+    //    for (var i in $scope.projects)
+    //    {
+    //        if (i.id == $scope.currentProject)
+    //        {
+    //            $scope.currentName = i.name;
+    //        }
+    //    }
+    //}, function myError(response) {
+    //})
 
     $http({
         method: "GET",
@@ -56,6 +80,8 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         $scope.userstories = response.data;
     }, function myError(response) {    
     })
+
+   
 
     $scope.showUserStory = function (id, userstory) {
         $scope.userstory = userstory;
