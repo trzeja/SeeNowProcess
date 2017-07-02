@@ -14,7 +14,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     }).then(function mySucces(response) {
         $scope.response = response.data.stories;
         for (var i = 0; i < $scope.response.length; ++i) {
-            $scope.parent_options.push({ value: $scope.response[i].UserStory, description: $scope.response[i].UserStory })
+            $scope.parent_options.push({ id: $scope.response[i].id, value: $scope.response[i].UserStory })
         }
 
     }, function myError(response) {
@@ -78,7 +78,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
                 'status': $scope.status.value, 'importance': $scope.importance.value,
-                'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value,
+                'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.id,
                 'users': $scope.selected_users
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }

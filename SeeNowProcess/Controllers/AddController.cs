@@ -56,6 +56,7 @@ namespace SeeNowProcess.Controllers
                 var stories = db.UserStories
                     .Select(t => new
                     {
+                        id = t.UserStoryID,
                         UserStory = t.Title
                     });
                 //przypisań do projektu chyba nie robimy?
