@@ -4,6 +4,8 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
 
     $scope.response = [];
     $scope.parent_options = [];
+    $scope.users = [];
+    $scope.selected_users = [];
 
     $http({
         method: "GET",
@@ -18,6 +20,34 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     }, function myError(response) {
         $scope.message = "Error";
     })
+
+    $http({
+        method: "GET",
+        url: "/Add/AllPeople",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySucces(response) {
+        $scope.response = response.data;
+        for (var i = 0; i < $scope.response.length; ++i) {
+            $scope.users.push({ id: $scope.response[i].id, NAME: $scope.response[i].NAME })
+        }
+
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
+    
+    $scope.checkUser = function (id) {
+        //$scope.users.splice(0, $scope.users.length);
+        //$scope.user.roles.push(1);
+        if ($scope.selected_users.indexOf(id) === -1) {
+            $scope.selected_users.push(id);
+        }
+        else {
+            $scope.selected_users.splice($scope.selected_users.indexOf(id), 1);
+        }
+       // $scope.selected_users.push(id);
+    };
+
+
     /* Roksana:
     1. Nie dodaję na razie "Choose an option" które dodała Ania, zostaje puste pole które po wyborze opcji
     znika z listy wyboru. Nie wiem na razie czy to dobry pomysł, zależy czy to będzie obowiązkowe pole (?)
@@ -38,17 +68,18 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
         ];
 
     $scope.addTask = function () {
-        $scope.tasks.push({
+        /*$scope.tasks.push({
             title: $scope.title, description: $scope.description, status: $scope.status.value,
             importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
-        });
+        });*/
         $http({
             method: "POST",
             url: "/Add/IndexAdd",
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
                 'status': $scope.status.value, 'importance': $scope.importance.value,
-                'estimated_time': $scope.estimated_time, 'parent': $scope.parent.value
+                'estimated_time': $scope.estimated_time, 'parent': $scope.parent.value,
+                'users': $scope.selected_users
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {

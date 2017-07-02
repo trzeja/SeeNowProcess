@@ -62,6 +62,21 @@ namespace SeeNowProcess.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult AllPeople()
+        {
+            using (db)
+            {
+                var people = db.Users
+                        .Select(p => new
+                        {
+                            id = p.UserID,
+                            NAME = p.Name,
+                        });
+                return Json(people.ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //
         // POST: /Account/Login
         /*    [HttpPost]
