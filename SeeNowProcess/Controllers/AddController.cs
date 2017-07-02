@@ -36,6 +36,7 @@ namespace SeeNowProcess.Controllers
                 if (story == null)
                     return Json("Error - cannot find user story", JsonRequestBehavior.AllowGet);
                 problem.Story = story;
+                problem.Box = db.Boxes.Where(box => box.Project.ProjectID == story.Project.ProjectID).OrderBy(box => box.Order).First();
                 List<User> assignedUsers = db.Users.Where(u => users.Contains(u.UserID)).ToList();
                 if (assignedUsers.Count < users.Count)
                 {
@@ -44,7 +45,13 @@ namespace SeeNowProcess.Controllers
                 }
                 problem.AssignedUsers = assignedUsers;
                 db.Problems.Add(problem);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                } catch(Exception e)
+                {
+                    string mess = e.Message;
+                }
             }
             return Json("Success",JsonRequestBehavior.AllowGet);
         }
