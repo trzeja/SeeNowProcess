@@ -24,12 +24,10 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoginAction()
+        public ActionResult LoginAction(string login, string password)
         {
             using (db)
             {
-                string login = Request.Form["login"];
-                string password = Request.Form["password"];
                 var user = db.Users.Where(x => x.Login.Equals(login)).FirstOrDefault();
                 if (user != null && user.ComparePassword(password))
                 {
@@ -40,19 +38,8 @@ namespace SeeNowProcess.Controllers
                 }
                 else {
                     return new JsonResult { Data = "Incorrect data", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    /*
-                     ~KK - raczej rozsądniejsze wydaje mi się odrzucenie całego żądania niż zwracanie "błędny login"/"błędne hasło"
-                       
-                    var user2 = db.Users.Where(x => x.Login.Equals(login)).FirstOrDefault();
-                    if (user2 != null)
-                    {
-                        return Content("Password Error");
-                    }
-                    return Content("Login Error");*/
                 }
-                // return Content("Login or password uncorrect");
             }
-            // return Content("Login: " + Request.Form["login"] + "Paswword: " + Request.Form["password"]);
         }
 
         public ActionResult Register()

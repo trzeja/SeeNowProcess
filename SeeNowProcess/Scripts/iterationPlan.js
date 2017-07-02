@@ -181,7 +181,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http) {
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
                 'status': $scope.status.value, 'importance': $scope.importance.value,
-                'estimated_time': $scope.estimated_time, 'parent': $scope.parent.value
+                'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {

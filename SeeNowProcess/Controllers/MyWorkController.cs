@@ -89,55 +89,5 @@ namespace SeeNowProcess.Controllers
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }
-        /*
-        public ActionResult UpdateDatabase()
-        {
-            using (db)
-            {
-                //trzeba wyszukać w bazie taska po id, wywalic go z obecnego boxa, przypisac do nowego boxa
-                var ProblemID = Request.Form["ProblemID"];
-                var NewState = Request.Form["NewState"]; //numer albo "null"                              
-
-                if (string.IsNullOrEmpty(NewState)) //null gdy wlozony do tego samego boxa, ale musza byc inne w tym boxie
-                {
-                    return View(); // nic wtedy nie robimy
-                }
-
-                int newOrder = int.Parse(NewState); // variable representing evil in galaxy
-
-                if (string.IsNullOrEmpty(ProblemID))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                int problemId = int.Parse(ProblemID);
-
-                Problem movedProblem = db.Problems.Find(problemId);
-
-                if (movedProblem == null)
-                {
-                    return HttpNotFound();
-                }
-
-                Box oldBox = movedProblem.Box;
-
-                oldBox.Problems.Remove(movedProblem);
-                db.MarkAsModified(oldBox);                
-
-                Iteration iteration = oldBox.Iteration;
-                Box newBox = iteration.Boxes.Where(b => b.Order == newOrder).FirstOrDefault();
-
-                movedProblem.Box = newBox;
-                db.MarkAsModified(movedProblem);
-                
-                newBox.Problems.Add(movedProblem);
-                db.MarkAsModified(newBox);
-                
-                db.SaveChanges();
-                return View();
-            }
-        }
-        */
-
     }
 }

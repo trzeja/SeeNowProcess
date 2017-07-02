@@ -21,23 +21,31 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndexAdd()
+        public ActionResult IndexAdd([Bind(Include = "Title,Description,Status,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
         {
             using (db)
             {
-                Models.Problem problem = new Models.Problem();
-                problem.Title = Request.Form["title"];
-                problem.Description = Request.Form["description"];
+                if (!(userStory == null ^ userStoryId == null)) // XNOR - musi być wypełnione dokładnie jedno
+                    return Json("Error - use exactly one of [UserStory, UserStoryId]", JsonRequestBehavior.AllowGet);
+                //Problem parentProblem = db.Problems.Where(p => p.ProblemID == parentProblemId).FirstOrDefault();
+                UserStory story;
+                if (userStory == null)
+                    story = db.UserStories.Where(us => us.UserStoryID == userStoryId).FirstOrDefault();
+                else
+                    story = db.UserStories.Where(us => us.Title.Equals(userStory)).FirstOrDefault();
+                if (story == null)
+                    return Json("Error - cannot find user story", JsonRequestBehavior.AllowGet);
+                problem.Story = story;
+                List<User> assignedUsers = db.Users.Where(u => users.Contains(u.UserID)).ToList();
+                if (assignedUsers.Count < users.Count)
+                {
+                    List<int> nonMatchedUsers = users.Where(id => !db.Users.Any(u => u.UserID == id)).ToList();
+                    return Json("Error - users ("+nonMatchedUsers.ToString()+") don't exist in database!", JsonRequestBehavior.AllowGet);
+                }
+                problem.AssignedUsers = assignedUsers;
                 db.Problems.Add(problem);
                 db.SaveChanges();
-
-                //problem.CurrentState = Request.Form["status"];
-
-                    //db.Problems.Add(problem);
-                    //db.SaveChanges();
-                    //return RedirectToAction("/MyWork/Index");
             }
-            // return View(problem);
             return Json("Success",JsonRequestBehavior.AllowGet);
         }
 
