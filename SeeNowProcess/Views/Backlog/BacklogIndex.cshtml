@@ -32,8 +32,10 @@
 <body ng-app="backlog" ng-controller="backlogCtrl">
     <div class="topped" align="right" >
         <label >Current project:</label>
-        <p @*class="moveLeft"*@>{{currentName}}</p>
-        <select ng-model="currentProject" ng-options="x.id as x.name for x in projects"></select>
+        <p >{{currentName}}</p>
+        <select ng-model="currentProject" ng-options="x.id as x.name for x in projects">
+        </select>
+
     </div>
 
     <div>

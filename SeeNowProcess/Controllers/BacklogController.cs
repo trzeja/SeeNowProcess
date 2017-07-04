@@ -74,15 +74,23 @@ namespace SeeNowProcess.Controllers
             {
                 if ((Session["project"] == null) || (Session["project"].Equals("")))
                 {
-                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    var resultJ = db.UserStories.Select(a => new
+                    {
+                        UserSID = a.UserStoryID,
+                        Title = a.Title
+                    });
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                int id = Int32.Parse(Session["project"].ToString());
-                var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
+                else
                 {
-                    UserSID = a.UserStoryID,
-                    Title = a.Title
-                });
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
+                    {
+                        UserSID = a.UserStoryID,
+                        Title = a.Title
+                    });
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 

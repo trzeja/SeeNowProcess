@@ -40,6 +40,9 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
     }).then(function mySucces(response) {
         $scope.projects = response.data;
+        var all = { id: "", name: "All projects" };
+        $scope.projects.push(all);
+        //$scope.$apply();
         $http({
             method: "GET",
             url: "/Backlog/GetCurrentProject",
