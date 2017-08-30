@@ -15,7 +15,11 @@ namespace SeeNowProcess.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            return View();
+            using (db)
+            {
+                var projects = db.Projects;
+                return View(projects.ToList());
+            }
         }
 
         public ActionResult ChangeCurrentProject(string id)

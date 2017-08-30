@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model IEnumerable<SeeNowProcess.Models.Project>
 
 @{ 
     ViewBag.Title = "BacklogIndex";
@@ -33,7 +34,11 @@
     <div class="topped" align="right" >
         <label >Current project:</label>
         <p >{{currentName}}</p>
-        <select ng-model="currentProject" ng-options="x.id as x.name for x in projects">
+        <select ng-model="currentProject"><!-- ng-options="x.id as x.name for x in projects">-->
+        @foreach(var project in Model)
+        {
+            <option value="@project.ProjectID">@project.Name</option>
+        }
         </select>
 
     </div>
