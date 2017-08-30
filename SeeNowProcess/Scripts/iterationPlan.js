@@ -115,7 +115,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
 
         $scope.addIteration = function () {
             $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDay().toString();
-            $scope.endingDate = $scope.endDategetFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDay().toString();
+            $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDay().toString();
             $http({
                 method: "POST",
                 url: "/IterationPlan/AddingIteration",

@@ -17,5 +17,9 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             }
             return View();
         }
+
+        //Potrzebna metoda POST przyjmująca dane z angulara (przesłanie takie jak wcześniej) MA NAZWAĆ SIĘ ADDPROJECT !!!
+        //po kolei: title, description, startdate, enddate (nie wiem czemu to przy tworzeniu ale ok - chyba żeby dodać estimate enddate albo wgl to wyrzucić), status
+
     }
 }
