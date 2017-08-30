@@ -218,7 +218,7 @@ namespace SeeNowProcess.DAL
                 new Iteration {Name="Backlog", Description="Garbage Collector", Project=RandomAccessMemoriesProject, StartDate=new DateTime(2013,1,1,0,0,0), EndDate=new DateTime(2013, 5, 1, 3, 0, 0)},
                 new Iteration {Name="First Iteration", Description="Our team's first itaration. It must be the fastest!", Project=RandomAccessMemoriesProject, StartDate=new DateTime(2013, 4, 1, 3, 0, 0),  EndDate=new DateTime(2013, 5, 1, 3, 0, 0) },
 
-                new Iteration {Name="Backlog", Description="Garbage Collector", Project=FirstProject, StartDate=new DateTime(2019,1,1,0,0,0), EndDate=new DateTime(2019, 5, 1, 3, 0, 0)},
+                new Iteration {Name="Backlog", Description="Garbage Collector", Project=InterstellaProject, StartDate=new DateTime(2019,1,1,0,0,0), EndDate=new DateTime(2019, 5, 1, 3, 0, 0)},
                 new Iteration {Name="First Iteration", Description="Our team's first itaration. It must be the fastest!", Project=InterstellaProject, StartDate=new DateTime(2019, 4, 1, 3, 0, 0),  EndDate=new DateTime(2019, 5, 1, 3, 0, 0) }
             };
             Iterations.ForEach(i => context.Iterations.Add(i));
