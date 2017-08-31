@@ -32,7 +32,7 @@
 
 <body ng-app="backlog" ng-controller="backlogCtrl">
     <div class="topped" align="right" >
-        <label >Current project:</label>
+        <p ><strong>Current project:</strong></p>
         <!-- <p >{{currentName}}</p> -->
         <select ng-model="currentProject" ng-init="currentProject=Session["project"]"><!-- ng-options="x.id as x.name for x in projects">-->
             <option value="0">All projects</option>

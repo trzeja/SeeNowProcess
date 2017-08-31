@@ -291,6 +291,7 @@
     <Content Include="Scripts\angularLogin.js" />
     <Content Include="Scripts\angularPeople.js" />
     <Content Include="Scripts\angularRegister.js" />
+    <Content Include="Scripts\angularTaskBoard.js" />
     <Content Include="Scripts\angularWorkByPerson.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

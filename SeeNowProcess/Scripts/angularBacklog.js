@@ -34,15 +34,15 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
 
     });
 
-    $http({
-        method: "GET",
-        url: "/Backlog/GetProjects",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    }).then(function mySucces(response) {
-        $scope.projects = response.data;
-        var all = { id: "", name: "All projects" };
-        $scope.projects.push(all);
-        //$scope.$apply();
+    //$http({
+    //    method: "GET",
+    //    url: "/Backlog/GetProjects",
+    //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    //}).then(function mySucces(response) {
+    //    $scope.projects = response.data;
+    //    var all = { id: "", name: "All projects" };
+    //    $scope.projects.push(all);
+    //    //$scope.$apply();
         $http({
             method: "GET",
             url: "/Backlog/GetCurrentProject",
@@ -61,8 +61,8 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         }, function myError(response) {
         })
 
-    }, function myError(response) {
-    })
+    //}, function myError(response) {
+    //})
 
     //$http({
     //    method: "GET",
