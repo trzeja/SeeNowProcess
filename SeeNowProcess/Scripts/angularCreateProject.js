@@ -1,7 +1,7 @@
 ﻿var projectApp = angular.module("projectForm", []);
-taskApp.controller("projectCtrl", function ($scope, $http) {
+projectApp.controller("projectCtrl", function ($scope, $http) {
 
-    $scope.status_options =
+    $scope.status =
         [
             { value: "open", description: "Open" },
             { value: "suspended", description: "Suspended" },
@@ -15,8 +15,8 @@ taskApp.controller("projectCtrl", function ($scope, $http) {
             url: "/Create/AddProject",
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
-                'status': $scope.status.value, 'startDate': $scope.startDate,
-                'endDate': $scope.endDate
+                'status': $scope.status.value, 'startDate':  $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDay().toString(),
+                'endDate': $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDay().toString()
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
