@@ -17,6 +17,10 @@ namespace SeeNowProcess.Controllers
             }
             using (db)
             {
+                if (Session["project"] == null)
+                {
+                    Session["project"] = "0";
+                }
                 var projects = db.Projects;
                 return View(projects.ToList());
             }
@@ -76,7 +80,8 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                //if ((Session["project"] == null) || (Session["project"].Equals("")))
+                if (Session["project"].Equals("0"))
                 {
                     var resultJ = db.UserStories.Select(a => new
                     {

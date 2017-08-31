@@ -49,9 +49,13 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
             $scope.currentProject = response.data;
-            for (var i = 0; i < $scope.projects.length;i++) {
-                if ($scope.projects[i].id == $scope.currentProject) {
-                    $scope.currentName = $scope.projects[i].name;
+            if ($scope.currentProject == 0) {
+                $scope.currentName = "All projects";
+            } else {
+                for (var i = 0; i < $scope.projects.length; i++) {
+                    if ($scope.projects[i].id == $scope.currentProject) {
+                        $scope.currentName = $scope.projects[i].name;
+                    }
                 }
             }
         }, function myError(response) {
