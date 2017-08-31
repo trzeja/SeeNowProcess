@@ -19,7 +19,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             }
             return View();
         }
-        public ActionResult AddProject([Bind(Include = "Title,Description,Status,StartDate,EndDate")] Project project)
+        public ActionResult AddProject([Bind(Include = "Name,Description,Status,StartDate,CompletionDate")] Project project)
         {
             using (db)
             {
