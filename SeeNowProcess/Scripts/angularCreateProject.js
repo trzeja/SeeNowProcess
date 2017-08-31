@@ -1,7 +1,7 @@
 ﻿var projectApp = angular.module("projectForm", []);
 projectApp.controller("projectCtrl", function ($scope, $http) {
 
-    $scope.status =
+    $scope.status_options =
         [
             { value: "open", description: "Open" },
             { value: "suspended", description: "Suspended" },
