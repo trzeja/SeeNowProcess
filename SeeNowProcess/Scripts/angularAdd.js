@@ -78,7 +78,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
                 'status': $scope.status.value, 'importance': $scope.importance.value,
-                'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.id,
+                'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value,
                 'users': $scope.selected_users
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
