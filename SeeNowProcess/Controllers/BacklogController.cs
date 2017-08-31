@@ -28,20 +28,21 @@ namespace SeeNowProcess.Controllers
 
         public ActionResult ChangeCurrentProject(string id)
         {
-            if (Session["project"] == null)
-            {
-                if (id == "")
-                {
-                    return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                }
-                else
-                {
-                    Session["project"] = id;
-                    return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    //return RedirectToAction("BacklogIndex", "Backlog");
-                }
-            }
-            else if (!Session["project"].Equals(id))
+            //if (Session["project"] == null)
+            //{
+            //    if (id == "")
+            //    {
+            //        return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //    }
+            //    else
+            //    {
+            //        Session["project"] = id;
+            //        return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //        //return RedirectToAction("BacklogIndex", "Backlog");
+            //    }
+            //}
+            //else if (!Session["project"].Equals(id))
+            if (!Session["project"].Equals(id))
             {
                 Session["project"] = id;
                 return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -56,9 +57,9 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
-                    return new JsonResult { Data = "", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                else
+                //if ((Session["project"] == null) || (Session["project"].Equals("")))
+                //    return new JsonResult { Data = "", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                //else
                     return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
