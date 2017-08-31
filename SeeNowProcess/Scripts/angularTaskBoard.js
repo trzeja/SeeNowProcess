@@ -3,7 +3,7 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
     $scope.message = "DZIALAAA";
     $scope.show = 0;
     $scope.currentProject;
-    $scope.currentName;
+    
 
 
     $scope.projects;
@@ -31,26 +31,13 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
 
     $http({
         method: "GET",
-        url: "/TaskBoard/GetProjects",
+        url: "/Backlog/GetCurrentProject",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
     }).then(function mySucces(response) {
-        $scope.projects = response.data;
-        $http({
-            method: "GET",
-            url: "/TaskBoard/GetCurrentProject",
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-        }).then(function mySucces(response) {
-            $scope.currentProject = response.data;
-            for (var i = 0; i < $scope.projects.length; i++) {
-                if ($scope.projects[i].id == $scope.currentProject) {
-                    $scope.currentName = $scope.projects[i].name;
-                }
-            }
-        }, function myError(response) {
-        })
-
+        $scope.currentProject = response.data;
     }, function myError(response) {
     })
+
     $http({
         method: "GET",
         url: "/TaskBoard/GetBoxes",
@@ -113,7 +100,7 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
             method: "POST",
             url: "/TaskBoard/UpdateDatabase",
             data: $.param({
-                'problemID': item.Id, 'newUserStoryID': userstory, 'newBoxOrder': box
+                'problemID': item.Id, 'newUserStoryID': userstory, 'newBoxOrder': box, 'newProjectId': item.Project
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {

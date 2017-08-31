@@ -15,20 +15,7 @@ namespace SeeNowProcess.Controllers
 
         public ActionResult ChangeCurrentProject(string id)
         {
-            if (Session["project"] == null)
-            {
-                if (id == "")
-                {
-                    return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                }
-                else
-                {
-                    Session["project"] = id;
-                    return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    //return RedirectToAction("BacklogIndex", "Backlog");
-                }
-            }
-            else if (!Session["project"].Equals(id))
+            if (!Session["project"].Equals(id))
             {
                 Session["project"] = id;
                 return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -36,17 +23,13 @@ namespace SeeNowProcess.Controllers
             }
             return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-
         }
 
         public ActionResult GetCurrentProject()
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
-                    return new JsonResult { Data = "", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                else
-                    return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 
@@ -69,27 +52,48 @@ namespace SeeNowProcess.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            return View();
+            using (db)
+            {
+                if (Session["project"] == null)
+                {
+                    Session["project"] = "0";
+                }
+                var projects = db.Projects;
+                return View(projects.ToList());
+            }
         }
 
         public ActionResult GetProblems()
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                if (Session["project"].Equals("0"))
                 {
-                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    var resultJ = db.Problems.Select(a => new
+                    {
+                        BoxOrder = a.Box.Order,
+                        UserSID = a.Story.UserStoryID,
+                        Id = a.ProblemID,
+                        Title = a.Title,
+                        Description = a.Description,
+                        Project = a.Box.Project.ProjectID
+                    });
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                int id = Int32.Parse(Session["project"].ToString());
-                var resultJ = db.Problems.Where(u => u.Box.Project.ProjectID == id).Select(a => new
+                else
                 {
-                    BoxOrder = a.Box.Order,
-                    UserSID = a.Story.UserStoryID,
-                    Id = a.ProblemID,
-                    Title = a.Title,
-                    Description = a.Description
-                });
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.Problems.Where(u => u.Box.Project.ProjectID == id).Select(a => new
+                    {
+                        BoxOrder = a.Box.Order,
+                        UserSID = a.Story.UserStoryID,
+                        Id = a.ProblemID,
+                        Title = a.Title,
+                        Description = a.Description,
+                        Project = a.Box.Project.ProjectID
+                    });
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 
@@ -97,17 +101,25 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                if (Session["project"].Equals("0"))
                 {
-                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    var resultJ = db.Boxes.Select(a => new
+                    {
+                        BoxOrder = a.Order,
+                        Name = a.Name
+                    }).Distinct();
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                int id = Int32.Parse(Session["project"].ToString());
-                var resultJ = db.Boxes.Where(u => u.Project.ProjectID == id).Select(a => new
+                else
                 {
-                    BoxOrder = a.Order,
-                    Name = a.Name
-                }).Distinct();
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.Boxes.Where(u => u.Project.ProjectID == id).Select(a => new
+                    {
+                        BoxOrder = a.Order,
+                        Name = a.Name
+                    }).Distinct();
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 
@@ -115,28 +127,38 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                if (Session["project"].Equals("0"))
                 {
-                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    var resultJ = db.UserStories.Select(a => new
+                    {
+                        UserSID = a.UserStoryID,
+                        Title = a.Title
+                    });
+                    var data = resultJ.ToList();
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                int id = Int32.Parse(Session["project"].ToString());
-                var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
+                else
                 {
-                    UserSID = a.UserStoryID,
-                    Title = a.Title
-                });
-                var data = resultJ.ToList();
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
+                    {
+                        UserSID = a.UserStoryID,
+                        Title = a.Title
+                    });
+                    var data = resultJ.ToList();
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 
         [HttpPost]
-        public ActionResult UpdateDatabase(int problemID, int newUserStoryID, int newBoxOrder)
+        public ActionResult UpdateDatabase(int problemID, int newUserStoryID, int newBoxOrder, int newProjectId)
         {
             using (db)
             {
-                int projectId = int.Parse(Session["project"].ToString());                
-                var newBoxId = db.Boxes.Where(b => b.Project.ProjectID == projectId && b.Order == newBoxOrder).FirstOrDefault().BoxID;  
+                //nie wiem czy tu sie mocno nie popluje przy all, trza przekazywac osobiste projectId
+                //int projectId = int.Parse(Session["project"].ToString());                
+                var newBoxId = db.Boxes.Where(b => b.Project.ProjectID == newProjectId && b.Order == newBoxOrder).FirstOrDefault().BoxID;  
                 var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
                 var newBox = db.Boxes.Where(b => b.BoxID == newBoxId).FirstOrDefault();
                 var newUserStory = db.UserStories.Where(u => u.UserStoryID == newUserStoryID).FirstOrDefault();                
