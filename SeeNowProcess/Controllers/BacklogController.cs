@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeeNowProcess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -141,6 +142,21 @@ namespace SeeNowProcess.Controllers
             }
         }
 
-        //Potrzebna funkcja POST usuwająca taska o zadanym id z bazy i userStory DeleteTask(taskId) -> patrz angularBacklog.js linie od 137
+        [HttpPost]
+        public ActionResult DeleteTask(int taskId)
+        {
+            using (db)
+            {
+                var problemList = db.Problems.Where(p => p.ProblemID == taskId);
+                if (!problemList.Any())
+                    return Json("Error - no such task", JsonRequestBehavior.AllowGet);
+                Problem problem = problemList.First();
+                db.MarkAsModified(problem.Story);
+                db.MarkAsModified(problem.Box);
+                db.MarkAsModified(problem.Iteration);
+                db.Problems.Remove(problem);
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
