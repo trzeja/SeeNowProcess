@@ -52,15 +52,29 @@ namespace SeeNowProcess.Controllers
                 problem.Iteration = story.Project.Iterations.OrderBy(iter => iter.IterationId).FirstOrDefault();
                 //zapisz zmiany
                 db.Problems.Add(problem);
+                string mess = "success";
                 try
                 {
                     db.SaveChanges();
-                } catch(Exception e)
-                {
-                    string mess = e.Message;
                 }
+                catch(System.Data.Entity.Validation.DbEntityValidationException e)
+                {
+                    mess = "Errors:";
+                    foreach(var validateError in e.EntityValidationErrors)
+                    {
+                        mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
+                        foreach (var error in validateError.ValidationErrors)
+                        {
+                            mess += "\n\t\t" + error.ErrorMessage;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    mess = e.Message;
+                }
+                return Json(mess,JsonRequestBehavior.AllowGet);
             }
-            return Json("Success",JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
