@@ -13,6 +13,7 @@
 @{
     ViewBag.Title = "Index";
 }
+@model IEnumerable<SeeNowProcess.Models.Project>
 <head>
     <style>
         .topped {
@@ -157,9 +158,17 @@
         @* <div>{{message}}</div>*@
 
         <div class="topped" align="right">
-            <label>Current project:</label>
-            <p @*class="moveLeft"*@>{{currentName}}</p>
-            <select ng-model="currentProject" ng-options="x.id as x.name for x in projects"></select>
+            <p><strong>Current project:</strong></p>
+            <!-- <p >{{currentName}}</p> -->
+            <select ng-model="currentProject" ng-init="currentProject=Session['project']">
+                <!-- ng-options="x.id as x.name for x in projects">-->
+                <option value="0">All projects</option>
+                @foreach (var project in Model)
+                {
+
+                    <option value="@project.ProjectID">@project.Name</option>
+                }
+            </select>
         </div>
         <table class="fill">
             <tr>
