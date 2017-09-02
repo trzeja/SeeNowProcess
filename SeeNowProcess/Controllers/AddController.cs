@@ -27,16 +27,20 @@ namespace SeeNowProcess.Controllers
             {
                 if (!(userStory == null ^ userStoryId == null)) // XNOR - musi być wypełnione dokładnie jedno
                     return Json("Error - use exactly one of [UserStory, UserStoryId]", JsonRequestBehavior.AllowGet);
-                //Problem parentProblem = db.Problems.Where(p => p.ProblemID == parentProblemId).FirstOrDefault();
+                //userstory
                 UserStory story;
                 if (userStory == null)
                     story = db.UserStories.Where(us => us.UserStoryID == userStoryId).FirstOrDefault();
                 else
-                    story = db.UserStories.Where(us => us.Title.Equals(userStory)).FirstOrDefault();
+                    story = db.UserStories.Where(us => us.Title.Equals(userStory, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                 if (story == null)
                     return Json("Error - cannot find user story", JsonRequestBehavior.AllowGet);
                 problem.Story = story;
+                //box
                 problem.Box = db.Boxes.Where(box => box.Project.ProjectID == story.Project.ProjectID).OrderBy(box => box.Order).First();
+                //assignedUsers
+                if (users == null)
+                    users = new List<int>();
                 List<User> assignedUsers = db.Users.Where(u => users.Contains(u.UserID)).ToList();
                 if (assignedUsers.Count < users.Count)
                 {
@@ -44,6 +48,9 @@ namespace SeeNowProcess.Controllers
                     return Json("Error - users ("+nonMatchedUsers.ToString()+") don't exist in database!", JsonRequestBehavior.AllowGet);
                 }
                 problem.AssignedUsers = assignedUsers;
+                //iteration
+                problem.Iteration = story.Project.Iterations.OrderBy(iter => iter.IterationId).FirstOrDefault();
+                //zapisz zmiany
                 db.Problems.Add(problem);
                 try
                 {
