@@ -22,8 +22,8 @@
         <div>{{message}}</div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="title"> TITLE: </label>
-            <input  name="taskTitle" class="form-control" type="text" id="task_title" ng-model="title" required>
-            <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span> -->
+            <input  name="taskTitle" class="form-control" type="text" id="task_title" ng-model="title" required ng-minlength="3" ng-maxlength="60">
+            <span style="color: red" ng-show="submitted && taskForm.taskTitle.$valid">Title is required</span>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="description"> DESCRIPTION: </label>
@@ -42,8 +42,12 @@
             <input class="form-control" type="text" id="task_estimated_time" ng-model="estimated_time" required>
         </div>
         <div class="form-group row">
+            <label class="col-sm-2 control-label selectContainer" for="task_project"> PROJECT: </label>
+            <select class="form-control" name="task_project" ng-model="project" ng-options="x.value for x in project_options" ng-change="getUserStories(project.id)"></select>
+        </div>
+        <div class="form-group row">
             <label class="col-sm-2 control-label selectContainer" for="task_parent"> PARENT USER STORY: </label>
-            <select class="form-control" name="task_parent" ng-model="parent" ng-options="x.value for x in parent_options"></select>
+            <select class="form-control" name="task_parent" ng-model="parent" ng-options="x.value for x in parent_options" ></select>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="selected_users"> USERS: </label>

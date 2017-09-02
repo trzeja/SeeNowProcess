@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeeNowProcess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -132,12 +133,31 @@ namespace SeeNowProcess.Controllers
                 var tasks = db.Problems.Where(u => u.Story.UserStoryID == id)
                         .Select(p => new
                         {
+                            TaskId = p.ProblemID,
                             Title = p.Title,
                             Description = p.Description,
                             Importance = p.Importance
                             //wysylac jeszcze inne informacje o tasku potem, np. order
                         });
                 return Json(tasks.ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTask(int taskId)
+        {
+            using (db)
+            {
+                var problemList = db.Problems.Where(p => p.ProblemID == taskId);
+                if (!problemList.Any())
+                    return Json("Error - no such task", JsonRequestBehavior.AllowGet);
+                Problem problem = problemList.First();
+                db.MarkAsModified(problem.Story);
+                db.MarkAsModified(problem.Box);
+                db.MarkAsModified(problem.Iteration);
+                db.Problems.Remove(problem);
+                db.SaveChanges();
+                return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }
     }

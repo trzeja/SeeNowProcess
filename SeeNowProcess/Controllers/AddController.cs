@@ -27,16 +27,20 @@ namespace SeeNowProcess.Controllers
             {
                 if (!(userStory == null ^ userStoryId == null)) // XNOR - musi być wypełnione dokładnie jedno
                     return Json("Error - use exactly one of [UserStory, UserStoryId]", JsonRequestBehavior.AllowGet);
-                //Problem parentProblem = db.Problems.Where(p => p.ProblemID == parentProblemId).FirstOrDefault();
+                //userstory
                 UserStory story;
                 if (userStory == null)
                     story = db.UserStories.Where(us => us.UserStoryID == userStoryId).FirstOrDefault();
                 else
-                    story = db.UserStories.Where(us => us.Title.Equals(userStory)).FirstOrDefault();
+                    story = db.UserStories.Where(us => us.Title.Equals(userStory, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                 if (story == null)
                     return Json("Error - cannot find user story", JsonRequestBehavior.AllowGet);
                 problem.Story = story;
+                //box
                 problem.Box = db.Boxes.Where(box => box.Project.ProjectID == story.Project.ProjectID).OrderBy(box => box.Order).First();
+                //assignedUsers
+                if (users == null)
+                    users = new List<int>();
                 List<User> assignedUsers = db.Users.Where(u => users.Contains(u.UserID)).ToList();
                 if (assignedUsers.Count < users.Count)
                 {
@@ -44,18 +48,50 @@ namespace SeeNowProcess.Controllers
                     return Json("Error - users ("+nonMatchedUsers.ToString()+") don't exist in database!", JsonRequestBehavior.AllowGet);
                 }
                 problem.AssignedUsers = assignedUsers;
+                //iteration
+                problem.Iteration = story.Project.Iterations.OrderBy(iter => iter.IterationId).FirstOrDefault();
+                //zapisz zmiany
                 db.Problems.Add(problem);
+                string mess = "success";
                 try
                 {
                     db.SaveChanges();
-                } catch(Exception e)
-                {
-                    string mess = e.Message;
                 }
+                catch(System.Data.Entity.Validation.DbEntityValidationException e)
+                {
+                    mess = "Errors:";
+                    foreach(var validateError in e.EntityValidationErrors)
+                    {
+                        mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
+                        foreach (var error in validateError.ValidationErrors)
+                        {
+                            mess += "\n\t\t" + error.ErrorMessage;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    mess = e.Message;
+                }
+                return Json(mess,JsonRequestBehavior.AllowGet);
             }
-            return Json("Success",JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetProjects()
+        {
+            using (db)
+            {
+                var projects = db.Projects.Select(a => new
+                {
+                    id = a.ProjectID,
+                    name = a.Name
+                });
+                return new JsonResult { Data = projects.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        [HttpGet]
         public ActionResult GetStories()
         {
             using (db)
@@ -64,7 +100,8 @@ namespace SeeNowProcess.Controllers
                     .Select(t => new
                     {
                         id = t.UserStoryID,
-                        UserStory = t.Title
+                        UserStory = t.Title,
+                        project_id = t.Project.ProjectID
                     });
                 //przypisań do projektu chyba nie robimy?
                 return new JsonResult
