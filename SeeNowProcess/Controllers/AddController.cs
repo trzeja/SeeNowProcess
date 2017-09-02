@@ -56,6 +56,21 @@ namespace SeeNowProcess.Controllers
             return Json("Success",JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetProjects()
+        {
+            using (db)
+            {
+                var projects = db.Projects.Select(a => new
+                {
+                    id = a.ProjectID,
+                    name = a.Name
+                });
+                return new JsonResult { Data = projects.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        [HttpGet]
         public ActionResult GetStories()
         {
             using (db)
@@ -64,7 +79,8 @@ namespace SeeNowProcess.Controllers
                     .Select(t => new
                     {
                         id = t.UserStoryID,
-                        UserStory = t.Title
+                        UserStory = t.Title,
+                        project_id = t.Project.ProjectID
                     });
                 //przypisań do projektu chyba nie robimy?
                 return new JsonResult

@@ -4,8 +4,11 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
 
     $scope.response = [];
     $scope.parent_options = [];
+    $scope.project_options = [];
     $scope.users = [];
     $scope.selected_users = [];
+    $scope.all_parent_options = [];
+    $scope.isDisabled = true;
 
     $http({
         method: "GET",
@@ -14,9 +17,23 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     }).then(function mySucces(response) {
         $scope.response = response.data.stories;
         for (var i = 0; i < $scope.response.length; ++i) {
-            $scope.parent_options.push({ id: $scope.response[i].id, value: $scope.response[i].UserStory })
+            $scope.all_parent_options.push({ id: $scope.response[i].id, value: $scope.response[i].UserStory, project_id: $scope.response[i].project_id })
+            $scope.parent_options.push({ id: $scope.response[i].id, value: $scope.response[i].UserStory, project_id: $scope.response[i].project_id })
         }
 
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
+
+    $http({
+        method: "GET",
+        url: "/Add/GetProjects",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySucces(response) {
+        $scope.response = response.data;
+        for (var i = 0; i < $scope.response.length; ++i) {
+            $scope.project_options.push({ id: $scope.response[i].id, value: $scope.response[i].name })
+        }
     }, function myError(response) {
         $scope.message = "Error";
     })
@@ -66,6 +83,15 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
              { value: "important", description: "Important" },
              { value: "critical", description: "Critical" }
         ];
+
+    $scope.getUserStories = function (id) {
+        $scope.parent_options = [];
+        $scope.isDisabled = false;
+        for (var i = 0; i < $scope.all_parent_options.length; ++i) {
+            if ($scope.all_parent_options[i].project_id == id)
+                $scope.parent_options.push({ id: $scope.all_parent_options[i].id, value: $scope.all_parent_options[i].value, project_id: $scope.all_parent_options[i].project_id})
+        }
+    }
 
     $scope.addTask = function () {
         /*$scope.tasks.push({
