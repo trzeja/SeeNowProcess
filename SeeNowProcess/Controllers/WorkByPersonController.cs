@@ -183,7 +183,8 @@ namespace SeeNowProcess.Controllers
                 db.MarkAsModified(oldBox);
 
                 problem.AssignedUsers.Add(newUser);
-                newUser.Problems.Add(problem);                
+                newUser.Problems.Add(problem);
+                oldUser.Problems.Remove(problem);                
 
                 db.MarkAsModified(problem);
                 db.MarkAsModified(newUser);
