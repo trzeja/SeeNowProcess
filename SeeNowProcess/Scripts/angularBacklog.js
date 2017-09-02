@@ -2,6 +2,7 @@
 backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $http) {
     $scope.importance = ["None", "Trivial", "Regular", "Important", "Critical"];
     $scope.userstory = "Select user story to show content";
+    $scope.userStoryId;
     $scope.currentUS;
     $scope.tasksUS;
     $scope.info;
@@ -93,6 +94,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
 
     $scope.showUserStory = function (id, userstory) {
         $scope.userstory = userstory;
+        $scope.userStoryId = id;
         
         $http({
             method: "POST",
@@ -104,6 +106,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         }).catch(function fail(result) {
             $scope.problems = ":(";
         })
+
         $http({
             method: "POST",
             url: "/Backlog/GetUSTasks",
@@ -126,6 +129,24 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             project: 'Project: ',
             size: 'Size: '
         };
+
+
         
+    }
+
+    $scope.deleteTask = function (TaskID) {
+        /*$scope.message = ID;*/
+        $http({
+            method: "POST",
+            url: "/Backlog/DeleteTask",
+            data: $.param({"taskId": TaskID}),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = response.data;
+            $scope.showUserStory($scope.userStoryId, $scope.userstory)
+        }, function myError(response) {
+            $scope.message = "Error deleting Task";
+        })
     }
 }]);

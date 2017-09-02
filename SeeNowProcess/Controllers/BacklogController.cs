@@ -140,5 +140,7 @@ namespace SeeNowProcess.Controllers
                 return Json(tasks.ToList(), JsonRequestBehavior.AllowGet);
             }
         }
+
+        //Potrzebna funkcja POST usuwająca taska o zadanym id z bazy i userStory DeleteTask(taskId) -> patrz angularBacklog.js linie od 137
     }
 }

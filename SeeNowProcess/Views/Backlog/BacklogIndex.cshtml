@@ -96,7 +96,7 @@
                             <td>{{item.Title}}</td>
                             <td>{{item.Description}}</td>
                             <td>{{item.Importance}}</td>
-                            <td><button type="button" class="btn red_button" @*ng-click="deleteTask(currentUser.id, item.ProblemID)"*@>-</button></td>
+                            <td><button type="button" class="btn red_button" ng-click="deleteTask(item.ProblemID)">-</button></td>
                             <!--<div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div> <!--<button type="button" class="btn red_button" ng-click="deleteTask(currentUser.id, item.ProblemID)">-</button>-->
                         </tr>
                     </tbody>
