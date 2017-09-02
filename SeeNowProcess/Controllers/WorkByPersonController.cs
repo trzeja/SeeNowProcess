@@ -9,48 +9,39 @@ namespace SeeNowProcess.Controllers
     public class WorkByPersonController : DIContextBaseController
     {
         // GET: WorkByPerson
-        public ActionResult Index()
+        public ActionResult WorkByPersonIndex()
         {
             if (Session["user"] == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            return View();
+            using (db)
+            {
+                if (Session["project"] == null)
+                {
+                    Session["project"] = "0";
+                }
+                var projects = db.Projects;
+                return View(projects.ToList());
+            }
         }
+        //here
         public ActionResult ChangeCurrentProject(string id)
         {
-            if (Session["project"] == null)
-            {
-                if (id == "")
-                {
-                    return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                }
-                else
-                {
-                    Session["project"] = id;
-                    return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    //return RedirectToAction("BacklogIndex", "Backlog");
-                }
-            }
-            else if (!Session["project"].Equals(id))
+            if (!Session["project"].Equals(id))
             {
                 Session["project"] = id;
                 return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 //return RedirectToAction("BacklogIndex", "Backlog");
             }
             return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
-
         }
 
         public ActionResult GetCurrentProject()
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
-                    return new JsonResult { Data = "", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                else
-                    return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 
@@ -71,21 +62,36 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                if (Session["project"].Equals("0"))
                 {
-                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.Problems.Select(a => new
+                    {
+                        BoxOrder = a.Box.Order,
+                        UserSID = a.Story.UserStoryID,
+                        Id = a.ProblemID,
+                        Title = a.Title,
+                        Description = a.Description,
+                        ProjectID = a.Box.Project.ProjectID,
+                        AssignedUsers = a.AssignedUsers.Select(u => u.UserID).ToList()
+                    });
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                int id = Int32.Parse(Session["project"].ToString());
-                var resultJ = db.Problems.Where(u => u.Box.Project.ProjectID == id).Select(a => new
+                else
                 {
-                    BoxOrder = a.Box.Order,
-                    UserSID = a.Story.UserStoryID,
-                    Id = a.ProblemID,
-                    Title = a.Title,
-                    Description = a.Description,
-                    AssignedUsers = a.AssignedUsers.Select(u => u.UserID).ToList()
-                });
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.Problems.Where(u => u.Box.Project.ProjectID == id).Select(a => new
+                    {
+                        BoxOrder = a.Box.Order,
+                        UserSID = a.Story.UserStoryID,
+                        Id = a.ProblemID,
+                        Title = a.Title,
+                        Description = a.Description,
+                        ProjectID = a.Box.Project.ProjectID,
+                        AssignedUsers = a.AssignedUsers.Select(u => u.UserID).ToList()
+                    });
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 
@@ -93,36 +99,56 @@ namespace SeeNowProcess.Controllers
         {
             using (db)
             {
-                if ((Session["project"] == null) || (Session["project"].Equals("")))
+                if (Session["project"].Equals("0"))
                 {
-                    return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    var resultJ = db.Boxes.Select(a => new
+                    {
+                        BoxOrder = a.Order,
+                        Name = a.Name
+                    }).Distinct();
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                int id = Int32.Parse(Session["project"].ToString());
-                var resultJ = db.Boxes.Where(u => u.Project.ProjectID == id).Select(a => new
+                else
                 {
-                    BoxOrder = a.Order,
-                    Name = a.Name
-                }).Distinct();
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    int id = Int32.Parse(Session["project"].ToString());
+                    var resultJ = db.Boxes.Where(u => u.Project.ProjectID == id).Select(a => new
+                    {
+                        BoxOrder = a.Order,
+                        Name = a.Name
+                    }).Distinct();
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 
         public ActionResult GetUsers()
         {
-            if ((Session["project"] == null) || (Session["project"].Equals("")))
-            {
-                return new JsonResult { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-            int projectId = int.Parse(Session["project"].ToString());
+            
+            // tu w ogóle zamieszanie, bo jak taski przesuwamy, to tylko w odrębie projektu danego? 
+            //czy jakoś bardziej podzielic, ale bez sensu to to... 
             using (db)
             {
-                var resultJ = db.Users.Select(p => new
+                if (Session["project"].Equals("0"))
                 {
-                    UserID = p.UserID,
-                    Name = p.Name
-                });
+                    var resultJ = db.Users.Select(p => new
+                    {
+                        UserID = p.UserID,
+                        Name = p.Name
+                    });
 
-                return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    int projectId = int.Parse(Session["project"].ToString());
+                    var resultJ = db.Users.Select(p => new
+                    {
+                        UserID = p.UserID,
+                        Name = p.Name
+                    });
+
+                    return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
             }
         }
 
@@ -140,6 +166,7 @@ namespace SeeNowProcess.Controllers
                         Title = p.Title,
                         Description = p.Description,
                         BoxOrder = p.Box.Order,
+                        ProjectID = p.Box.Project.ProjectID,
                         AssignedUsers = p.AssignedUsers.Select(u => u.UserID).ToList()
                     });
                 return new JsonResult
@@ -154,13 +181,13 @@ namespace SeeNowProcess.Controllers
             }
         }
 
-
+        //czy tu tylko przesuwanie miedzy
         [HttpPost]
-        public ActionResult UpdateDatabase(int problemID, int oldUserID, int newUserID, int newBoxOrder)
+        public ActionResult UpdateDatabase(int problemID, int oldUserID, int newUserID, int newBoxOrder, int projectId)
         {
             using (db)
             {
-                int projectId = int.Parse(Session["project"].ToString());
+                //int projectId = int.Parse(Session["project"].ToString());
                 var newBoxId = db.Boxes.Where(b => b.Project.ProjectID == projectId && b.Order == newBoxOrder).FirstOrDefault().BoxID;
                 var problem = db.Problems.Where(p => p.ProblemID == problemID).FirstOrDefault();
                 var newBox = db.Boxes.Where(b => b.BoxID == newBoxId).FirstOrDefault();

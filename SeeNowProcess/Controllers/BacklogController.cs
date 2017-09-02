@@ -133,6 +133,7 @@ namespace SeeNowProcess.Controllers
                 var tasks = db.Problems.Where(u => u.Story.UserStoryID == id)
                         .Select(p => new
                         {
+                            TaskId = p.ProblemID,
                             Title = p.Title,
                             Description = p.Description,
                             Importance = p.Importance
@@ -155,6 +156,7 @@ namespace SeeNowProcess.Controllers
                 db.MarkAsModified(problem.Box);
                 db.MarkAsModified(problem.Iteration);
                 db.Problems.Remove(problem);
+                db.SaveChanges();
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }

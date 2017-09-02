@@ -16,7 +16,7 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function mySucces(response) {
                 if (response.data == "Change") {
-                    window.location.href = "/WorkByPerson/Index";
+                    window.location.href = "/WorkByPerson/WorkByPersonIndex";
                 }
             }, function myError(response) {
             })
@@ -95,7 +95,7 @@
                                 for (var k = 0; k < $scope.lists[j].boxes.length; k++) {
                                     if ($scope.problems[i].BoxOrder == $scope.lists[j].boxes[k].order) //czy w tym boxie
                                     {
-                                        var task = {Id: $scope.problems[i].Id, Title: $scope.problems[i].Title, Description: $scope.problems[i].Description, UserId: $scope.lists[j].id};
+                                        var task = {Id: $scope.problems[i].Id, Title: $scope.problems[i].Title, Description: $scope.problems[i].Description, projectID: $scope.problems[i].ProjectID, UserId: $scope.lists[j].id};
                                         $scope.lists[j].boxes[k].tasks.push(task);
                                         //$scope.lists[j].boxes[k].tasks.push({$scope.problems[i]});
                                     }
@@ -143,10 +143,12 @@
             method: "POST",
             url: "/WorkByPerson/UpdateDatabase",
             data: $.param({//int problemID, int oldUserID, int newUserID, int newBoxOrder
-                'problemID': item.Id, 'oldUserID': item.UserId, 'newUserID': newUser, 'newBoxOrder': box
+                'problemID': item.Id, 'oldUserID': item.UserId, 'newUserID': newUser, 'newBoxOrder': box, 'projectID': item.projectID
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
+            //czy to nie powinno byc?
+            //item.BoxID = box;
             item.UserId = newUser;
             $scope.hello = ":)";
         }, function failure(response) {

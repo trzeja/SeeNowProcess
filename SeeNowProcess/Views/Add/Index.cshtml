@@ -22,8 +22,8 @@
         <div>{{message}}</div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="title"> TITLE: </label>
-            <input  name="taskTitle" class="form-control" type="text" id="task_title" ng-model="title" required>
-            <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span> -->
+            <input  name="taskTitle" class="form-control" type="text" id="task_title" ng-model="title" required ng-minlength="3" ng-maxlength="60">
+            <span style="color: red" ng-show="submitted && taskForm.taskTitle.$valid">Title is required</span>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="description"> DESCRIPTION: </label>
