@@ -17,7 +17,35 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            return View();
+            using (db)
+            {
+                if (Session["project"] == null)
+                {
+                    Session["project"] = "0";
+                }
+                var projects = db.Projects;
+                return View(projects.ToList());
+            }
+        }
+
+        public ActionResult ChangeCurrentProject(string id)
+        {
+            if (!Session["project"].Equals(id))
+            {
+                Session["project"] = id;
+                return new JsonResult { Data = "Change", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                //return RedirectToAction("BacklogIndex", "Backlog");
+            }
+            return new JsonResult { Data = "NoChange", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+
+        public ActionResult GetCurrentProject()
+        {
+            using (db)
+            {
+                return new JsonResult { Data = Session["project"], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
         }
 
         [HttpPost]
@@ -26,6 +54,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         {
             using (db)
             {
+                //tu bedzie dodawany z formatki nie? - R.
                 // chyba teraz nie rozrozniamy projektu
                 Project project = db.Projects.FirstOrDefault();
                 iteration.Project = project;
@@ -47,6 +76,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             }
         }
 
+        //Czy można taski między iteracjami z różnych projektów?
         [HttpPost]
         public ActionResult MoveTask(int taskId, int newIterationId)
         {
@@ -97,16 +127,45 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         {
             using (db)
             {
-                var problems = db.Problems
+                if (Session["project"].Equals(""))
+                {
+                    var problems = db.Problems
                         .Select(p => new
                         {
                             id = p.ProblemID,
                             title = p.Title,
                             description = p.Description,
-                            id_iteracji = p.Iteration==null ? 1 : p.Iteration.IterationId
+                            id_iteracji = p.Iteration == null ? 1 : p.Iteration.IterationId
                             // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
                         });
-                return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
+                    return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    int idProject = Int32.Parse(Session["project"].ToString());
+                    var problems = db.Problems.Where(p => p.Box.Project.ProjectID == idProject)
+                        .Select(p => new
+                        {
+                            id = p.ProblemID,
+                            title = p.Title,
+                            description = p.Description,
+                            id_iteracji = p.Iteration == null ? 1 : p.Iteration.IterationId
+                            // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
+                        });
+                    return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
+                }
+
+
+                //var problems = db.Problems
+                //        .Select(p => new
+                //        {
+                //            id = p.ProblemID,
+                //            title = p.Title,
+                //            description = p.Description,
+                //            id_iteracji = p.Iteration==null ? 1 : p.Iteration.IterationId
+                //            // jak cos wiecej potrzebne to dopisujcie tutaj, byle typy proste, nie obiekty i inne cuda
+                //        });
+                //return Json(problems.ToList(), JsonRequestBehavior.AllowGet);
                 /* return Json(
                      db.Problems
                          .Where(p => p.Box.Iteration.IterationId == id)

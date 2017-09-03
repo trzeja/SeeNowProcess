@@ -5,12 +5,20 @@
 @{
     ViewBag.Title = "IterationPlanIndex";
 }
+@model IEnumerable<SeeNowProcess.Models.Project>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
-    <script src="~/Scripts/iterationPlan.js"></script>
+    <script src="~/Scripts/angularIterationPlan.js"></script>
+    <style>
+        .topped {
+            top: 80px;
+            position: absolute;
+            left: 80vw;
+        }
+    </style>
 </head>
 
 
@@ -20,6 +28,20 @@
 
 <div ng-controller="iterationCtrl">
     <div>{{message}}</div>
+    <div class="topped" align="right">
+        <p><strong>Current project:</strong></p>
+        <!-- <p >{{currentName}}</p> -->
+        <select ng-model="currentProject" ng-init="currentProject=Session['project']">
+            <!-- ng-options="x.id as x.name for x in projects">-->
+            <option value="0">All projects</option>
+            @foreach (var project in Model)
+            {
+
+                <option value="@project.ProjectID">@project.Name</option>
+            }
+        </select>
+    </div>
+
     <div><input type="submit" class="btn green_button btn-add" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
 
     <!--Modal - adding iteration-->

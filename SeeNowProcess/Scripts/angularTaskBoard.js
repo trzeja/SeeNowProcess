@@ -31,7 +31,7 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
 
     $http({
         method: "GET",
-        url: "/Backlog/GetCurrentProject",
+        url: "/TaskBoard/GetCurrentProject",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
     }).then(function mySucces(response) {
         $scope.currentProject = response.data;
