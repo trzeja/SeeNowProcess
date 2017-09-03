@@ -54,6 +54,7 @@
     <div>
         <ul class="people-list">
             <li ng-repeat="x in userstories"><a class="my-btn my-button" data-toggle="collapse" ng-click="showUserStory(x.UserSID,x.Title)">{{x.Title}}</a><hr></li>
+            <li><input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USERSTORY" ng-click="addUserStory()"></li>
         </ul>
     </div>
 
