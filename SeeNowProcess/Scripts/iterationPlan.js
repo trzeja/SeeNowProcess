@@ -125,7 +125,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
             }).then(function mySucces(response) {
                 $scope.message = "Result: " + response.data;
                 if (response.data == "Success")
-                    window.location.href = "/IterationPlan/Index";
+                    window.location.href = "/IterationPlan/IterationPlanIndex";
             }, function myError(response) {
             })
 

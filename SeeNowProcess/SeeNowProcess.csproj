@@ -332,7 +332,7 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Create\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\IterationPlan\Index.cshtml" />
+    <Content Include="Views\IterationPlan\IterationPlanIndex.cshtml" />
     <Content Include="Views\MyRecent\Index.cshtml" />
     <Content Include="Views\MyWork\MyWorkIndex.cshtml" />
     <Content Include="Views\People\PeopleIndex.cshtml" />

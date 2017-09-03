@@ -11,7 +11,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
     public class IterationPlanController : DIContextBaseController
     {
         // GET: IterationPlan
-        public ActionResult Index()
+        public ActionResult IterationPlanIndex()
         {
             if (Session["user"] == null)
             {
