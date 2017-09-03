@@ -15,8 +15,8 @@ projectApp.controller("projectCtrl", function ($scope, $http) {
             url: "/Create/AddProject",
             data: $.param({
                 'name': $scope.title, 'description': $scope.description,
-                'status': $scope.status.value, 'startDate':  $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDay().toString(),
-                'completionDate': $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth() + 1).toString() + "-" + $scope.endDate.getDay().toString()
+                'status': $scope.status.value, 'startDate':  $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDate().toString(),
+                'completionDate': $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth() + 1).toString() + "-" + $scope.endDate.getDate().toString()
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {

@@ -28,6 +28,7 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
     $scope.startingDate;
     $scope.endingDate;
 
+
     $scope.show = 0;
     $scope.currentProject;
 
@@ -166,9 +167,42 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
             return item;
         }
 
+        $scope.getTeamsForProject = function (id) {
+            $http({
+                method: "GET",
+                url: "/Add/GetTeams?userStoryId=" + id,
+                //data: $.param({'userStoryId': id}),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.response = response.data.teams;
+                for (var i = 0; i < $scope.response.length; ++i) {
+                    $scope.team_options.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
+                }
+
+            }, function myError(response) {
+                $scope.message = "Error";
+            })
+        }
+
+        $scope.getUsersForProject = function (id) {
+            $http({
+                method: "GET",
+                url: "/Add/GetUsersFromTeam?teamId=" + id,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySucces(response) {
+                $scope.response = response.data;
+                for (var i = 0; i < $scope.response.length; ++i) {
+                    $scope.users.push({ id: $scope.response[i].id, NAME: $scope.response[i].NAME })
+                }
+
+            }, function myError(response) {
+                $scope.message = "Error";
+            })
+        }
+
         $scope.addIteration = function () {
-            $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDay().toString();
-            $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDay().toString();
+            $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDate().toString();
+            $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDate().toString();
             $http({
                 method: "POST",
                 url: "/IterationPlan/AddingIteration",
@@ -204,6 +238,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
     $scope.selected_users = [];
     $scope.all_parent_options = [];
     $scope.isDisabled = true;
+    $scope.team_options = [];
 
     $http({
         method: "GET",
@@ -229,20 +264,6 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
         for (var i = 0; i < $scope.response.length; ++i) {
             $scope.project_options.push({ id: $scope.response[i].id, value: $scope.response[i].name })
         }
-    }, function myError(response) {
-        $scope.message = "Error";
-    })
-
-    $http({
-        method: "GET",
-        url: "/Add/AllPeople",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    }).then(function mySucces(response) {
-        $scope.response = response.data;
-        for (var i = 0; i < $scope.response.length; ++i) {
-            $scope.users.push({ id: $scope.response[i].id, NAME: $scope.response[i].NAME })
-        }
-
     }, function myError(response) {
         $scope.message = "Error";
     })
@@ -288,6 +309,40 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
         }
     }
 
+    $scope.getTeamsForProject = function (id) {
+        $http({
+            method: "GET",
+            url: "/Add/GetTeams?userStoryId=" + id,
+            //data: $.param({'userStoryId': id}),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySucces(response) {
+            $scope.response = response.data.teams;
+            for (var i = 0; i < $scope.response.length; ++i) {
+                $scope.team_options.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
+            }
+
+        }, function myError(response) {
+            $scope.message = "Error";
+        })
+    }
+
+    $scope.getUsersForProject = function (id) {
+        $http({
+            method: "GET",
+            url: "/Add/GetUsersFromTeam?teamId=" + id,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySucces(response) {
+            $scope.response = response.data;
+            $scope.users = [];
+            for (var i = 0; i < $scope.response.length; ++i) {
+                $scope.users.push({ id: $scope.response[i].id, NAME: $scope.response[i].NAME })
+            }
+
+        }, function myError(response) {
+            $scope.message = "Error";
+        })
+    }
+
     $scope.addTask = function () {
         /*$scope.tasks.push({
             title: $scope.title, description: $scope.description, status: $scope.status.value,
@@ -306,6 +361,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
             $scope.message = "Did it!";
+            window.location.href = "/IterationPlan/IterationPlanIndex"
         },
         function failure(response) {
             $scope.message = "Fail...";

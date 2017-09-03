@@ -8,6 +8,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     $scope.users = [];
     $scope.selected_users = [];
     $scope.all_parent_options = [];
+    $scope.team_options = [];
     $scope.isDisabled = true;
 
     $http({
@@ -38,7 +39,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
         $scope.message = "Error";
     })
 
-    $http({
+    /*$http({
         method: "GET",
         url: "/Add/AllPeople",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
@@ -50,7 +51,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
 
     }, function myError(response) {
         $scope.message = "Error";
-    })
+    })*/
     
     $scope.checkUser = function (id) {
         //$scope.users.splice(0, $scope.users.length);
@@ -91,6 +92,40 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             if ($scope.all_parent_options[i].project_id == id)
                 $scope.parent_options.push({ id: $scope.all_parent_options[i].id, value: $scope.all_parent_options[i].value, project_id: $scope.all_parent_options[i].project_id})
         }
+        
+    }
+
+    $scope.getTeamsForProject = function (id) {
+        $http({
+            method: "GET",
+            url: "/Add/GetTeams?userStoryId="+id,
+            //data: $.param({'userStoryId': id}),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySucces(response) {
+            $scope.response = response.data.teams;
+            for (var i = 0; i < $scope.response.length; ++i) {
+                $scope.team_options.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
+            }
+
+        }, function myError(response) {
+            $scope.message = "Error";
+        })
+    }
+
+    $scope.getUsersForProject = function (id) {
+        $http({
+            method: "GET",
+            url: "/Add/GetUsersFromTeam?teamId="+id,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySucces(response) {
+            $scope.response = response.data;
+            for (var i = 0; i < $scope.response.length; ++i) {
+                $scope.users.push({ id: $scope.response[i].id, NAME: $scope.response[i].NAME })
+            }
+
+        }, function myError(response) {
+            $scope.message = "Error";
+        })
     }
 
     $scope.addTask = function () {
