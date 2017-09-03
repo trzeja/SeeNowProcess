@@ -18,7 +18,7 @@ iterationApp.service('iterationService', function () {
 
 });
 
-iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $http) {
+iterationApp.controller("iterationCtrl", function ($scope, $http, iterationService) {
     $scope.message = '';
     $scope.iterations = [];
     $scope.lists = [];
@@ -155,11 +155,14 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', function ($scope, $
             iterationService.addIterationId(id);
 
         }
-}]);
+});
 
-iterationApp.controller("taskCtrl", function ($scope,$http) {
+iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
     $scope.tasks = [];
 
+    $scope.status;
+    $scope.title;
+    $scope.description;
     $scope.response = [];
     $scope.parent_options = [];
     $scope.project_options = [];
@@ -256,6 +259,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http) {
             title: $scope.title, description: $scope.description, status: $scope.status.value,
             importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
         });*/
+        var iterationId = iterationService.getIterationId()
         $http({
             method: "POST",
             url: "/Add/IndexAddWithIteration",
@@ -263,7 +267,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http) {
                 'title': $scope.title, 'description': $scope.description,
                 'status': $scope.status.value, 'importance': $scope.importance.value, 
                 'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value,
-                'users': $scope.selected_users, 'iterationId': iterationService.getIterationId()
+                'users': $scope.selected_users, 'iterationId': iterationId
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
