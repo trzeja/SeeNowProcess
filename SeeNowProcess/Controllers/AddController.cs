@@ -187,6 +187,26 @@ namespace SeeNowProcess.Controllers
             }
         }
 
+        [HttpGet] ActionResult GetPeopleFromProject(int projectId)
+        {
+            using (db)
+            {
+                var people = db.Projects
+                    .Where(p => p.ProjectID == projectId)
+                    .SelectMany(project => project.Stories)
+                    .SelectMany(story => story.Teams)
+                    .SelectMany(team => team.Assignments)
+                    .Select(assignment => assignment.User)
+                    .Distinct()
+                    .Select(p => new
+                    {
+                        id = p.UserID,
+                        NAME = p.Name,
+                    });
+                return Json(people.ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //
         // POST: /Account/Login
         /*    [HttpPost]
