@@ -188,7 +188,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpGet]
-        ActionResult GetTeamsFromUserStory(int userStoryId)
+        public ActionResult GetTeams(int userStoryId)
         {
             using (db)
             {
@@ -213,7 +213,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpGet]
-        ActionResult GetUsersFromTeam(int teamId)
+        public ActionResult GetUsersFromTeam(int teamId)
         {
             using (db)
             {
