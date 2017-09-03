@@ -77,6 +77,63 @@ namespace SeeNowProcess.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult IndexAddWithIteration([Bind(Include = "Title,Description,Status,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users, int iterationId)
+        {
+            using (db)
+            {
+                if (!(userStory == null ^ userStoryId == null)) // XNOR - musi być wypełnione dokładnie jedno
+                    return Json("Error - use exactly one of [UserStory, UserStoryId]", JsonRequestBehavior.AllowGet);
+                //userstory
+                UserStory story;
+                if (userStory == null)
+                    story = db.UserStories.Where(us => us.UserStoryID == userStoryId).FirstOrDefault();
+                else
+                    story = db.UserStories.Where(us => us.Title.Equals(userStory, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                if (story == null)
+                    return Json("Error - cannot find user story", JsonRequestBehavior.AllowGet);
+                problem.Story = story;
+                //box
+                problem.Box = db.Boxes.Where(box => box.Project.ProjectID == story.Project.ProjectID).OrderBy(box => box.Order).First();
+                //assignedUsers
+                if (users == null)
+                    users = new List<int>();
+                List<User> assignedUsers = db.Users.Where(u => users.Contains(u.UserID)).ToList();
+                if (assignedUsers.Count < users.Count)
+                {
+                    List<int> nonMatchedUsers = users.Where(id => !db.Users.Any(u => u.UserID == id)).ToList();
+                    return Json("Error - users (" + nonMatchedUsers.ToString() + ") don't exist in database!", JsonRequestBehavior.AllowGet);
+                }
+                problem.AssignedUsers = assignedUsers;
+                //iteration
+                problem.Iteration = story.Project.Iterations.Where(iter => iter.IterationId == iterationId).FirstOrDefault();
+                //zapisz zmiany
+                db.Problems.Add(problem);
+                string mess = "success";
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                {
+                    mess = "Errors:";
+                    foreach (var validateError in e.EntityValidationErrors)
+                    {
+                        mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
+                        foreach (var error in validateError.ValidationErrors)
+                        {
+                            mess += "\n\t\t" + error.ErrorMessage;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    mess = e.Message;
+                }
+                return Json(mess, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult GetProjects()
         {

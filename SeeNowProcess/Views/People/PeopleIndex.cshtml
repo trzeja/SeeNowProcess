@@ -53,7 +53,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
                     <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab">Account Settings</a></li>
-                    <li class="my-tabs"><a href="#Teams" role="tab" data-toggle="tab">Teams</a></li>
+                    <li class="my-tabs"><a href="#Teams" role="tab" data-toggle="tab">Teams & Projects</a></li>
                     <!--<li class="my-tabs"><a href="#4zakladka" role="tab" data-toggle="tab">4 zakładka</a></li>-->
                 </ul>
             </div>
@@ -190,7 +190,7 @@
             </div>
             <div class="tab-pane" id="Teams">
                 <h4><strong>Teams</strong></h4>
-                        <hr />
+                    <hr />
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -212,13 +212,32 @@
                             </tbody>
 
                         </table>
-                        <!-- Projects
-                 <hr />
-                 <div ng-repeat="item in userTeams">
-                     <div class="element">User Story: {{item.UserStory}}<p class="element2">Team name: {{item.Name}}</p></div>
-                 </div>-->
+                <!--<div style="color: white; margin-left: -15vw; z-index:15;"><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">-</button></div>-->
+                <br/>
+                <br/>
+                <h4><strong>Projects</strong></h4>
+                    <hr />
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 10vw"> Name </th>
+                                <th style="width: 10vw"> Description</th>
+                                <th style="width: 10vw"> Start Date </th>
+                                <th style="width: 10vw"> Completion Date </th>
+                                <th style="width: 10vw"> Status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in userProjects">
+                                <td>{{item.ProjectName}}</td>
+                                <td>{{item.ProjectDescription}}</td>
+                                <td>{{item.ProjectStartDate}}</td>
+                                <td>{{item.ProjectCompletionDate}}</td>
+                                <td>{{item.ProjectStatus}}</td>   
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>
-    <div style="color: white; margin-left: -15vw; z-index:15;"><button type="button" class="btn red_button" ng-click="deleteTeam(currentUser.id, item.TeamID)">-</button></div>
 </body>

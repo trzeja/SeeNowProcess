@@ -3,7 +3,7 @@
 }
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IterationPlanIndex";
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -20,7 +20,7 @@
 
 <div ng-controller="iterationCtrl">
     <div>{{message}}</div>
-    <div><input type="submit" class="btn green_button btn-add" style="margin-bottom:20px" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
+    <div><input type="submit" class="btn green_button btn-add" value="ADD ITERATION" data-toggle="modal" data-target="#iterationModal"></div>
 
     <!--Modal - adding iteration-->
     <div class="modal fade" id="iterationModal" role="dialog">
@@ -71,7 +71,7 @@
         </thead>
         <tbody>
             <td class="space column" ng-repeat="x in lists">
-                <div><input type="submit" class="btn green_button btn-right" style="margin-bottom:20px" value="+" data-toggle="modal" data-target="#taskModal"></div>
+                <div><input type="submit" class="btn green_button btn-right" style="margin-bottom:20px" ng-click="passIterationId(x.id)" value="+" data-toggle="modal" data-target="#taskModal"></div>
                 <ul class="visible list-unstyled text-center" dnd-list="x.data" dnd-drop="dropCallback(item,x.id)"> @* dnd-drop="dropCallback(item,)"*@
                     <li ng-repeat="item in x.data"
                         dnd-draggable="item"
@@ -88,7 +88,7 @@
     </div>
 
     <!--Modal - adding task-->
-     <div class="modal fade" id="taskModal" role="dialog">
+     <div class="modal fade" ng-controller="taskCtrl" id="taskModal" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content for addingTask :/-->
@@ -121,19 +121,23 @@
                                 <input class="form-control" type="text" id="task_estimated_time" ng-model="estimated_time" required>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 control-label selectContainer" for="task_parent"> PARENT USER STORY: </label>
-                                <select class="form-control" name="task_parent" ng-model="parent" ng-options="x.description for x in parent_options"></select>
+                                <label class="col-sm-3 control-label selectContainer" for="task_project"> PROJECT: </label>
+                                <select class="form-control" name="task_project" ng-model="project" ng-options="x.value for x in project_options" ng-change="getUserStories(project.id)"></select>
                             </div>
                             <div class="form-group row">
-                    <label class="col-sm-2 control-label" for="selected_users"> USERS: </label>
-                        <div class="col-sm-offset-2" name="selected" ng-repeat="x in users">
-                            <input class="col-sm-offset-2" type="checkbox" ng-model="selected" ng-change="checkUser(x.id)"> {{x.NAME}}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-10 control-label"></label>
-                        <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" ng-click="addTask()">
-                    </div>
+                                <label class="col-sm-3 control-label selectContainer" for="task_parent"> PARENT USER STORY: </label>
+                                <select class="form-control" name="task_parent" ng-model="parent" ng-options="x.value for x in parent_options"></select>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label" for="selected_users"> USERS: </label>
+                                <div class="col-sm-offset-3" name="selected" ng-repeat="x in users">
+                                    <input class="col-sm-offset-2" type="checkbox" ng-model="selected" ng-change="checkUser(x.id)"> {{x.NAME}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-10 control-label"></label>
+                                <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" ng-click="addTask()">
+                            </div>
                     </form>
                 </div>
                     <div class="modal-footer">

@@ -134,6 +134,10 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         
     }
 
+    $scope.addUserStory = function () {
+
+    }
+
     $scope.deleteTask = function (TaskID) {
         /*$scope.message = ID;*/
         $http({
