@@ -187,17 +187,39 @@ namespace SeeNowProcess.Controllers
             }
         }
 
-        [HttpGet] ActionResult GetPeopleFromProject(int projectId)
+        [HttpGet]
+        ActionResult GetTeamsFromUserStory(int userStoryId)
         {
             using (db)
             {
-                var people = db.Projects
-                    .Where(p => p.ProjectID == projectId)
-                    .SelectMany(project => project.Stories)
-                    .SelectMany(story => story.Teams)
-                    .SelectMany(team => team.Assignments)
+                var teams = db.UserStories
+                    .Where(us => us.UserStoryID == userStoryId)
+                    .SelectMany(us => us.Teams)
+                    .Select(t => new
+                    {
+                        id = t.TeamID,
+                        name = t.Name
+                    });
+                //przypisań do projektu chyba nie robimy?
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        teams = teams.ToList()
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
+
+        [HttpGet]
+        ActionResult GetUsersFromTeam(int teamId)
+        {
+            using (db)
+            {
+                var people = db.Assignments
+                    .Where(ass => ass.TeamID == teamId)
                     .Select(assignment => assignment.User)
-                    .Distinct()
                     .Select(p => new
                     {
                         id = p.UserID,
