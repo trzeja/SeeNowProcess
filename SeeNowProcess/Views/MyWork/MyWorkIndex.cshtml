@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SeeNowProcess.Models.Problem>
+﻿@*@model IEnumerable<SeeNowProcess.Models.Problem>*@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,11 +8,18 @@
     ViewBag.Title = "MyWorkIndex";
 }
 
+@model IEnumerable<SeeNowProcess.Models.Project>
+
 <head>
     <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
     <style>
+        .topped {
+            top: 80px;
+            position: absolute;
+            left: 80vw;
+        }
         .fill {
-    top: 70px;
+    top: 160px;
     left: 195px;
     right: 0;
     bottom: 0;
@@ -121,120 +128,24 @@
     <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
+    <script src="~/Scripts/angularMyWork.js"></script>
 </head>
 <body>
 
-    <script>
-        angular.module("dragAndDrop", ['dndLists']).controller("dragging", function ($scope, $http) {
-
-            //$http({
-            //    method: "GET",
-            //    url: "/MyWork/GetCurrentUser",
-            //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-            //}).then(function success(result) {
-            //    $scope.user = result.data;
-            //}).catch(function fail(result) { });
-
-            $scope.dropCallback = function (item,number) {
-                //w item mamy jaki był poprzednio - w number jaki ma byc nowy
-                $http({
-                    method: "POST",
-                    url: "/MyWork/UpdateDatabase",
-                    data: $.param({
-                        'ProblemID': item.ProblemID, 'NewState': number
-                    }),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-                }).then(function success(response) {}, function failure(response) {});
-                item.BoxID = number;
-                return item;
-            };
-            
-
-            $http({
-                method: "GET",
-                url: "/MyWork/GetBoxOrder",
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-            })
-            .then(function success(result) {
-                $scope.boxOrder = result.data;
-
-                //utworzenie listy na przechowywanie taskow
-                $scope.lists = [];
-                for (var i = 0; i < $scope.boxOrder.length; i++) 
-                {
-                    $scope.lists.push({Order: $scope.boxOrder[i].BoxOrder, Tasks:[]});
-                }
-                $http({
-                    method: "GET",
-                    url: "/MyWork/IndexJS",
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-                })
-                .then(function success(result) {
-                //pobrac tu trzeba tez do ktorego nalezy 
-                //$scope.models.lists.A = result.data;
-                $scope.wholeList = result.data;
-
-                for (var x = 0; x < $scope.wholeList.length; x++) {
-                    //switch ($scope.allProblemsList[x].Box.Order) { //moja propozycja (Mikolaj)
-                    //nie dziala, moze nie da sie odwolac do tak zagnizdzonego pola... :c konsola na 
-                    //przegladarce wywala ze nie znapola "Order"
-
-                    for (var j = 0; j < $scope.lists.length; j++) {
-                        if ($scope.wholeList[x].BoxOrder == $scope.lists[j].Order) {
-                            $scope.lists[j].Tasks.push($scope.wholeList[x]);
-                        }
-                    }
-                    //switch ($scope.wholeList[x].BoxOrder) {
-                    //    case 0:
-                    //        $scope.models.lists.A.push($scope.wholeList[x]);
-                    //        break;
-                    //    case 1:
-                    //        $scope.models.lists.B.push($scope.wholeList[x]);
-                    //        break;
-                    //    case 2:
-                    //        $scope.models.lists.C.push($scope.wholeList[x]);
-                    //        break;
-                    //    case 3:
-                    //        $scope.models.lists.D.push($scope.wholeList[x]);
-                    //        break;
-                    //    case 4:
-                    //        $scope.models.lists.E.push($scope.wholeList[x]);
-                    //        break;
-                    //    case 5:
-                    //    default:
-                    //        $scope.models.lists.F.push($scope.wholeList[x]);
-                    //        break;
-                    //}
-                }
-
-
-                }).catch(function fail(result) {
-                    $scope.list = ":(";
-                })
-            }).catch(function fail(result) {
-                $scope.boxOrder = ":(";
-            })
-
-
-            
-
-            $scope.wholeList = [];
-
-            $scope.addTask = function (title,description) {
-                $scope.models.lists.A.push({title, description});
-            }
-            
-
-        });
-
-
-    </script>
-
-
-
-
     <div ng-app="dragAndDrop" ng-controller="dragging">
-       <p>{{hello}}</p>
+        <div class="topped" align="right">
+            <p><strong>Current project:</strong></p>
+            <!-- <p >{{currentName}}</p> -->
+            <select ng-model="currentProject" ng-init="currentProject=Session['project']">
+                <!-- ng-options="x.id as x.name for x in projects">-->
+                <option value="0">All projects</option>
+                @foreach (var project in Model)
+                {
+
+                    <option value="@project.ProjectID">@project.Name</option>
+                }
+            </select>
+        </div>
         <table class="fill">
             <tr>
                 <th class="space2 column" ng-repeat="x in boxOrder"><h5 class="text-center"><strong>{{x.Name}}</strong></h5></th>
