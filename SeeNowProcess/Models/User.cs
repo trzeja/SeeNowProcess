@@ -22,7 +22,7 @@ namespace SeeNowProcess.Models
         
         [StringLength(20, MinimumLength=5)]
         public string Login { get; set; }
-        //[StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
+        [StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
         //[DataType(DataType.Password)] // w sumie nie wiem co to dokladnie robi, ale typ pasuje
         [NotMapped]
         public string Password {

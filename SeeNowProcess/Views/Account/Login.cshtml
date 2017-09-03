@@ -5,15 +5,25 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="~/Scripts/angularLogin.js"></script>
+    <style>
+        .control-label.text-left{
+    text-align: left;
+}
+        </style>
 </head>
 <h2>Login</h2>
 
-<form ng-app="loginForm" name="loginForm" ng-controller="loginCtrl" class="form-horizontal" ng-submit="loginCheck()">
+<form ng-app="loginForm" name="loginForm" ng-controller="loginCtrl" class="form-horizontal" ng-submit="loginCheck()" novalidate>
     <div>{{myWelcome}}</div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="login"> Login: </label>
-        <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
-        <p style="color:red" ng-show="(loginForm.login.$dirty || Submited ) && loginForm.login.$error.required">Please enter LOGIN</p>
+        <input class="col-sm-2 form-control" type="text" id="login" name="login" ng-model="login" ng-minlength="5" ng-maxlength="20" required autofocus>
+        <p class="col-sm-3 control-label text-left" style="color:red" for="login" ><span class="text-left" ng-show="loginForm.login.$error.required">Required!</span>
+        <span ng-show="loginForm.login.$error.minlength">Should be at least 5 characters long</span>
+        <span ng-show="loginForm.login.$error.maxlength">Should be less than 20 characters</span></p>
+       
+        @*<input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
+        <p style="color:red" ng-show="(loginForm.login.$dirty || Submited ) && loginForm.login.$error.required">Please enter LOGIN</p>*@
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="password"> Password: </label>
@@ -22,7 +32,8 @@
     </div>
     <div class="form-group row">
         <label class="col-sm-10 control-label"></label>
-        <input type="submit" class="form-control btn green_button" style="margin-left: 20%" value="LOGIN"> <!-- ng-click="loginCheck()"-->
+        <input type="submit" class="form-control btn green_button" style="margin-left: 20%" value="LOGIN" 
+               ng-disabled="loginForm.login.$error.required || loginForm.login.$error.minlength || loginForm.login.$error.maxlength"> <!-- ng-click="loginCheck()"-->
     </div>
 </form>
 
