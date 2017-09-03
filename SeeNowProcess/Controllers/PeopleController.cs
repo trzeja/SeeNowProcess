@@ -224,7 +224,13 @@ namespace SeeNowProcess.Controllers
                         /*UserStorySize = t.UserStory == null ? "Unassigned" : t.UserStory.Size,*/
                         UserStoryUnit = t.UserStory == null ? "Unassigned" : t.UserStory.Unit,
                         UserStoryProject = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
-                        Leader = t.TeamLeader.Name
+                        Leader = t.TeamLeader.Name,
+                        ProjectID = t.UserStory == null ? -1 : t.UserStory.Project.ProjectID,
+                        ProjectName = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
+                        ProjectDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Description,
+                        ProjectStartDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.StartDate.ToString(),
+                        ProjectCompletionDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.CompletionDate.ToString(),
+                        ProjectStatus = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Status.ToString()
                     });
                 //przypisań do projektu chyba nie robimy?
                 return new JsonResult
@@ -238,7 +244,6 @@ namespace SeeNowProcess.Controllers
                 };
             }
         }
-
 
         [HttpPost]
         public ActionResult deleteUser(int id) {
