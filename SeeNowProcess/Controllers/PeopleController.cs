@@ -207,6 +207,7 @@ namespace SeeNowProcess.Controllers
                 return result;
             }
         }
+
         public ActionResult GetAssignments(int userId)
         {
             using (db)
@@ -233,6 +234,90 @@ namespace SeeNowProcess.Controllers
                         ProjectStatus = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Status.ToString()
                     });
                 //przypisań do projektu chyba nie robimy?
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        UserID = userId,
+                        Teams = Teams.ToList()
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
+
+        public ActionResult GetUserStories(int userId)
+        {
+            using (db)
+            {
+                var UserStories = db.Assignments
+                    .Where(a => a.UserID == userId)
+                    .Select(a => a.Team)
+                    .Select(t => new
+                    {
+                        UserStoryID = t.UserStory == null ? -1 : t.UserStory.UserStoryID,
+                        UserStoryTitle = t.UserStory == null ? "Unassigned" : t.UserStory.Title,
+                        UserStoryDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Description,
+                        /*UserStorySize = t.UserStory == null ? "Unassigned" : t.UserStory.Size,*/
+                        UserStoryUnit = t.UserStory == null ? "Unassigned" : t.UserStory.Unit,
+                        UserStoryProject = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name                        
+                    }).Distinct();
+                
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        UserID = userId,
+                        UserStories = UserStories.ToList()
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
+
+        public ActionResult GetProjects(int userId)
+        {
+            using (db)
+            {
+                var Projects = db.Assignments
+                    .Where(a => a.UserID == userId)
+                    .Select(a => a.Team)
+                    .Select(t => new
+                    {                        
+                        ProjectID = t.UserStory == null ? -1 : t.UserStory.Project.ProjectID,
+                        ProjectName = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
+                        ProjectDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Description,
+                        ProjectStartDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.StartDate.ToString(),
+                        ProjectCompletionDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.CompletionDate.ToString(),
+                        ProjectStatus = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Status.ToString()
+                    }).Distinct();
+                
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        UserID = userId,
+                        Teams = Projects.ToList()
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
+
+        public ActionResult GetTeams(int userId)
+        {
+            using (db)
+            {
+                var Teams = db.Assignments
+                    .Where(a => a.UserID == userId)
+                    .Select(a => a.Team)
+                    .Select(t => new
+                    {
+                        TeamID = t.TeamID,
+                        Name = t.Name,                       
+                        Leader = t.TeamLeader.Name                        
+                    }).Distinct();
+
                 return new JsonResult
                 {
                     Data = new
