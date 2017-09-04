@@ -38,7 +38,7 @@
         <input class="col-sm-2 form-control" type="password" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword" required autofocus match-password="password">
         <p class="col-sm-3 control-label text-left" style="color:red" for="login">
             <span class="text-left" ng-show="registerForm.confirmPassword.$error.required">Required!</span>
-            <span class="text-left" ng-show="registerForm.confirmPassword.$valid">Passwords not match</span>
+            <span class="text-left" ng-show="registerForm.confirmPassword.$valid">Password does not match</span>
         </p>
     </div>
     <div class="form-group row">

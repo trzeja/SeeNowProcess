@@ -18,16 +18,14 @@ loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
 
         }).then(function mySucces(response) {
             if (response.data === "Success") {
-
-                $scope.myWelcome = "Please wait...";
-                $scope.lock = true;
                 window.location.href = "/People/PeopleIndex";
             }
                 
             else {
+                // ewentualnie mozna rozdzielic na password i username zle, jesli mi kontroler zwroci info
                 $scope.myWelcome = "Error - incorrect data!";
-                //$scope.login = "";
-                //$scope.password = "";
+                $scope.login = "";
+                $scope.password = "";
                 $scope.lock = false;
             }
         }, function myError(response) {
