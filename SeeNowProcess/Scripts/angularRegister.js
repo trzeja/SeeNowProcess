@@ -1,4 +1,20 @@
 ﻿var registerApp = angular.module("registerForm", []);
+registerApp.directive('matchPassword', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, mCtrl, ngModel) {
+            function passwordMatching(value) {
+                if (value != password.value) {
+                    mCtrl.$setValidity('matchPass', true);
+                } else {
+                    mCtrl.$setValidity('matchPass', false);
+                }
+                return value;
+            }
+            mCtrl.$parsers.push(passwordMatching);
+        }
+    }
+});
 registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $http) {
     $scope.message = '';
 

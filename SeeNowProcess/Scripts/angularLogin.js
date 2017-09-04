@@ -1,13 +1,15 @@
 ﻿var loginApp = angular.module("loginForm", []);
 loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
-
+    $scope.lock = false;
     $scope.myWelcome = "";
 
     $scope.loginCheck = function () {
-        var objUser = $.param({
-            password: $scope.password,
-            login: $scope.login
-        })
+        $scope.myWelcome = "Please wait...";
+        $scope.lock = true;
+        //var objUser = $.param({
+        //    password: $scope.password,
+        //    login: $scope.login
+        //})
         $http({
             method: "POST",
             url: "/Account/LoginAction",
@@ -15,16 +17,24 @@ loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
         }).then(function mySucces(response) {
-            if (response.data === "Success")
+            if (response.data === "Success") {
+
+                $scope.myWelcome = "Please wait...";
+                $scope.lock = true;
                 window.location.href = "/People/PeopleIndex";
-            else
+            }
+                
+            else {
                 $scope.myWelcome = "Error - incorrect data!";
-                $scope.login = "";
-                $scope.password = "";
+                //$scope.login = "";
+                //$scope.password = "";
+                $scope.lock = false;
+            }
         }, function myError(response) {
             $scope.myWelcome = "Error";
-            $scope.login = "";
-            $scope.password = "";
+            //$scope.login = "";
+            //$scope.password = "";
+            $scope.lock = false;
         })
 
         /*
