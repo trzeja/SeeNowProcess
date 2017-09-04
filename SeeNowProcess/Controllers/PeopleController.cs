@@ -297,7 +297,7 @@ namespace SeeNowProcess.Controllers
                     Data = new
                     {
                         UserID = userId,
-                        Teams = Projects.ToList()
+                        Projects = Projects.ToList()
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };

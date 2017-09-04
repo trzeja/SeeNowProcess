@@ -4,6 +4,8 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.lists = [];  //people from database
     $scope.userTasks = [];
     $scope.userTeams = [];
+    $scope.userUserStories = [];
+    $scope.userProjects = [];
     $scope.selected = null;
     $scope.userName = 'Select user to show content.';
     $scope.currentUser;
@@ -87,7 +89,7 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
                 $scope.message = "Error in displaying tasks";
             })
 
-            $http({
+           /* $http({
                 method: "POST",
                 url: "/People/GetAssignments",
                 data: $.param({ "userId": $scope.currentUser.id }),
@@ -95,6 +97,42 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
 
             }).then(function mySucces(response) {
                 $scope.userTeams = response.data.Teams;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })*/
+            $http({
+                method: "POST",
+                url: "/People/GetTeams",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTeams = response.data.Teams;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+            $http({
+                method: "POST",
+                url: "/People/GetProjects",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userProjects = response.data.Projects;
+
+            }, function myError(response) {
+                $scope.message = "Error in displaying User Stories.";
+            })
+            $http({
+                method: "POST",
+                url: "/People/GetUserStories",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userUserStories= response.data.UserStories;
 
             }, function myError(response) {
                 $scope.message = "Error in displaying User Stories.";
