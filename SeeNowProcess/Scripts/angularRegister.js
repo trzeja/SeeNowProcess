@@ -17,7 +17,7 @@ registerApp.directive('matchPassword', function () {
 });
 registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $http) {
     $scope.message = '';
-
+    $scope.lock = false;
     $scope.roles_options =
     [
          { value: "admin", description: "Admin" },
@@ -31,10 +31,14 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
 
     ];
     $scope.registerUser = function () {
+        
+        //czy to moge wywalic jak sprawdzam na etapie wpisywania?
         if ($scope.password !== $scope.confirmPassword) {
             $scope.message = "Passwords don't match!";
         }
         else {
+            $scope.lock = true;
+            $scope.message = "Please wait...";
             $http({
                 method: "POST",
                 url: "/Account/RegisterAction",
@@ -45,9 +49,14 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
                 if (response.data === "Success")
                     window.location.href = "/Add/Index";
                 else {
+                    $scope.lock = false;
+                    //moze jaki jest case ze istnieje sprawdzic i wyzerowac hasla chociaz?
                     $scope.message = response.data;
+                    $scope.password = "";
+                    $scope.confirmPassword = "";
                 }
             }, function myError(response) {
+                $scope.lock = false;
                 $scope.message = "Error";
             })
 
