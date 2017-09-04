@@ -5,22 +5,41 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="~/Scripts/angularRegister.js"></script>
+    <style>
+        .control-label.text-left {
+            text-align: left;
+        }
+    </style>
 </head>
 <h2>Register</h2>
 
-<form ng-app="registerForm" name="registerForm" ng-controller="registerCtrl" class="form-horizontal" ng-submit="registerUser()">
+<form ng-app="registerForm" name="registerForm" ng-controller="registerCtrl" class="form-horizontal" ng-submit="registerUser()" novalidate>
     <div>{{message}}</div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="login"> Login: </label>
-        <input class="form-control" type="text" id="login" ng-model="login" required autofocus ng-class="Submited?'ng-dirty':''">
+        <input class="col-sm-2 form-control" type="text" id="login" name="login" ng-minlength="5" ng-maxlength="20" ng-model="login" required autofocus>
+        <p class="col-sm-3 control-label text-left" style="color:red" for="login">
+            <span class="text-left" ng-show="registerForm.login.$error.required" ng-disabled="$scope.lock">Required!</span>
+            <span ng-show="registerForm.login.$error.minlength">Should be at least 5 characters long</span>
+            <span ng-show="registerForm.login.$error.maxlength">Should be less than 20 characters</span>
+        </p>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="password"> Password: </label>
-        <input class="form-control" type="password" id="password" ng-model="password" required autofocus ng-class="Submited?'ng-dirty':''">
+        <input class="col-sm-2 form-control" type="password" id="password" name="password" ng-model="password" required autofocus ng-minlength="6" ng-maxlength="100">
+        <p class="col-sm-3 control-label text-left" style="color:red" for="login">
+            <span class="text-left" ng-show="registerForm.password.$error.required">Required!</span>
+            <span ng-show="registerForm.password.$error.minlength">Should be at least 6 characters long</span>
+            <span ng-show="registerForm.password.$error.maxlength">Should be less than 100 characters</span>
+        </p>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="confirmPassword"> Confirm Password: </label>
-        <input class="form-control" type="password" id="confirmPassword" ng-model="confirmPassword" required autofocus ng-class="Submited?'ng-dirty':''">
+        <input class="col-sm-2 form-control" type="password" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword" required autofocus match-password="password">
+        <p class="col-sm-3 control-label text-left" style="color:red" for="login">
+            <span class="text-left" ng-show="registerForm.confirmPassword.$error.required">Required!</span>
+            <span class="text-left" ng-show="registerForm.confirmPassword.$valid">Passwords not match</span>
+        </p>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="name"> Full Name: </label>
