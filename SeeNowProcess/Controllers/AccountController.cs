@@ -48,7 +48,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterAction([Bind(Exclude = "Hash,Salt",Include ="Login,Password,Name,Email,Phone")] User user)
+        public ActionResult RegisterAction([Bind(Exclude = "Hash,Salt",Include ="Login,Password,Name,Email,Phone, Role")] User user)
         {
             using (db)
             {
