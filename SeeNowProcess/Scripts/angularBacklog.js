@@ -188,7 +188,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         }).then(function mySucces(response) {
             $scope.response = response.data;
             for (var i = 0; i < $scope.response.length; ++i) {
-                $scope.userStoriesTeams.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
+                $scope.userStoriesTeams.push({ id: $scope.response[i].ID, NAME: $scope.response[i].name })
             }
         }, function myError(response) {
             $scope.message = "Error";
