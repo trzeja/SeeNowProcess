@@ -173,6 +173,8 @@ namespace SeeNowProcess.Controllers
         [HttpPost]
         public ActionResult AddUserStory([Bind(Include ="Title,Description,Size,Unit,Notes,Criteria")] UserStory userStory, int project, List<int>teams)
         {
+            if (teams == null)
+                teams = new List<int>();
             using (db)
             {
                 string mess = "Success";
