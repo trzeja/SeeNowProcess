@@ -6,6 +6,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     $scope.currentUS;
     $scope.tasksUS;
     $scope.info;
+    $scope.selected_teams;
 
     $scope.show = 0;
     $scope.currentProject;
@@ -135,7 +136,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     }
 
     $scope.addUserStory = function () {
-
+        var newteam;
     }
 
     $scope.deleteTask = function (TaskID) {
@@ -153,4 +154,67 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             $scope.message = "Error deleting Task";
         })
     }
+
+
+    //ADD uSERSTORY MODAL
+    $http({
+        method: "GET",
+        url: "/Add/GetProjects",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySucces(response) {
+        $scope.response = response.data;
+        for (var i = 0; i < $scope.response.length; ++i) {
+            $scope.userStoriesProjects_options.push({ id: $scope.response[i].id, name: $scope.response[i].name })
+        }
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
+
+    $scope.checkTeam = function (id) {
+        if ($scope.selected_users.indexOf(id) === -1) {
+            $scope.selected_users.push(id);
+        }
+        else {
+            $scope.selected_teams.splice($scope.selected_teams.indexOf(id), 1);
+        }
+    };
+
+    $scope.getTeams = function () {
+        $http({
+            method: "GET",
+            url: "/Backlog/GetTeams",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySucces(response) {
+            $scope.response = response.data.teams;
+            for (var i = 0; i < $scope.response.length; ++i) {
+                $scope.userStoriesTeams.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
+            }
+
+        }, function myError(response) {
+            $scope.message = "Error";
+        })
+    }
+
+    $scope.addUserStory= function () {
+        $http({
+            method: "POST",
+            url: "/Backlog/AddUserStory",
+            data: $.param({
+                'title': $scope.userStoryTitle, 'description': $scope.userStoryDescription,
+                'size': $scope.userStorySize, 'unit': $scope.userStoryUnit,
+                'notes': $scope.userStoryNotes, 'criteria': $scope.userStoryCriteria,
+                'project': $scope.userStoryProject, 'teams': $scope.selected_teams
+            }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function success(response) {
+            $scope.message = "Did it!";
+        },
+        function failure(response) {
+            $scope.message = "Fail...";
+        });
+    }
+
+
+
+
 }]);
