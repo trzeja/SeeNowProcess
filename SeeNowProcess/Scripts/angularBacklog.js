@@ -6,7 +6,9 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     $scope.currentUS;
     $scope.tasksUS;
     $scope.info;
-    $scope.selected_teams;
+    $scope.selected_teams = [];
+    $scope.userStoriesProjects_options = [];
+    $scope.userStoriesTeams = [];
 
     $scope.show = 0;
     $scope.currentProject;
@@ -171,29 +173,27 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     })
 
     $scope.checkTeam = function (id) {
-        if ($scope.selected_users.indexOf(id) === -1) {
-            $scope.selected_users.push(id);
+        if ($scope.selected_teams.indexOf(id) === -1) {
+            $scope.selected_teams.push(id);
         }
         else {
             $scope.selected_teams.splice($scope.selected_teams.indexOf(id), 1);
         }
     };
 
-    $scope.getTeams = function () {
         $http({
             method: "GET",
             url: "/Backlog/GetTeams",
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
-            $scope.response = response.data.teams;
+            $scope.response = response.data;
             for (var i = 0; i < $scope.response.length; ++i) {
                 $scope.userStoriesTeams.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
             }
-
         }, function myError(response) {
             $scope.message = "Error";
         })
-    }
+
 
     $scope.addUserStory= function () {
         $http({
@@ -203,11 +203,11 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
                 'title': $scope.userStoryTitle, 'description': $scope.userStoryDescription,
                 'size': $scope.userStorySize, 'unit': $scope.userStoryUnit,
                 'notes': $scope.userStoryNotes, 'criteria': $scope.userStoryCriteria,
-                'project': $scope.userStoryProject, 'teams': $scope.selected_teams
+                'project': $scope.userStoryProject.id, 'teams': $scope.selected_teams
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            $scope.message = "Did it!";
+            window.location.href = "/Backlog/BacklogIndex";
         },
         function failure(response) {
             $scope.message = "Fail...";
