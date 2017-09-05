@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201705091808527_iterationBox-to-projectBox.Designer.cs">
       <DependentUpon>201705091808527_iterationBox-to-projectBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.cs" />
+    <Compile Include="Migrations\201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.Designer.cs">
+      <DependentUpon>201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -377,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705091808527_iterationBox-to-projectBox.resx">
       <DependentUpon>201705091808527_iterationBox-to-projectBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.resx">
+      <DependentUpon>201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
