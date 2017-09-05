@@ -157,7 +157,7 @@
                 <th class="space2 column" ng-repeat="x in boxes"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
             </tr>
             <tr ng-repeat="x in list">
-                <td class="space column">{{x.title}} </td>
+                <td class="space column" style="text-align:center" ng-bind-html="x.title | trustAsHtml"></td><!--{{x.title}}-->
             <td class="space column" valign="top" ng-repeat="y in x.boxes">
                 <ul class="visible list-unstyled text-center" dnd-list="y.tasks" dnd-drop="dropCallback(item,x.id,y.order)">
           
