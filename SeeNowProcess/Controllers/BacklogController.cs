@@ -180,6 +180,7 @@ namespace SeeNowProcess.Controllers
                 string mess = "Success";
                 List<Team> dbTeams = db.Teams.Where(t => teams.Contains(t.TeamID)).ToList();
                 userStory.Teams = dbTeams;
+                db.UserStories.Add(userStory);
                 dbTeams.ForEach(team => db.MarkAsModified(team));
                 try
                 {
