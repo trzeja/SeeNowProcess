@@ -17,7 +17,7 @@ namespace SeeNowProcess.Models
         
         public string Name { get; set; }
         public virtual User TeamLeader { get; set; }
-        public virtual UserStory UserStory { get; set; }
+        public virtual ICollection<UserStory> UserStories { get; set; }
         public virtual ICollection<Assignment> Assignments { get; set; }
 
     }
