@@ -248,6 +248,10 @@
     <Compile Include="Migrations\201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.Designer.cs">
       <DependentUpon>201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051725110_userRestrictions.cs" />
+    <Compile Include="Migrations\201709051725110_userRestrictions.Designer.cs">
+      <DependentUpon>201709051725110_userRestrictions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -384,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.resx">
       <DependentUpon>201709051643455_Zmiana relacji Team-UserStories na wiele do wielu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051725110_userRestrictions.resx">
+      <DependentUpon>201709051725110_userRestrictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
