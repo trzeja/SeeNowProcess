@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201709051725110_userRestrictions.Designer.cs">
       <DependentUpon>201709051725110_userRestrictions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051826490_problemRestrictions.cs" />
+    <Compile Include="Migrations\201709051826490_problemRestrictions.Designer.cs">
+      <DependentUpon>201709051826490_problemRestrictions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -391,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709051725110_userRestrictions.resx">
       <DependentUpon>201709051725110_userRestrictions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051826490_problemRestrictions.resx">
+      <DependentUpon>201709051826490_problemRestrictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

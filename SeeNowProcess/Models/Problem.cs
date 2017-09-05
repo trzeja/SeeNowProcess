@@ -19,19 +19,18 @@ namespace SeeNowProcess.Models
         public int ProblemID { get; set; }
         
 
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(60, MinimumLength = 3),Required]
         public string Title { get; set; }
+        [StringLength(200, MinimumLength = 3), Required]
         public string Description { get; set; }
-
-        //[Display(Name = "Current State")]
-        //public State? CurrentState { get; set; }
-        public Importance? Importance { get; set; }
+        [Required]
+        public Importance Importance { get; set; }
         public int? Progress { get; set; }
 
         [Display(Name = "Creation Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public virtual Box Box { get; set; }
         public virtual Iteration Iteration { get; set; }
 
