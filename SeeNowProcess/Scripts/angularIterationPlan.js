@@ -27,6 +27,7 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
     $scope.endDate = '';
     $scope.startingDate;
     $scope.endingDate;
+    //$scope.idProject;
 
 
     $scope.show = 0;
@@ -206,7 +207,7 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
             $http({
                 method: "POST",
                 url: "/IterationPlan/AddingIteration",
-                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startingDate, "endDate": $scope.endingDate}),
+                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startingDate, "endDate": $scope.endingDate /*, "idProject": $scope.idProject*/}),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {

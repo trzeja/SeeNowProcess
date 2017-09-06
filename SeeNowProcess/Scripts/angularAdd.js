@@ -26,7 +26,8 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     $scope.selected_users = [];
     $scope.all_parent_options = [];
     $scope.team_options = [];
-    $scope.isDisabled = true;
+    $scope.noProject = true;
+    $scope.noUserStory = true;
 
     $http({
         method: "GET",
@@ -103,8 +104,8 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
         ];
 
     $scope.getUserStories = function (id) {
+        $scope.noProject = false;
         $scope.parent_options = [];
-        $scope.isDisabled = false;
         for (var i = 0; i < $scope.all_parent_options.length; ++i) {
             if ($scope.all_parent_options[i].project_id == id)
                 $scope.parent_options.push({ id: $scope.all_parent_options[i].id, value: $scope.all_parent_options[i].value, project_id: $scope.all_parent_options[i].project_id})
@@ -113,6 +114,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     }
 
     $scope.getTeamsForProject = function (id) {
+        $scope.noUserStory = false;
         $http({
             method: "GET",
             url: "/Add/GetTeams?userStoryId="+id,

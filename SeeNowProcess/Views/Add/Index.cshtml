@@ -71,14 +71,14 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label selectContainer" for="parent"> PARENT USER STORY: </label>
-            <select class="col-sm-2 form-control" name="parent" ng-model="parent" ng-options="x.value for x in parent_options" ng-change="getTeamsForProject(parent.id)" ng-disabled="lock" required></select>
+            <select class="col-sm-2 form-control" name="parent" ng-model="parent" ng-options="x.value for x in parent_options" ng-change="getTeamsForProject(parent.id)" ng-disabled="lock || noProject" required></select>
             <p class="col-sm-3 control-label text-left" style="color:red" for="parent">
                 <span class="text-left" ng-show="taskForm.parent.$error.required">Required!</span>
             </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label selectContainer" for="task_team"> TEAM: </label>
-            <select class="col-sm-2 form-control" name="team" ng-model="team" ng-options="x.NAME for x in team_options" ng-change="getUsersForProject(team.id)" ng-disabled="lock" required></select>
+            <select class="col-sm-2 form-control" name="team" ng-model="team" ng-options="x.NAME for x in team_options" ng-change="getUsersForProject(team.id)" ng-disabled="lock || noUserStory" required></select>
             <p class="col-sm-3 control-label text-left" style="color:red" for="team">
                 <span class="text-left" ng-show="taskForm.team.$error.required">Required!</span>
             </p>

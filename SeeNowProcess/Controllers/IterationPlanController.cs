@@ -50,7 +50,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
 
         [HttpPost]
         //Create([Bind(Include = "Id,SupervisorId,LastName,FirstName")] Worker worker)
-        public ActionResult AddingIteration([Bind(Include = "Name,Description,StartDate,EndDate")] Iteration iteration)
+        public ActionResult AddingIteration([Bind(Include = "Name,Description,StartDate,EndDate")] Iteration iteration/*, string idProject*/)
         {
             using (db)
             {
