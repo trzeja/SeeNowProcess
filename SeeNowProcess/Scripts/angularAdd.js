@@ -1,7 +1,24 @@
 ﻿var taskApp = angular.module("taskForm", []);
+taskApp.directive('selUsers', function () {
+    return {
+        require: "ngModel",
+        link: function (scope, element, attr, mCtrl, ngModel) {
+            function validatePeople(value) {
+                if (value.length < 1) {
+                    mCtrl.$setValidity('userSel', true);
+                }
+                else {
+                    mCtrl.$setValidity('userSel', false);
+                }
+                return value;
+            }
+            mCtrl.$parsers.push(validatePeople);
+        }
+    };
+});
 taskApp.controller("taskCtrl", function ($scope,$http) {
     $scope.tasks = [];
-
+    $scope.lock = false;
     $scope.response = [];
     $scope.parent_options = [];
     $scope.project_options = [];
@@ -133,6 +150,8 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             title: $scope.title, description: $scope.description, status: $scope.status.value,
             importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
         });*/
+        $scope.message = "Please wait...";
+        $scope.lock = true;
         $http({
             method: "POST",
             url: "/Add/IndexAdd",
@@ -144,10 +163,18 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            $scope.message = "Did it!";
+            if (response.data == "success") {
+                //$scope.message = "Did it!";
+                window.location.href = "/TaskBoard/TaskBoardIndex";
+            }
+            else {
+                $scope.lock = false;
+                $scope.message = response.data;
+            }
         },
         function failure(response)
         {
+            $scope.lock = false;
             $scope.message = "Fail...";
         });
     }
