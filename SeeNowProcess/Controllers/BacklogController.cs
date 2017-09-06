@@ -160,5 +160,50 @@ namespace SeeNowProcess.Controllers
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpGet]
+        public ActionResult GetTeams()
+        {
+            using (db)
+            {
+                return Json(db.Teams.Select(t => new { ID = t.TeamID, name = t.Name }).ToList(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddUserStory([Bind(Include ="Title,Description,Size,Unit,Notes,Criteria")] UserStory userStory, int project, List<int>teams)
+        {
+            if (teams == null)
+                teams = new List<int>();
+            using (db)
+            {
+                string mess = "Success";
+                List<Team> dbTeams = db.Teams.Where(t => teams.Contains(t.TeamID)).ToList();
+                userStory.Teams = dbTeams;
+                db.UserStories.Add(userStory);
+                dbTeams.ForEach(team => db.MarkAsModified(team));
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                {
+                    mess = "Errors:";
+                    foreach (var validateError in e.EntityValidationErrors)
+                    {
+                        mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
+                        foreach (var error in validateError.ValidationErrors)
+                        {
+                            mess += "\n\t\t" + error.ErrorMessage;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    mess = e.Message;
+                }
+                return Json(mess, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

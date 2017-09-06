@@ -54,7 +54,7 @@
     <div>
         <ul class="people-list">
             <li ng-repeat="x in userstories"><a class="my-btn my-button" data-toggle="collapse" ng-click="showUserStory(x.UserSID,x.Title)">{{x.Title}}</a><hr></li>
-            <li><input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USERSTORY" ng-click="addUserStory()"></li>
+            <li><input type="submit" class="btn green_button" value="ADD USERSTORY" data-toggle="modal" data-target="#UserStoryModal"></li>
         </ul>
     </div>
 
@@ -115,6 +115,66 @@
                 <div><label class="infoTag">{{info.project}}</label>{{currentUS.Project}}</div>
                 <div><label class="infoTag">{{info.size}}</label>{{currentUS.Size}}{{currentUS.Unit}}</div>
             </div>
+        </div>
+    </div>
+    <!--Modal - adding userStory-->
+    <div class="modal fade" id="UserStoryModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content for addingUserStory:/-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>Add UserStory</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form name="taskForm" class="form-horizontal" method="post">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryTitle"> TITLE: </label>
+                            <input name="userStoryTitle" class="form-control" type="text" id="userStoryTitle" ng-model="userStoryTitle" required>
+                            <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span>-->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryDescription"> DESCRIPTION: </label>
+                            <textarea class="form-control" rows="5" id="userStoryDescription" ng-model="userStoryDescription" required> </textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStorySize"> SIZE: </label>
+                            <input name="userStorySize" class="form-control" type="text" id="userStorySize" ng-model="userStorySize" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryUnit"> UNIT: </label>
+                            <input name="userStoryUnit" class="form-control" type="text" id="userStoryUnit" ng-model="userStoryUnit" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryNotes"> NOTES: </label>
+                            <textarea class="form-control" rows="8" id="userStoryNotes" ng-model="userStoryNotes" required> </textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryCriteria"> CRITERIA: </label>
+                            <input name="userStoryCriteria" class="form-control" type="text" id="userStoryCriteria" ng-model="userStoryCriteria" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3" for="userStoryProject"> PROJECT: </label>
+                            <select class="form-control" name="userStoryProject" ng-model="userStoryProject" ng-options="x.name for x in userStoriesProjects_options"></select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label" for="selected_teams"> TEAMS: </label>
+                            <div class="col-sm-offset-2" name="selected" ng-repeat="x in userStoriesTeams">
+                                <input class="col-sm-offset-2" type="checkbox" ng-model="selected" ng-change="checkTeam(x.id)"> {{x.NAME}}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-10 control-label"></label>
+                            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USERSTORY" ng-click="addUserStory()" data-dismiss="modal">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

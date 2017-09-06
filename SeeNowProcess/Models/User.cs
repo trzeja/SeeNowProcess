@@ -20,9 +20,9 @@ namespace SeeNowProcess.Models
         
         public int UserID { get; set; }
         
-        [StringLength(20, MinimumLength=5)]
+        [StringLength(20, MinimumLength=5),Required]
         public string Login { get; set; }
-        [StringLength(100, MinimumLength=6)] // 6, to accept password "admin1" :)
+        [StringLength(100, MinimumLength=6),Required] // 6, to accept password "admin1" :)
         //[DataType(DataType.Password)] // w sumie nie wiem co to dokladnie robi, ale typ pasuje
         [NotMapped]
         public string Password {
@@ -35,14 +35,16 @@ namespace SeeNowProcess.Models
         }
         public byte[] Salt { get; set; }
         public byte[] Hash { get; set; }
+        [StringLength(50, MinimumLength = 4), Required]
         public string Name { get; set; }
         [Display(Name="E-mail address")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress),Required]       
         public string Email { get; set; }
         [Display(Name="Phone Number")]
         [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
-        public Role? role { get; set; }
+        public string PhoneNumber { get; set; } //zazwyczaj nie wymaga sie
+        [Required]
+        public Role role { get; set; }
         public virtual User Supervisor { get; set; }
         public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am

@@ -208,44 +208,6 @@ namespace SeeNowProcess.Controllers
             }
         }
 
-        public ActionResult GetAssignments(int userId)
-        {
-            using (db)
-            {
-                var Teams = db.Assignments
-                    .Where(a => a.UserID == userId)
-                    .Select(a => a.Team)
-                    .Select(t => new
-                    {
-                        TeamID = t.TeamID,
-                        Name = t.Name,
-                        UserStoryID = t.UserStory == null ? -1 : t.UserStory.UserStoryID,
-                        UserStoryTitle = t.UserStory == null ? "Unassigned" : t.UserStory.Title,
-                        UserStoryDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Description,
-                        /*UserStorySize = t.UserStory == null ? "Unassigned" : t.UserStory.Size,*/
-                        UserStoryUnit = t.UserStory == null ? "Unassigned" : t.UserStory.Unit,
-                        UserStoryProject = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
-                        Leader = t.TeamLeader.Name,
-                        ProjectID = t.UserStory == null ? -1 : t.UserStory.Project.ProjectID,
-                        ProjectName = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
-                        ProjectDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Description,
-                        ProjectStartDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.StartDate.ToString(),
-                        ProjectCompletionDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.CompletionDate.ToString(),
-                        ProjectStatus = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Status.ToString()
-                    });
-                //przypisań do projektu chyba nie robimy?
-                return new JsonResult
-                {
-                    Data = new
-                    {
-                        UserID = userId,
-                        Teams = Teams.ToList()
-                    },
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
-            }
-        }
-
         public ActionResult GetUserStories(int userId)
         {
             using (db)
@@ -253,14 +215,14 @@ namespace SeeNowProcess.Controllers
                 var UserStories = db.Assignments
                     .Where(a => a.UserID == userId)
                     .Select(a => a.Team)
-                    .Select(t => new
+                    .SelectMany(t => t.UserStories)
+                    .Select(us => new
                     {
-                        UserStoryID = t.UserStory == null ? -1 : t.UserStory.UserStoryID,
-                        UserStoryTitle = t.UserStory == null ? "Unassigned" : t.UserStory.Title,
-                        UserStoryDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Description,
-                        /*UserStorySize = t.UserStory == null ? "Unassigned" : t.UserStory.Size,*/
-                        UserStoryUnit = t.UserStory == null ? "Unassigned" : t.UserStory.Unit,
-                        UserStoryProject = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name                        
+                        UserStoryID = us.UserStoryID,
+                        UserStoryTitle = us.Title,
+                        UserStoryDescription = us.Description,
+                        UserStoryUnit = us.Unit,
+                        UserStoryProject = us.Project.Name                        
                     }).Distinct();
                 
                 return new JsonResult
@@ -282,15 +244,18 @@ namespace SeeNowProcess.Controllers
                 var Projects = db.Assignments
                     .Where(a => a.UserID == userId)
                     .Select(a => a.Team)
-                    .Select(t => new
-                    {                        
-                        ProjectID = t.UserStory == null ? -1 : t.UserStory.Project.ProjectID,
-                        ProjectName = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Name,
-                        ProjectDescription = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Description,
-                        ProjectStartDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.StartDate.ToString(),
-                        ProjectCompletionDate = t.UserStory == null ? "Unassigned" : t.UserStory.Project.CompletionDate.ToString(),
-                        ProjectStatus = t.UserStory == null ? "Unassigned" : t.UserStory.Project.Status.ToString()
-                    }).Distinct();
+                    .SelectMany(t => t.UserStories)
+                    .Select(us => us.Project)
+                    .Distinct()
+                    .Select(p => new
+                    {
+                        ProjectID = p.ProjectID,
+                        ProjectName = p.Name,
+                        ProjectDescription = p.Description,
+                        ProjectStartDate = p.StartDate.ToString(),
+                        ProjectCompletionDate = p.CompletionDate.ToString(),
+                        ProjectStatus = p.Status.ToString()
+                    });
                 
                 return new JsonResult
                 {

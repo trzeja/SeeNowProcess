@@ -132,7 +132,8 @@ namespace SeeNowProcess.Controllers
                     var resultJ = db.UserStories.Select(a => new
                     {
                         UserSID = a.UserStoryID,
-                        Title = a.Title
+                        Title = a.Title,
+                        ProjectName = a.Project.Name
                     });
                     var data = resultJ.ToList();
                     return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -143,7 +144,8 @@ namespace SeeNowProcess.Controllers
                     var resultJ = db.UserStories.Where(u => u.Project.ProjectID == id).Select(a => new
                     {
                         UserSID = a.UserStoryID,
-                        Title = a.Title
+                        Title = a.Title,
+                        ProjectName = a.Project.Name
                     });
                     var data = resultJ.ToList();
                     return new JsonResult { Data = resultJ.ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };

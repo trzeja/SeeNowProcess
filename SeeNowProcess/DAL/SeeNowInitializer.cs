@@ -64,8 +64,8 @@ namespace SeeNowProcess.DAL
             UserStory userStory = context.UserStories.Where(us => us.Title == "Once upon a Time").First();
             var Teams = new List<Team>
             {
-                new Team {Name="Tesla Team", TeamLeader=context.Users.Where(u => u.Login=="kajak").First(), UserStory=userStory },
-                new Team {Name="Schmetterling!", TeamLeader=context.Users.Where(u => u.Login=="adada").First(), UserStory=userStory}
+                new Team {Name="Tesla Team", TeamLeader=context.Users.Where(u => u.Login=="kajak").First(), UserStories=new List<UserStory> { userStory } },
+                new Team {Name="Schmetterling!", TeamLeader=context.Users.Where(u => u.Login=="adada").First(), UserStories=new List<UserStory> { userStory } }
             };
             Teams.ForEach(t => context.Teams.Add(t));
             context.SaveChanges();
