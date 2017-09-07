@@ -270,6 +270,15 @@ namespace SeeNowProcess.Controllers
             return View();
         }
 
+        public ActionResult UserStoryAddIndex()
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
+        }
+
         public ActionResult IndexAddTeam(string name, int leader, List<int> users)
         {
             if (users == null)
