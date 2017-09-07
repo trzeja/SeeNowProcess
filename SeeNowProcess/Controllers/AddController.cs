@@ -260,6 +260,18 @@ namespace SeeNowProcess.Controllers
                         return View(model);
                 }
             }*/
+
+        public ActionResult TeamAddIndex()
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
+        }
+
+        //Metoda IndexAddTeam POST pobiera parametry widoczne w angularTeam.js (linie od 40)
+        //Potrzebuję tutaj mieć dopilnowane, żeby w bazie teamLeader też miał ten team u siebie wyświetlany ;-)
     }
 
 

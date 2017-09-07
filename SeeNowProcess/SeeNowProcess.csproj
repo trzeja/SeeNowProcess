@@ -288,6 +288,7 @@
     <Content Include="Content\drag-and-drop-styles.css" />
     <Content Include="Content\leftmenu.css" />
     <Content Include="Content\PeopleStyles.css" />
+    <Content Include="Scripts\angularTeam.js" />
     <Content Include="Scripts\angularAdd.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -363,6 +364,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\People\Show.cshtml" />
+    <Content Include="Views\Add\TeamAddIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
