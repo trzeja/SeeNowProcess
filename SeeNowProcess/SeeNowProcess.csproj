@@ -288,6 +288,7 @@
     <Content Include="Content\drag-and-drop-styles.css" />
     <Content Include="Content\leftmenu.css" />
     <Content Include="Content\PeopleStyles.css" />
+    <Content Include="Scripts\angularUserStory.js" />
     <Content Include="Scripts\angularTeam.js" />
     <Content Include="Scripts\angularAdd.js" />
     <Content Include="favicon.ico" />
@@ -365,6 +366,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\People\Show.cshtml" />
     <Content Include="Views\Add\TeamAddIndex.cshtml" />
+    <Content Include="Views\Add\UserStoryAddIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

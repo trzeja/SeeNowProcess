@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "UserStoryAddIndex";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SeeNowProcess</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="~/Scripts/angularUserStory.js"></script>
+    <style>
+        .control-label.text-left {
+            text-align: left;
+        }
+    </style>
+</head>
+<!--Anna-->
+<body ng-app="userStoryForm" ng-controller="userStoryCtrl">
+ <h4><strong>Add UserStory</strong></h4> <hr />
+                    <form name="userStoryForm" class="form-horizontal" method="post">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryTitle"> TITLE: </label>
+                            <input name="userStoryTitle" class="form-control" type="text" id="userStoryTitle" ng-model="userStoryTitle" required>
+                            <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span>-->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryDescription"> DESCRIPTION: </label>
+                            <textarea class="form-control" rows="5" id="userStoryDescription" ng-model="userStoryDescription" required> </textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStorySize"> SIZE: </label>
+                            <input name="userStorySize" class="form-control" type="text" id="userStorySize" ng-model="userStorySize" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryUnit"> UNIT: </label>
+                            <input name="userStoryUnit" class="form-control" type="text" id="userStoryUnit" ng-model="userStoryUnit" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryNotes"> NOTES: </label>
+                            <textarea class="form-control" rows="8" id="userStoryNotes" ng-model="userStoryNotes" required> </textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryCriteria"> CRITERIA: </label>
+                            <input name="userStoryCriteria" class="form-control" type="text" id="userStoryCriteria" ng-model="userStoryCriteria" required>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3" for="userStoryProject"> PROJECT: </label>
+                            <select class="form-control" name="userStoryProject" ng-model="userStoryProject" ng-options="x.name for x in userStoriesProjects_options"></select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="selected_teams"> TEAMS: </label>
+                            <div class="col-sm-offset-2" name="selected" ng-repeat="x in userStoriesTeams">
+                                <input class="col-sm-offset-2" type="checkbox" ng-model="selected" ng-change="checkTeam(x.id)"> {{x.name}}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-10 control-label"></label>
+                            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USERSTORY" ng-click="addUserStory()" data-dismiss="modal">
+                        </div>
+                    </form>
+</body>
