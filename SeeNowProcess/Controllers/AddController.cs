@@ -21,7 +21,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndexAdd([Bind(Include = "Title,Description,Status,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
+        public ActionResult IndexAdd([Bind(Include = "Title,Description,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
         {
             problem.CreationDate = DateTime.Now;
             using (db)

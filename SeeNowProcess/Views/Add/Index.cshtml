@@ -42,13 +42,6 @@
             </p>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 control-label" for="status"> STATUS: </label>
-            <select class="col-sm-2 form-control" name="status" ng-model="status" ng-options="x.description for x in status_options" ng-disabled="lock" required></select>
-            <p class="col-sm-3 control-label text-left" style="color:red" for="status">
-                <span class="text-left" ng-show="taskForm.status.$error.required">Required!</span>
-            </p>
-        </div>
-        <div class="form-group row">
             <label class="control-label col-sm-2" for="importance"> IMPORTANCE: </label>
             <select class="col-sm-2 form-control" name="importance" ng-model="importance" ng-options="x.description for x in importance_options" ng-disabled="lock" required></select>
             <p class="col-sm-3 control-label text-left" style="color:red" for="importance">
