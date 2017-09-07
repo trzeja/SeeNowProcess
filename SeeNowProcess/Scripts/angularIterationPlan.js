@@ -32,6 +32,7 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
 
     $scope.show = 0;
     $scope.currentProject;
+    $scope.currentProjectName;
 
     $scope.$watch('currentProject', function () {
         if ($scope.show != 0) {
@@ -60,6 +61,15 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
     }).then(function mySucces(response) {
         $scope.currentProject = response.data;
+    }, function myError(response) {
+    })
+
+    $http({
+        method: "GET",
+        url: "/IterationPlan/GetCurrentProjectName",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySuccess(response) {
+        $scope.currentProjectName = response.data;
     }, function myError(response) {
     })
 

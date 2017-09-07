@@ -82,6 +82,10 @@
                                     }
                             </select>
                         </div>
+                        <div class="form-group row" ng-show="currentProject != '0'">
+                            <label class="col-sm-3 control-label" for="datepickerEnd"> PROJECT: </label>
+                            <input class="col-sm-2 form-control" name="project" ng-model="currentProjectName" disabled/>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
