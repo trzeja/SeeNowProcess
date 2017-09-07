@@ -1,10 +1,10 @@
 ﻿var taskApp = angular.module("taskForm", []);
-taskApp.directive('selUsers', function () {
+taskApp.directive('timeRest', function () {
     return {
         require: "ngModel",
         link: function (scope, element, attr, mCtrl, ngModel) {
-            function validatePeople(value) {
-                if (value.length < 1) {
+            function validateTime(value) {
+                if (value < 1) {
                     mCtrl.$setValidity('userSel', true);
                 }
                 else {
@@ -12,7 +12,7 @@ taskApp.directive('selUsers', function () {
                 }
                 return value;
             }
-            mCtrl.$parsers.push(validatePeople);
+            mCtrl.$parsers.push(validateTime);
         }
     };
 });
