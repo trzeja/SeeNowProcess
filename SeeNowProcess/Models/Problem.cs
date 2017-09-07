@@ -35,7 +35,7 @@ namespace SeeNowProcess.Models
         public virtual Iteration Iteration { get; set; }
         
         [Display(Name = "Estimated Time")]
-        public TimeSpan? EstimatedTime { get; set; } //new TimeSpan(2, 14, 18); "02:14:18"
+        public TimeSpan EstimatedTime { get; set; } //new TimeSpan(2, 14, 18); "02:14:18"
 
         [Display(Name = "Final Time")]
         public TimeSpan? FinalTime { get; set; }

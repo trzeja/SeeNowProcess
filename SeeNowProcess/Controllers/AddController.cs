@@ -24,6 +24,7 @@ namespace SeeNowProcess.Controllers
         public ActionResult IndexAdd([Bind(Include = "Title,Description,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
         {
             problem.CreationDate = DateTime.Now;
+            problem.EstimatedTime = new TimeSpan((int)(problem.EstimatedTime.TotalDays), 0, 0); 
             using (db)
             {
                 if (!(userStory == null ^ userStoryId == null)) // XNOR - musi być wypełnione dokładnie jedno

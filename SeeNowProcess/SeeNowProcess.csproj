@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201709071238077_parentTaskDeletion.Designer.cs">
       <DependentUpon>201709071238077_parentTaskDeletion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709071354248_estimatedTimeRequired.cs" />
+    <Compile Include="Migrations\201709071354248_estimatedTimeRequired.Designer.cs">
+      <DependentUpon>201709071354248_estimatedTimeRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -405,6 +409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709071238077_parentTaskDeletion.resx">
       <DependentUpon>201709071238077_parentTaskDeletion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709071354248_estimatedTimeRequired.resx">
+      <DependentUpon>201709071354248_estimatedTimeRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
