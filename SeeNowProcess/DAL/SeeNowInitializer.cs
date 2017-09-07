@@ -192,8 +192,7 @@ namespace SeeNowProcess.DAL
 
             };
             //TODO nie mamy seeda na przypisania User<->Problem
-            Problems[2].ParentProblem = Problems[0];
-            Problems[3].ParentProblem = Problems[0];
+            
             Problems.ForEach(p => context.Problems.Add(p));
             context.SaveChanges();
         }

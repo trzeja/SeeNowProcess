@@ -33,10 +33,7 @@ namespace SeeNowProcess.Models
         public DateTime CreationDate { get; set; }
         public virtual Box Box { get; set; }
         public virtual Iteration Iteration { get; set; }
-
-        [Display(Name = "Parent Problem")]
-        public virtual Problem ParentProblem { get; set; }
-
+        
         [Display(Name = "Estimated Time")]
         public TimeSpan? EstimatedTime { get; set; } //new TimeSpan(2, 14, 18); "02:14:18"
 
