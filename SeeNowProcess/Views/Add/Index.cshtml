@@ -51,10 +51,11 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="estimated_time"> ESTIMATED TIME: </label>
-            <input class="col-sm-2 form-control" type="number" id="estimated_time" name="estimated_time" ng-model="estimated_time" required ng-disabled="lock" min="1">
+            <input class="col-sm-2 form-control" type="number" id="estimated_time" name="estimated_time" ng-model="estimated_time" required ng-disabled="lock" min="1" max="23">
             <p class="col-sm-3 control-label text-left" style="color:red" for="importance">
                 <span class="text-left" ng-show="taskForm.estimated_time.$error.required">Required!</span>
                 <span ng-show="taskForm.estimated_time.$error.min">Should be greater than 0</span>
+                <span ng-show="taskForm.estimated_time.$error.max">Should be smaller than 24</span>
             </p>
         </div>
         <div class="form-group row">
