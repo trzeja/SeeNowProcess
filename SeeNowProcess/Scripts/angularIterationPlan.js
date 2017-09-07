@@ -203,11 +203,18 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
 
         $scope.addIteration = function () {
             $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDate().toString();
-            $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth()+1).toString() + "-" + $scope.endDate.getDate().toString();
+            $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth() + 1).toString() + "-" + $scope.endDate.getDate().toString();
+            $scope.send;
+            if ($scope.currentProject == '0') {
+                $scope.send = $scope.project;
+            }
+            else {
+                $scope.send = $scope.currentProject;
+            }
             $http({
                 method: "POST",
                 url: "/IterationPlan/AddingIteration",
-                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startingDate, "endDate": $scope.endingDate /*, "idProject": $scope.idProject*/}),
+                data: $.param({ "name": $scope.iterationName, "description": $scope.iterationDescription, "startDate": $scope.startingDate, "endDate": $scope.endingDate , "idProject": $scope.send}),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {

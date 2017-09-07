@@ -50,14 +50,18 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
 
         [HttpPost]
         //Create([Bind(Include = "Id,SupervisorId,LastName,FirstName")] Worker worker)
-        public ActionResult AddingIteration([Bind(Include = "Name,Description,StartDate,EndDate")] Iteration iteration/*, string idProject*/)
+        public ActionResult AddingIteration([Bind(Include = "Name,Description,StartDate,EndDate")] Iteration iteration, string idProject)
         {
             using (db)
             {
                 //tu bedzie dodawany z formatki nie? - R.
                 // chyba teraz nie rozrozniamy projektu
-                Project project = db.Projects.FirstOrDefault();
+                int idPr = Int32.Parse(idProject.ToString());
+                Project project = db.Projects.Where(p => p.ProjectID == idPr).FirstOrDefault();
                 iteration.Project = project;
+                //Project project = db.Projects.FirstOrDefault();
+                //iteration.Project = project;
+                
                 //zabezpieczenie przed duplikacją nazw "Unnamed"
                 List<Iteration> unnameds;
                 unnameds = db.Iterations
@@ -103,7 +107,7 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
         {
             using (db)
             {
-
+                // !!! help !!!
                 // chyba teraz nie rozrozniamy projektu
                 Project project = db.Projects.FirstOrDefault();
                 var iterations = db.Iterations
