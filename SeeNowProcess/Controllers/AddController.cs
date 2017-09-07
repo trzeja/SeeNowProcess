@@ -282,15 +282,15 @@ namespace SeeNowProcess.Controllers
                 Team team = new Team { Name = name, TeamLeader = teamLeader };
                 db.Users
                     .Where(us => users.Contains(us.UserID) || us.UserID == leader)
-                    .Select(us => new Assignment { Team = team, User = us })
                     .ToList()
-                    .ForEach(ass =>
+                    .ForEach(us =>
                         {
+                            Assignment ass = new Assignment { Team = team, User = us };
                             team.Assignments.Add(ass);
                             db.Assignments.Add(ass);
                         }
                     );
-                if (team.Assignments.Count != users.Count)
+                if (team.Assignments.Count != users.Count + (users.Contains(leader) ? 0 : 1))
                     return Json("Error - some users do not exist", JsonRequestBehavior.AllowGet);
                 db.Teams.Add(team);
                 try
