@@ -14,6 +14,7 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.roles = ["admin", "headMaster", "seniorDev", "juniorDev", "intern", "tester", "client"];
     $scope.fullRoles = ["Admin", "Head Master", "Senior Developer", "Junior Developer", "Intern", "Tester", "Client"];
     $scope.importance = ["None", "Trivial", "Regular", "Important", "Critical"];
+    $scope.allTeams = [];
 
     
     $http({
@@ -414,6 +415,43 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             $scope.message = "Error taking User";
         })
     }
+
+    $http({
+        method: "GET",
+        url: "/People/GetAllTeams",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+    }).then(function mySucces(response) {
+        $scope.allTeams = response.data;
+
+    }, function myError(response) {
+        $scope.message = "Error in displaying User Stories.";
+    })
+
+    $scope.addUserToTeam = function (id) {
+        $http({
+            method: "POST",
+            url: "/People/AddUserToTeam",
+            data: $.param({ "userId": id, "teamId": $scope.newTeam.id}),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+        }).then(function mySucces(response) {
+            $scope.message = response.data;
+            $http({
+                method: "POST",
+                url: "/People/GetTeams",
+                data: $.param({ "userId": $scope.currentUser.id }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+
+            }).then(function mySucces(response) {
+                $scope.userTeams = response.data.Teams;
+
+            }, function myError(response) {
+                $scope.message = "Error in adding User to team.";
+            });
+        })
+    }
+
 
 
 }]);

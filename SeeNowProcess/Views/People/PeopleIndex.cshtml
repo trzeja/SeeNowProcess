@@ -189,7 +189,7 @@
                 </div>
             </div>
             <div class="tab-pane" id="Teams">
-                <h4><strong>Teams</strong></h4>
+                <h4><strong>Teams</strong><input type="submit" class="btn green_button" value="Add to team" data-toggle="modal" data-target="#TeamModal"></h4>
                     <hr />
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -236,6 +236,34 @@
                         </tbody>
                     </table>
             </div>
+        </div>
+    </div>
+    <!--Modal - adding user to team-->
+    <div class="modal fade" id="TeamModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content for addingUserStory:/-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>Add {{currentUser.userName}} to team</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form name="teamForm" class="form-horizontal" method="post">
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3" for="newTeam"> TEAM: </label>
+                            <select class="form-control" name="newTeam" ng-model="newTeam" ng-options="x.Name for x in allTeams"></select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-10 control-label"></label>
+                            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USER TO TEAM" ng-click="addUserToTeam(currentUser.id)" data-dismiss="modal">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

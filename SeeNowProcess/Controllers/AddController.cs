@@ -47,7 +47,7 @@ namespace SeeNowProcess.Controllers
                 if (assignedUsers.Count < users.Count)
                 {
                     List<int> nonMatchedUsers = users.Where(id => !db.Users.Any(u => u.UserID == id)).ToList();
-                    return Json("Error - users ("+nonMatchedUsers.ToString()+") don't exist in database!", JsonRequestBehavior.AllowGet);
+                    return Json("Error - users (" + nonMatchedUsers.ToString() + ") don't exist in database!", JsonRequestBehavior.AllowGet);
                 }
                 problem.AssignedUsers = assignedUsers;
                 //iteration
@@ -59,10 +59,10 @@ namespace SeeNowProcess.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch(System.Data.Entity.Validation.DbEntityValidationException e)
+                catch (System.Data.Entity.Validation.DbEntityValidationException e)
                 {
                     mess = "Errors:";
-                    foreach(var validateError in e.EntityValidationErrors)
+                    foreach (var validateError in e.EntityValidationErrors)
                     {
                         mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
                         foreach (var error in validateError.ValidationErrors)
@@ -75,7 +75,7 @@ namespace SeeNowProcess.Controllers
                 {
                     mess = e.Message;
                 }
-                return Json(mess,JsonRequestBehavior.AllowGet);
+                return Json(mess, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -270,9 +270,55 @@ namespace SeeNowProcess.Controllers
             return View();
         }
 
-        //Metoda IndexAddTeam POST pobiera parametry widoczne w angularTeam.js (linie od 40)
-        //Potrzebuję tutaj mieć dopilnowane, żeby w bazie teamLeader też miał ten team u siebie wyświetlany ;-)
+        public ActionResult IndexAddTeam(string name, int leader, List<int> users)
+        {
+            if (users == null)
+                users = new List<int>();
+            using (db)
+            {
+                User teamLeader = db.Users.Where(us => us.UserID == leader).FirstOrDefault();
+                if (teamLeader == null)
+                    return Json("TeamLeader - no such user", JsonRequestBehavior.AllowGet);
+                Team team = new Team { Name = name, TeamLeader = teamLeader };
+                db.Users
+                    .Where(us => users.Contains(us.UserID) || us.UserID == leader)
+                    .ToList()
+                    .ForEach(us =>
+                        {
+                            Assignment ass = new Assignment { Team = team, User = us };
+                            team.Assignments.Add(ass);
+                            db.Assignments.Add(ass);
+                        }
+                    );
+                if (team.Assignments.Count != users.Count + (users.Contains(leader) ? 0 : 1))
+                    return Json("Error - some users do not exist", JsonRequestBehavior.AllowGet);
+                db.Teams.Add(team);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                {
+                    string mess = "Errors:";
+                    foreach (var validateError in e.EntityValidationErrors)
+                    {
+                        mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
+                        foreach (var error in validateError.ValidationErrors)
+                        {
+                            mess += "\n\t\t" + error.ErrorMessage;
+                        }
+                    }
+                    return Json(mess, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    return Json(e.Message, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
-
-
 }

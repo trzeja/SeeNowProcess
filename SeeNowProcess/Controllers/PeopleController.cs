@@ -295,6 +295,24 @@ namespace SeeNowProcess.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult GetAllTeams()
+        {
+            using (db)
+            {
+                var Teams = db.Assignments
+                    .Select(a => a.Team)
+                    .Select(t => new
+                    {
+                        TeamID = t.TeamID,
+                        Name = t.Name,
+                        Leader = t.TeamLeader.Name
+                    }).Distinct();
+
+                return new JsonResult{Data =Teams.ToList(),JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            }
+        }
+
         [HttpPost]
         public ActionResult deleteUser(int id) {
             using (db)
@@ -400,6 +418,8 @@ namespace SeeNowProcess.Controllers
                  }*/
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
+
+        //Potrzebna metoda dodająca użytkownika do teamu odniesienie we froncie: angularPeople.js linie od 431 ;-)
 
 
     }
