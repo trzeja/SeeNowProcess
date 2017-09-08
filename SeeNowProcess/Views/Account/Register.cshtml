@@ -21,7 +21,7 @@
         <p class="col-sm-3 control-label text-left" style="color:red" for="login">
             <span class="text-left" ng-show="registerForm.login.$error.required">Required!</span>
             <span ng-show="registerForm.login.$error.minlength">Should be at least 5 characters long</span>
-            <span ng-show="registerForm.login.$error.maxlength">Should be less than 20 characters</span>
+            <span ng-show="registerForm.login.$error.maxlength">Should not be more than 20 characters</span>
         </p>
     </div>
     <div class="form-group row">
@@ -30,7 +30,7 @@
         <p class="col-sm-3 control-label text-left" style="color:red" for="password">
             <span class="text-left" ng-show="registerForm.password.$error.required">Required!</span>
             <span ng-show="registerForm.password.$error.minlength">Should be at least 6 characters long</span>
-            <span ng-show="registerForm.password.$error.maxlength">Should be less than 100 characters</span>
+            <span ng-show="registerForm.password.$error.maxlength">Should not be more than 100 characters</span>
         </p>
     </div>
     <div class="form-group row">
@@ -38,14 +38,16 @@
         <input class="col-sm-2 form-control" type="password" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword" ng-disabled="lock" required autofocus match-password="password">
         <p class="col-sm-3 control-label text-left" style="color:red" for="confirmPassword">
             <span class="text-left" ng-show="registerForm.confirmPassword.$error.required">Required!</span>
-            <span class="text-left" ng-show="registerForm.confirmPassword.$valid">Password does not match</span>
+            <span class="text-left" ng-show="!registerForm.confirmPassword.$valid">Password does not match</span>
         </p>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="name"> Full Name: </label>
-        <input class="col-sm-2 form-control" type="text" id="name" name="name" ng-model="name" required ng-disabled="lock" autofocus>
+        <input class="col-sm-2 form-control" type="text" id="name" name="name" ng-model="name" required ng-disabled="lock" ng-minlength="4"ng-maxlength="50" autofocus>
         <p class="col-sm-3 control-label text-left" style="color:red" for="name">
             <span class="text-left" ng-show="registerForm.name.$error.required">Required!</span>
+            <span ng-show="registerForm.name.$error.minlength">Should be at least 4 characters long</span>
+            <span ng-show="registerForm.name.$error.maxlength">Should not be more than 50 characters</span>
         </p>
     </div>
     <div class="form-group row">
@@ -59,10 +61,10 @@
     <div class="form-group row">
         <!-- sprawdzanie ilosci cyfr i czy cyfry? -->
         <label class="col-sm-2 control-label" for="phone"> Phone number: </label>
-        <input class="col-sm-2 form-control" type="tel" id="phone" name="phone" ng-model="phone" required ng-disabled="lock" autofocus>
-        <p class="col-sm-3 control-label text-left" style="color:red" for="phone">
+        <input class="col-sm-2 form-control" type="tel" id="phone" name="phone" ng-model="phone" @*required*@ ng-disabled="lock" autofocus>
+        @*<p class="col-sm-3 control-label text-left" style="color:red" for="phone">
             <span class="text-left" ng-show="registerForm.phone.$error.required">Required!</span>
-        </p>
+        </p>*@
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="role"> Role: </label>
@@ -73,14 +75,8 @@
     </div>
     <div class="form-group row">
         <label class="col-sm-10 control-label"></label>
-        <input type="submit" class="btn green_button" style="margin-left: 20%" value="REGISTER" 
-               ng-disabled="registerForm.login.$error.required || registerForm.login.$error.minlength
-               || registerForm.password.$error.maxlength || registerForm.password.$error.required 
-               || registerForm.password.$error.minlength || registerForm.password.$error.maxlength
-               || registerForm.confirmPassword.$error.required || registerForm.confirmPassword.$valid
-               || registerForm.name.$error.required || registerForm.email.$error.required
-               || registerForm.email.$error.email || registerForm.phone.$error.required
-               || registerForm.role.$error.required || lock"/>
+        <input type="submit" class="btn green_button" style="margin-left: 20%" value="REGISTER" ng-click="forms()"
+               ng-disabled="registerForm.$invalid || lock"/>
                <!--nie wiem czemu nie dziala, moze jakiego bledu nie widze ng-disabled="registerForm.$invalid"-->
         
     </div>

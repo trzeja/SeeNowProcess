@@ -5,9 +5,9 @@ registerApp.directive('matchPassword', function () {
         link: function (scope, element, attr, mCtrl, ngModel) {
             function passwordMatching(value) {
                 if (value != password.value) {
-                    mCtrl.$setValidity('matchPass', true);
-                } else {
                     mCtrl.$setValidity('matchPass', false);
+                } else {
+                    mCtrl.$setValidity('matchPass', true);
                 }
                 return value;
             }
@@ -30,6 +30,11 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
 
 
     ];
+
+    $scope.forms = function () {
+        $scope.registerForm.$error;
+    }
+
     $scope.registerUser = function () {
         
         //czy to moge wywalic jak sprawdzam na etapie wpisywania?
