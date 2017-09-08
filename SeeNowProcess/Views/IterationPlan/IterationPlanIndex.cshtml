@@ -59,32 +59,55 @@
                     <h4 class="modal-title"><strong>Add Iteration</strong></h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form name="iterationForm" novalidate>
+                        <div>{{message}}</div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="iterationName"> NAME: </label>
-                            <input class="form-control" type="text" id="iterationName" ng-model="iterationName" required>
+                            <input class="col-sm-2 form-control" type="text" id="iterationName" name="iterationName" ng-model="iterationName" required ng-disabled="lock"
+                                   ng-minlength="3" ng-maxlength="60">
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                                <span class="text-left" ng-show="iterationForm.iterationName.$error.required">Required!</span>
+                                <span ng-show="iterationForm.iterationName.$error.minlength">Should be at least 3 characters long</span>
+                                <span ng-show="iterationForm.iterationName.$error.maxlength">Should not be more than 60 characters</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="iterationDescription"> DESCRIPTION: </label>
-                            <input class="form-control" type="text" id="iterationDescription" ng-model="iterationDescription" required>
+                            <input class="col-sm-2 form-control" type="text" id="iterationDescription" name="iterationDescription" ng-model="iterationDescription" required 
+                                   ng-disabled="lock" ng-minlength="3" ng-maxlength="200">
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                                <span class="text-left" ng-show="iterationForm.iterationDescription.$error.required">Required!</span>
+                                <span ng-show="iterationForm.iterationDescription.$error.minlength">Should be at least 3 characters long</span>
+                                <span ng-show="iterationForm.iterationDescription.$error.maxlength">Should not be more than 200 characters</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="datepickerStart"> START DATE: </label>
-                            <input class="form-control" type="date" id="datepickerStart" ng-model="startDate" required>
+                            <input class="col-sm-2 form-control" type="date" name="datepickerStart" id="datepickerStart" ng-model="startDate" required ng-disabled="lock">
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                                <span class="text-left" ng-show="iterationForm.datepickerStart.$error.required">Required!</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="datepickerEnd"> END DATE: </label>
-                            <input class="form-control" type="date" id="datepickerEnd" ng-model="endDate" required>
+                            <input class="col-sm-2 form-control" type="date" name="datepickerEnd" id="datepickerEnd" ng-model="endDate" required ng-disabled="lock">
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                                <span class="text-left" ng-show="iterationForm.datepickerEnd.$error.required">Required!</span>
+                                <span class="text-left" ng-show="(startDate > endDate) && (!iterationForm.datepickerEnd.$error.required)">End date cannot be before start date</span>
+                            </p>
                         </div>
 
                         <div class="form-group row" ng-show="currentProject == '0'">
                             <label class="col-sm-3 control-label" for="datepickerEnd"> PROJECT: </label>
-                            <select class="col-sm-2 form-control" name="project" ng-model="project">
+                            <select class="col-sm-2 form-control" name="projectIt" id="project" ng-model="project" ng-required="currentProject == '0'" ng-disabled="lock">
                                 @foreach (var project in Model)
                                     {
                                     <option value="@project.ProjectID">@project.Name</option>
                                     }
                             </select>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="project">
+                                <span class="text-left" ng-show="iterationForm.projectIt.$error.required">Required!</span>
+                            </p>
                         </div>
                         <div class="form-group row" ng-show="currentProject != '0'">
                             <label class="col-sm-3 control-label" for="datepickerEnd"> PROJECT: </label>
@@ -93,7 +116,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn green_button" data-dismiss="modal" ng-click="addIteration()">Add</button>
+                    <button type="button" class="btn green_button" data-dismiss="modal" ng-click="addIteration()" ng-disabled="iterationForm.$invalid || lock || (startDate > endDate)">Add</button>
                     <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
                 </div>
             </div>

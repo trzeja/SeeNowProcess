@@ -212,6 +212,8 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
         }
 
         $scope.addIteration = function () {
+            $scope.message = "Please wait...";
+            $scope.lock = true;
             $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDate().toString();
             $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth() + 1).toString() + "-" + $scope.endDate.getDate().toString();
             $scope.send;
@@ -228,10 +230,18 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
-                $scope.message = "Result: " + response.data;
-                if (response.data == "Success")
+                //$scope.message = "Result: " + response.data;
+                if (response.data == "Success") {
                     window.location.href = "/IterationPlan/IterationPlanIndex";
+                }
+                else {
+                    $scope.lock = false;
+                    $scope.message = response.data;
+                }
+
             }, function myError(response) {
+                $scope.lock = false;
+                $scope.message = "Fail...";
             })
 
 
