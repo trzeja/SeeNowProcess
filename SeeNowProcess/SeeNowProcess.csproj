@@ -264,6 +264,10 @@
     <Compile Include="Migrations\201709071354248_estimatedTimeRequired.Designer.cs">
       <DependentUpon>201709071354248_estimatedTimeRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709081721372_wincyjRestrykcyjProblem.cs" />
+    <Compile Include="Migrations\201709081721372_wincyjRestrykcyjProblem.Designer.cs">
+      <DependentUpon>201709081721372_wincyjRestrykcyjProblem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -416,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709071354248_estimatedTimeRequired.resx">
       <DependentUpon>201709071354248_estimatedTimeRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709081721372_wincyjRestrykcyjProblem.resx">
+      <DependentUpon>201709081721372_wincyjRestrykcyjProblem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

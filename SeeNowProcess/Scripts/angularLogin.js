@@ -18,7 +18,7 @@ loginApp.controller("loginCtrl", [ '$scope', '$http', function ($scope, $http) {
 
         }).then(function mySucces(response) {
             if (response.data === "Success") {
-                window.location.href = "/People/PeopleIndex";
+                window.location.href = "/Home/Index";
             }
                 
             else {
