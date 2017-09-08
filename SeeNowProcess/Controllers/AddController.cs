@@ -21,6 +21,18 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetProjectForIteration(string iterationId)
+        {
+            using (db)
+            {
+                int id = Int32.Parse(iterationId.ToString());
+                Iteration iteration = db.Iterations.Where(i => i.IterationId == id).FirstOrDefault();
+                Project project = db.Projects.Where(p => p.ProjectID == iteration.Project.ProjectID).FirstOrDefault();
+                return new JsonResult { Data = project, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        [HttpPost]
         public ActionResult IndexAdd([Bind(Include = "Title,Description,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
         {
             problem.CreationDate = DateTime.Now;
@@ -80,7 +92,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndexAddWithIteration([Bind(Include = "Title,Description,Status,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users, int iterationId)
+        public ActionResult IndexAddWithIteration([Bind(Include = "Title,Description,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users, int iterationId)
         {
             using (db)
             {

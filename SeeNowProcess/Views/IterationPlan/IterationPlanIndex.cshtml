@@ -18,6 +18,10 @@
             position: absolute;
             left: 80vw;
         }
+        
+        .control-label.text-left {
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -107,7 +111,7 @@
         </thead>
         <tbody>
             <td class="space column" ng-repeat="x in lists">
-                <div><input type="submit" class="btn green_button btn-right" style="margin-bottom:20px" ng-click="passIterationId(x.id)" value="+" data-toggle="modal" data-target="#taskModal"></div>
+                <div><input type="submit" class="btn green_button btn-right" style="margin-bottom:20px" ng-click="passIterationId(x.id, x.name)" value="+" data-toggle="modal" data-target="#taskModal"></div>
                 <ul class="visible list-unstyled text-center" dnd-list="x.data" dnd-drop="dropCallback(item,x.id)"> @* dnd-drop="dropCallback(item,)"*@
                     <li ng-repeat="item in x.data"
                         dnd-draggable="item"
@@ -134,49 +138,84 @@
                         <h4 class="modal-title"><strong>Add Task</strong></h4>
                     </div>
                     <div class="modal-body">
-                        <form name="taskForm" ng-controller="taskCtrl" class="form-horizontal" method="post">
+                        
+                        <form name="taskForm" ng-controller="taskCtrl" class="form-horizontal" method="post" novalidate>
+                            <div>{{message}}</div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label" for="title"> TITLE: </label>
-                                <input name="taskTitle" class="form-control" type="text" id="task_title" ng-model="title" required>
-                                <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span>-->
+                                <input name="task_title" class="col-sm-2 form-control" type="text" id="task_title" ng-model="title" ng-disabled="lock" required ng-minlength="3" ng-maxlength="60">
+                                <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                                    <span class="text-left" ng-show="taskForm.task_title.$error.required">Required!</span>
+                                    <span ng-show="taskForm.task_title.$error.minlength">Should be at least 3 characters long</span>
+                                    <span ng-show="taskForm.task_title.$error.maxlength">Should not be more than 60 characters</span>
+                                </p>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label" for="description"> DESCRIPTION: </label>
-                                <textarea class="form-control" rows="5" id="task_description" ng-model="description" required> </textarea>
+                                <textarea class="col-sm-2 form-control" rows="5" id="task_description" name="task_description" ng-model="description" required
+                                          ng-disabled="lock" ng-minlength="3" ng-maxlength="200"> </textarea>
+                                <p class="col-sm-3 control-label text-left" style="color:red" for="description">
+                                    <span class="text-left" ng-show="taskForm.task_description.$error.required">Required!</span>
+                                    <span ng-show="taskForm.task_description.$error.minlength">Should be at least 3 characters long</span>
+                                    <span ng-show="taskForm.task_description.$error.maxlength">Should not be more than 200 characters</span>
+                                </p>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 control-label" for="status"> STATUS: </label>
-                                <select class="form-control" name="task_status" ng-model="status" ng-options="x.description for x in status_options"></select>
-                            </div>
+                            
                             <div class="form-group row">
                                 <label class="control-label col-sm-3" for="importance"> IMPORTANCE: </label>
-                                <select class="form-control" name="task_importance" ng-model="importance" ng-options="x.description for x in importance_options"></select>
+                                <select class="col-sm-2 form-control" name="task_importance" ng-model="importance" ng-options="x.description for x in importance_options"
+                                        ng-disabled="lock" required></select>
+                                <p class="col-sm-3 control-label text-left" style="color:red" for="importance">
+                                    <span class="text-left" ng-show="taskForm.task_importance.$error.required">Required!</span>
+                                </p>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label" for="estimated_time"> ESTIMATED TIME: </label>
-                                <input class="form-control" type="text" id="task_estimated_time" ng-model="estimated_time" required>
+                                <input class="col-sm-2 form-control" type="number" id="task_estimated_time" name="task_estimated_time" ng-model="estimated_time" required ng-disabled="lock" min="1" max="23">
+                                <p class="col-sm-3 control-label text-left" style="color:red" for="importance">
+                                    <span class="text-left" ng-show="taskForm.task_estimated_time.$error.required">Required!</span>
+                                    <span ng-show="taskForm.task_estimated_time.$error.min">Should be greater than 0</span>
+                                    <span ng-show="taskForm.task_estimated_time.$error.max">Should be smaller than 24</span>
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label" for="task_iteration_name"> ITERATION: </label>
+                                <input class="col-sm-2 form-control" type="text" name="task_iteration_name" ng-model="itName" disabled/>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label selectContainer" for="task_project"> PROJECT: </label>
-                                <select class="form-control" name="task_project" ng-model="project" ng-options="x.value for x in project_options" ng-change="getUserStories(project.id)"></select>
+                                <input class="col-sm-2 form-control" type="text" name="task_project" ng-model="project" disabled />
+                                @*<select class="form-control" name="task_project" ng-model="project" ng-options="x.value for x in project_options" ng-change="getUserStories(project.id)"></select>*@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label selectContainer" for="task_parent"> PARENT USER STORY: </label>
-                                <select class="form-control" name="task_parent" ng-model="parent" ng-options="x.value for x in parent_options" ng-change="getTeamsForProject(parent.id)"></select>
+                                <select class="col-sm-2 form-control" name="task_parent" ng-model="parent" ng-options="x.value for x in parent_options" ng-disabled="lock" ng-change="getTeamsForProject(parent.id)" required></select>
+                                <p class="col-sm-3 control-label text-left" style="color:red" for="parent">
+                                    <span class="text-left" ng-show="taskForm.task_parent.$error.required">Required!</span>
+                                </p>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label selectContainer" for="task_team"> TEAM: </label>
-                                <select class="form-control" name="task_team" ng-model="team" ng-options="x.NAME for x in team_options" ng-change="getUsersForProject(team.id)"></select>
+                                <select class="col-sm-2 form-control" name="task_team" ng-model="team" ng-options="x.NAME for x in team_options" ng-change="getUsersForProject(team.id)" ng-disabled="lock || noUserStory" required></select>
+                                <p class="col-sm-3 control-label text-left" style="color:red" for="team">
+                                    <span class="text-left" ng-show="taskForm.task_team.$error.required">Required!</span>
+                                </p>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label" for="selected_users"> USERS: </label>
-                                <div class="col-sm-offset-3" name="selected" ng-repeat="x in users">
-                                    <input class="col-sm-offset-2" type="checkbox" ng-model="selected" ng-change="checkUser(x.id)"> {{x.NAME}}
+                                <div class="col-sm-3">
+                                <div  name="selected" ng-repeat="x in users">
+                                    <input type="checkbox" ng-model="selected" ng-change="checkUser(x.id)" ng-disabled="lock"> {{x.NAME}}
                                 </div>
+                                </div>
+                                <p class="col-sm-offset-3 control-label text-left" style="color:red" for="selected_users">
+                                    <span class="text-left" ng-show="selected_users.length < 1">Please select at least one user</span>
+                                </p>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-10 control-label"></label>
-                                <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" ng-click="addTask()" data-dismiss="modal">
+                                <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" ng-click="addTask()" 
+                                       ng-disabled="lock || taskForm.$invalid || (selected_users.length < 1)" data-dismiss="modal">
                             </div>
                     </form>
                 </div>

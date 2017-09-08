@@ -18,7 +18,7 @@ iterationApp.service('iterationService', function () {
 
 });
 
-iterationApp.controller("iterationCtrl", function ($scope, $http, iterationService) {
+iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope,iterationService) {
     $scope.message = '';
     $scope.iterations = [];
     $scope.lists = [];
@@ -139,7 +139,7 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
         }).then(function mySuccess(response) {
             var list = response.data;
             for (var i = 0; i < $scope.iterations.length; ++i) {
-                var object = { "id": $scope.iterations[i].id, "data": [] };
+                var object = { "id": $scope.iterations[i].id, "name": $scope.iterations[i].name, "data": [] };
                 $scope.lists.push(object);
             }
             for (var j = 0; j < list.length; ++j) {
@@ -237,13 +237,13 @@ iterationApp.controller("iterationCtrl", function ($scope, $http, iterationServi
 
         }
 
-        $scope.passIterationId = function (id) {
-            iterationService.addIterationId(id);
-
+        $scope.passIterationId = function (id,name) {
+            //iterationService.addIterationId(id);
+            $rootScope.$emit("CallMe", {id,name});
         }
-});
+}]);
 
-iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
+iterationApp.controller("taskCtrl", ['$scope', '$http', '$rootScope', function ($scope,$http, $rootScope,iterationService) {
     $scope.tasks = [];
 
     $scope.status;
@@ -257,6 +257,27 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
     $scope.all_parent_options = [];
     $scope.isDisabled = true;
     $scope.team_options = [];
+    $scope.noUserStory = true;
+
+    $rootScope.$on("CallMe", function(info,data) {
+        $scope.itName = data.name;
+        $scope.iterationId = data.id;
+        $http({
+            method: "POST",
+            url: "/IterationPlan/GetProjectForIteration",
+            data: $.param({
+                'iterationId': $scope.iterationId
+            }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function success(response) {
+            $scope.project = response.data[1];
+            $scope.projectID = response.data[0];
+            $scope.getUserStories($scope.projectID);
+        },
+        function failure(response) {
+           
+        });
+    });
 
     $http({
         method: "GET",
@@ -328,6 +349,7 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
     }
 
     $scope.getTeamsForProject = function (id) {
+        $scope.noUserStory = false;
         $http({
             method: "GET",
             url: "/Add/GetTeams?userStoryId=" + id,
@@ -366,23 +388,33 @@ iterationApp.controller("taskCtrl", function ($scope,$http, iterationService) {
             title: $scope.title, description: $scope.description, status: $scope.status.value,
             importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
         });*/
-        var iterationId = iterationService.getIterationId()
+        //var iterationId = iterationService.getIterationId()
+        $scope.lock = true;
+        $scope.message = "Please wait...";
         $http({
             method: "POST",
             url: "/Add/IndexAddWithIteration",
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
-                'status': $scope.status.value, 'importance': $scope.importance.value, 
+                'importance': $scope.importance.value, 
                 'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value,
-                'users': $scope.selected_users, 'iterationId': iterationId
+                'users': $scope.selected_users, 'iterationId': $scope.iterationId
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            $scope.message = "Did it!";
-            window.location.href = "/IterationPlan/IterationPlanIndex"
+            if (response.data == "success") {
+                //$scope.message = "Did it!";
+                window.location.href = "/IterationPlan/IterationPlanIndex"
+            }
+            else {
+                $scope.lock = false;
+                $scope.message = response.data;
+            }
+            
         },
         function failure(response) {
+            $scope.lock = false;
             $scope.message = "Fail...";
         });
     }
-});
+}]);

@@ -31,14 +31,17 @@
             <p class="col-sm-3 control-label text-left" style="color:red" for="title">
                 <span class="text-left" ng-show="taskForm.title.$error.required">Required!</span>
                 <span ng-show="taskForm.title.$error.minlength">Should be at least 3 characters long</span>
-                <span ng-show="taskForm.title.$error.maxlength">Should be less than 60 characters</span>
+                <span ng-show="taskForm.title.$error.maxlength">Should not be more than 60 characters</span>
             </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="description"> DESCRIPTION: </label>
-            <textarea class="col-sm-2 form-control" rows="5" id="task_description" name="description" ng-model="description" required ng-disabled="lock"> </textarea>
+            <textarea class="col-sm-2 form-control" rows="5" id="task_description" name="description" ng-model="description" required ng-disabled="lock" 
+                      ng-minlength="3" ng-maxlength="200"> </textarea>
             <p class="col-sm-3 control-label text-left" style="color:red" for="description">
                 <span class="text-left" ng-show="taskForm.description.$error.required">Required!</span>
+                <span ng-show="taskForm.description.$error.minlength">Should be at least 3 characters long</span>
+                <span ng-show="taskForm.description.$error.maxlength">Should not be more than 200 characters</span>
             </p>
         </div>
         <div class="form-group row">
@@ -46,7 +49,6 @@
             <select class="col-sm-2 form-control" name="importance" ng-model="importance" ng-options="x.description for x in importance_options" ng-disabled="lock" required></select>
             <p class="col-sm-3 control-label text-left" style="color:red" for="importance">
                 <span class="text-left" ng-show="taskForm.importance.$error.required">Required!</span>
-
             </p>
         </div>
         <div class="form-group row">
@@ -95,8 +97,8 @@
             <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" ng-click="addTask()" ng-disabled="taskForm.$invalid || (selected_users.length < 1) || lock"><!--ADD TASK</input>-->
         </div>
 
-        <div>
+        @*<div>
             {{selected_users.length}}
-        </div>
+        </div>*@
     </form>
 </body>

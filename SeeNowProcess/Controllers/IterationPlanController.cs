@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Projekt_programistyczny_pierwsze_kroki.Controllers
+namespace SeeNowProcess.Controllers
 {
     public class IterationPlanController : DIContextBaseController
     {
@@ -66,6 +66,8 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
             }
         }
 
+
+
         [HttpPost]
         //Create([Bind(Include = "Id,SupervisorId,LastName,FirstName")] Worker worker)
         public ActionResult AddingIteration([Bind(Include = "Name,Description,StartDate,EndDate")] Iteration iteration, string idProject)
@@ -117,6 +119,20 @@ namespace Projekt_programistyczny_pierwsze_kroki.Controllers
                 db.MarkAsModified(problem);
                 db.SaveChanges();
                 return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetProjectForIteration(string iterationId)
+        {
+            using (db) {
+                int id = Int32.Parse(iterationId.ToString());
+                Iteration iteration = db.Iterations.Where(i => i.IterationId == id).FirstOrDefault();
+                Project project = db.Projects.Where(p => p.ProjectID == iteration.Project.ProjectID).FirstOrDefault();
+                List<string> list = new List<string>();
+                list.Add(project.ProjectID.ToString());
+                list.Add(project.Name);
+                return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 
