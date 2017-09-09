@@ -47,7 +47,7 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
             $http({
                 method: "POST",
                 url: "/Account/RegisterAction",
-                data: $.param({ 'password': $scope.password, 'login': $scope.login, 'name': $scope.name, 'email': $scope.email, 'phone': $scope.phone, 'role': $scope.role.value }),
+                data: $.param({ 'password': $scope.password, 'login': $scope.login, 'name': $scope.name, 'email': $scope.email, 'phoneNumber': $scope.phone, 'role': $scope.role.value }),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
