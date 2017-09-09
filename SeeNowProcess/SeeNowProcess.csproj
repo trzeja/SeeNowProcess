@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201709081721372_wincyjRestrykcyjProblem.Designer.cs">
       <DependentUpon>201709081721372_wincyjRestrykcyjProblem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709091045018_iterationFullRestrictions.cs" />
+    <Compile Include="Migrations\201709091045018_iterationFullRestrictions.Designer.cs">
+      <DependentUpon>201709091045018_iterationFullRestrictions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -423,6 +427,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709081721372_wincyjRestrykcyjProblem.resx">
       <DependentUpon>201709081721372_wincyjRestrykcyjProblem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709091045018_iterationFullRestrictions.resx">
+      <DependentUpon>201709091045018_iterationFullRestrictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
