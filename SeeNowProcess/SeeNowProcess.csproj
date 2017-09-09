@@ -272,6 +272,10 @@
     <Compile Include="Migrations\201709091045018_iterationFullRestrictions.Designer.cs">
       <DependentUpon>201709091045018_iterationFullRestrictions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709091105280_supervisorAndNiggersRemoved.cs" />
+    <Compile Include="Migrations\201709091105280_supervisorAndNiggersRemoved.Designer.cs">
+      <DependentUpon>201709091105280_supervisorAndNiggersRemoved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Box.cs" />
@@ -430,6 +434,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709091045018_iterationFullRestrictions.resx">
       <DependentUpon>201709091045018_iterationFullRestrictions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709091105280_supervisorAndNiggersRemoved.resx">
+      <DependentUpon>201709091105280_supervisorAndNiggersRemoved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

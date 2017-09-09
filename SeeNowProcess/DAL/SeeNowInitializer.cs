@@ -50,11 +50,6 @@ namespace SeeNowProcess.DAL
                 new User {Login="aliada",Email="Alicja.Adamiak@company.com", Name="Alicja Adamiak", Password="!!Marynarzem@", PhoneNumber="356-865-350", role=Role.Intern },
                 new User {Login="client", Email="Nasty.Client@doitnow.com", Name="Nasty Client", Password="I'dDoItBetter", PhoneNumber="666-666-666", role=Role.Client}
             };
-            Users[0].Supervisor = Users[1];
-            Users[2].Supervisor = Users[1];
-            Users[3].Supervisor = Users[2];
-            Users[4].Supervisor = Users[2];
-            Users[5].Supervisor = Users[3];
 
             Users.ForEach(u => context.Users.Add(u));
             context.SaveChanges();

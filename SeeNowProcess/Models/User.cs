@@ -13,7 +13,6 @@ namespace SeeNowProcess.Models
         public User()
         {
             Assignments = new List<Assignment>();
-            Subordinates = new List<User>();
             Stories = new List<UserStory>();
             Problems = new List<Problem>();
         }
@@ -45,9 +44,7 @@ namespace SeeNowProcess.Models
         public string PhoneNumber { get; set; } //zazwyczaj nie wymaga sie
         [Required]
         public Role role { get; set; }
-        public virtual User Supervisor { get; set; }
         public virtual ICollection<Assignment> Assignments { get; set; }
-        public virtual ICollection<User> Subordinates { get; set; } // users whose supervisor I am
         public virtual ICollection<UserStory> Stories { get; set; }
         public virtual ICollection<Problem> Problems { get; set; }
 
