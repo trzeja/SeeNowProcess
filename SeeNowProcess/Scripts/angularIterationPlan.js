@@ -139,7 +139,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
         }).then(function mySuccess(response) {
             var list = response.data;
             for (var i = 0; i < $scope.iterations.length; ++i) {
-                var object = { "id": $scope.iterations[i].id, "name": $scope.iterations[i].name, "data": [] };
+                var object = { "id": $scope.iterations[i].id,"projectName":$scope.iterations[i].projectName, "name": $scope.iterations[i].name, "data": [] };
                 $scope.lists.push(object);
             }
             for (var j = 0; j < list.length; ++j) {

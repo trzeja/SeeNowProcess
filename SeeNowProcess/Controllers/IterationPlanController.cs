@@ -148,6 +148,7 @@ namespace SeeNowProcess.Controllers
                     {
                         id = i.IterationId,
                         name = i.Name,
+                        projectName = i.Project.Name,
                         duration = (i.StartDate == null ? "?" : i.StartDate.ToString()) + " - " + (i.EndDate == null ? "?" : i.EndDate.ToString())
                     });
                     return Json(iterations.ToList(), JsonRequestBehavior.AllowGet);
@@ -162,6 +163,7 @@ namespace SeeNowProcess.Controllers
                         {
                             id = i.IterationId,
                             name = i.Name,
+                            projectName = i.Project.Name,
                             duration = (i.StartDate == null ? "?" : i.StartDate.ToString()) + " - " + (i.EndDate == null ? "?" : i.EndDate.ToString())
                         });
                     return Json(iterations.ToList(), JsonRequestBehavior.AllowGet);
