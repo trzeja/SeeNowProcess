@@ -24,6 +24,9 @@
     .my-tabs {
     width: 18vw;
     }
+    .control-label.text-left {
+            text-align: left;
+        }
     /*.moveLeft {
         left: 20px;
     }*/
@@ -128,45 +131,97 @@
                     <h4 class="modal-title"><strong>Add UserStory</strong></h4>
                 </div>
                 <div class="modal-body">
-                    <form name="taskForm" class="form-horizontal" method="post">
+                    <form name="userStoryForm" class="form-horizontal" method="post" novalidate>
+                        <div>{{message}}</div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="userStoryTitle"> TITLE: </label>
-                            <input name="userStoryTitle" class="form-control" type="text" id="userStoryTitle" ng-model="userStoryTitle" required>
-                            <!-- <span style="color: red" ng-show="submitted && taskForm.taskTitle.$error.required">Title is required</span>-->
+                            <input name="userStoryTitle" class="col-sm-2 form-control" type="text" id="userStoryTitle" ng-model="userStoryTitle" required
+                                   ng-minlength="3" ng-maxlength="60" ng-disabled="lock">
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryTitle">
+                                <span class="text-left" ng-show="userStoryForm.userStoryTitle.$error.required">Required!</span>
+                                <span ng-show="userStoryForm.userStoryTitle.$error.minlength">Should be at least 3 characters long</span>
+                                <span ng-show="userStoryForm.userStoryTitle.$error.maxlength">Should not be more than 60 characters</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="userStoryDescription"> DESCRIPTION: </label>
-                            <textarea class="form-control" rows="5" id="userStoryDescription" ng-model="userStoryDescription" required> </textarea>
+                            <textarea class="col-sm-2 form-control" rows="5" id="userStoryDescription" name="userStoryDescription" ng-model="userStoryDescription" required
+                                      ng-minlength="3" ng-maxlength="60" ng-disabled="lock"></textarea>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryTitle">
+                                <span class="text-left" ng-show="userStoryForm.userStoryDescription.$error.required">Required!</span>
+                                <span ng-show="userStoryForm.userStoryDescription.$error.minlength">Should be at least 3 characters long</span>
+                                <span ng-show="userStoryForm.userStoryDescription.$error.maxlength">Should not be more than 200 characters</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="userStorySize"> SIZE: </label>
-                            <input name="userStorySize" class="form-control" type="text" id="userStorySize" ng-model="userStorySize" required>
+                            <input name="userStorySize" class="col-sm-2 form-control" type="number" id="userStorySize" ng-model="userStorySize" min="1" required ng-disabled="lock">
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStorySize">
+                                <span class="text-left" ng-show="userStoryForm.userStorySize.$error.required">Required!</span>
+                                <span ng-show="userStoryForm.userStorySize.$error.min">Should be greater than 0</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="userStoryUnit"> UNIT: </label>
-                            <input name="userStoryUnit" class="form-control" type="text" id="userStoryUnit" ng-model="userStoryUnit" required>
+                            <input name="userStoryUnit" class="col-sm-2 form-control" type="text" id="userStoryUnit" ng-model="userStoryUnit" ng-disabled="lock" required>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryUnit">
+                                <span class="text-left" ng-show="userStoryForm.userStoryUnit.$error.required">Required!</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="userStoryNotes"> NOTES: </label>
-                            <textarea class="form-control" rows="8" id="userStoryNotes" ng-model="userStoryNotes" required> </textarea>
+                            <textarea class="col-sm-2 form-control" rows="5" id="userStoryNotes" name="userStoryNotes" ng-model="userStoryNotes"
+                                      ng-minlength="3" ng-maxlength="200" ng-disabled="lock"></textarea>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryNotes">
+                                <span ng-show="userStoryForm.userStoryNotes.$error.minlength">Should be at least 3 characters long</span>
+                                <span ng-show="userStoryForm.userStoryNotes.$error.maxlength">Should not be more than 200 characters</span>
+                            </p>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label" for="userStoryOwner"> OWNER: </label>
+                            <select class="col-sm-2 form-control" name="userStoryOwner" ng-model="userStoryOwner" required
+                                    ng-options="x.name for x in userStoriesOwnerOptions" ng-disabled="lock"></select>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryOwner">
+                                <span class="text-left" ng-show="userStoryForm.userStoryOwner.$error.required">Required!</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="userStoryCriteria"> CRITERIA: </label>
-                            <input name="userStoryCriteria" class="form-control" type="text" id="userStoryCriteria" ng-model="userStoryCriteria" required>
+                            <textarea name="userStoryCriteria" rows="8" class="col-sm-2 form-control" id="userStoryCriteria" ng-model="userStoryCriteria"
+                                      required ng-minlength="3" ng-maxlength="200" ng-disabled="lock"></textarea>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryCriteria">
+                                <span class="text-left" ng-show="userStoryForm.userStoryCriteria.$error.required">Required!</span>
+                                <span ng-show="userStoryForm.userStoryCriteria.$error.minlength">Should be at least 3 characters long</span>
+                                <span ng-show="userStoryForm.userStoryCriteria.$error.maxlength">Should not be more than 200 characters</span>
+                            </p>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" ng-show="currentProject == 0">
                             <label class="control-label col-sm-3" for="userStoryProject"> PROJECT: </label>
-                            <select class="form-control" name="userStoryProject" ng-model="userStoryProject" ng-options="x.name for x in userStoriesProjects_options"></select>
+                            <select class="col-sm-2 form-control" name="userStoryProject" ng-model="userStoryProject" ng-required="currentProject == 0"
+                                    ng-options="x.name for x in userStoriesProjects_options" ng-disabled="lock"></select>
+                            <p class="col-sm-3 control-label text-left" style="color:red" for="userStoryProject">
+                                <span class="text-left" ng-show="userStoryForm.userStoryProject.$error.required">Required!</span>
+                            </p>
+                        </div>
+                        <div class="form-group row" ng-show="currentProject != 0">
+                            <label class="control-label col-sm-3" for="userStoryProject"> PROJECT: </label>
+                            <input class="col-sm-2 form-control" name="userStoryProject" ng-model="currentProjectName" disabled/>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="selected_teams"> TEAMS: </label>
-                            <div class="col-sm-offset-2" name="selected" ng-repeat="x in userStoriesTeams">
-                                <input class="col-sm-offset-2" type="checkbox" ng-model="selected" ng-change="checkTeam(x.id)"> {{x.NAME}}
+                            <div class="col-sm-3">
+                                <div name="selected" ng-repeat="x in userStoriesTeams">
+                                    <input type="checkbox" ng-model="selected" ng-change="checkTeam(x.id)" ng-disabled="lock"> {{x.NAME}}
+                                </div>
                             </div>
+                            <p class="col-sm-offset-3 control-label text-left" style="color:red" for="selected_teams">
+                                <span class="text-left" ng-show="selected_teams.length < 1">Please select at least one team</span>
+                            </p>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-10 control-label"></label>
-                            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USERSTORY" ng-click="addUserStory()" data-dismiss="modal">
+                            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD USERSTORY" ng-click="addUserStory()" data-dismiss="modal"
+                                   ng-disabled="lock || userStoryForm.$invalid || (selected_teams.length < 1)">
                         </div>
                     </form>
                 </div>

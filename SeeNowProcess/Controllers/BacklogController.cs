@@ -54,6 +54,24 @@ namespace SeeNowProcess.Controllers
 
         }
 
+        public ActionResult GetCurrentProjectName()
+        {
+            using (db)
+            {
+                if (Session["project"].Equals("0"))
+                {
+                    return new JsonResult { Data = "All projects", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    int idProject = Int32.Parse(Session["project"].ToString());
+                    Project project = db.Projects.Where(p => p.ProjectID == idProject).FirstOrDefault();
+                    return new JsonResult { Data = project.Name, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+
+            }
+        }
+
         public ActionResult GetCurrentProject()
         {
             using (db)

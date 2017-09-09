@@ -9,11 +9,25 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     $scope.selected_teams = [];
     $scope.userStoriesProjects_options = [];
     $scope.userStoriesTeams = [];
+    $scope.userStoriesOwnerOptions = [];
 
     $scope.show = 0;
     $scope.currentProject;
-    //$scope.currentName;
-    
+    $scope.currentProjectName;
+    $scope.lock = false;
+
+    $http({
+        method: "GET",
+        url: "/Add/AllPeople",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySuccess(response) {
+        $scope.responseOwner = response.data;
+        for (var i = 0; i < $scope.responseOwner.length; i++) {
+            $scope.userStoriesOwnerOptions.push({ id: $scope.responseOwner[i].id, name: $scope.responseOwner[i].NAME });
+        }
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
 
     $scope.projects;
 
@@ -65,6 +79,14 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         }, function myError(response) {
         })
 
+        $http({
+            method: "GET",
+            url: "/Backlog/GetCurrentProjectName",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+        }).then(function mySuccess(response) {
+            $scope.currentProjectName = response.data;
+        }, function myError(response) {
+        })
     //}, function myError(response) {
     //})
 
@@ -137,9 +159,9 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         
     }
 
-    $scope.addUserStory = function () {
-        var newteam;
-    }
+    //$scope.addUserStory = function () {
+    //    var newteam;
+    //}
 
     $scope.deleteTask = function (TaskID) {
         /*$scope.message = ID;*/
@@ -195,7 +217,15 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         })
 
 
-    $scope.addUserStory= function () {
+        $scope.addUserStory = function () {
+            $scope.message = "Please wait...";
+            $scope.lock = true;
+            if ($scope.currentProject == 0) {
+                $scope.send = $scope.userStoryProject.id
+            }
+            else {
+                $scope.send = $scope.currentProject;
+            }
         $http({
             method: "POST",
             url: "/Backlog/AddUserStory",
@@ -203,11 +233,18 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
                 'title': $scope.userStoryTitle, 'description': $scope.userStoryDescription,
                 'size': $scope.userStorySize, 'unit': $scope.userStoryUnit,
                 'notes': $scope.userStoryNotes, 'criteria': $scope.userStoryCriteria,
-                'project': $scope.userStoryProject.id, 'teams': $scope.selected_teams
+                'project': $scope.send, 'teams': $scope.selected_teams,
+                'owner': $scope.userStoryOwner.id
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            window.location.href = "/Backlog/BacklogIndex";
+            if (response.data == "success") {
+                window.location.href = "/Backlog/BacklogIndex";
+            }
+            else {
+                $scope.lock = false;
+                $scope.message = response.data;
+            }
         },
         function failure(response) {
             $scope.message = "Fail...";
