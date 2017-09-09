@@ -155,12 +155,13 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
         });*/
         $scope.message = "Please wait...";
         $scope.lock = true;
+        $scope.progress = 0;
         $http({
             method: "POST",
             url: "/Add/IndexAdd",
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
-                'importance': $scope.importance.value,
+                'importance': $scope.importance.value, 'progress': $scope.progress,
                 'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value,
                 'users': $scope.selected_users
             }),

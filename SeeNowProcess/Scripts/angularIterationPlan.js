@@ -401,12 +401,13 @@ iterationApp.controller("taskCtrl", ['$scope', '$http', '$rootScope', function (
         //var iterationId = iterationService.getIterationId()
         $scope.lock = true;
         $scope.message = "Please wait...";
+        $scope.progress = 0;
         $http({
             method: "POST",
             url: "/Add/IndexAddWithIteration",
             data: $.param({
                 'title': $scope.title, 'description': $scope.description,
-                'importance': $scope.importance.value, 
+                'importance': $scope.importance.value, 'progress': $scope.progress,
                 'estimatedTime': $scope.estimated_time, 'userStory': $scope.parent.value,
                 'users': $scope.selected_users, 'iterationId': $scope.iterationId
             }),

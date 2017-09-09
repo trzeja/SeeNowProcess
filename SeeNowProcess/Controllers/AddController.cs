@@ -33,7 +33,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndexAdd([Bind(Include = "Title,Description,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
+        public ActionResult IndexAdd([Bind(Include = "Title,Description,Importance,Progress,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users)
         {
             problem.CreationDate = DateTime.Now;
             problem.EstimatedTime = new TimeSpan(problem.EstimatedTime.Days, 0, 0);
@@ -92,7 +92,7 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndexAddWithIteration([Bind(Include = "Title,Description,Importance,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users, int iterationId)
+        public ActionResult IndexAddWithIteration([Bind(Include = "Title,Description,Importance,Progress,EstimatedTime")] Problem problem, String userStory, int? userStoryId, List<int> users, int iterationId)
         {
             problem.CreationDate = DateTime.Now;
             problem.EstimatedTime = new TimeSpan(problem.EstimatedTime.Days, 0, 0);
