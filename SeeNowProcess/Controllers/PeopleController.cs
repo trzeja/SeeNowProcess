@@ -324,12 +324,7 @@ namespace SeeNowProcess.Controllers
                 {
 //                    problem.AssignedUsers.Remove(user);
                     db.MarkAsModified(problem);
-                }
-                foreach(User subordinate in user.Subordinates)
-                {
-//                    subordinate.Supervisor = user.Supervisor;
-                    db.MarkAsModified(subordinate);
-                }
+                }                
                 IEnumerable<Assignment> assignments = db.Assignments.Where(a => a.UserID == user.UserID).ToList();
                 db.Assignments.RemoveRange(assignments);
                 IEnumerable<Team> teams = db.Teams.Where(t => t.TeamLeader.UserID == user.UserID).ToList();
@@ -342,7 +337,6 @@ namespace SeeNowProcess.Controllers
                 user.Problems.Clear();
                 //userstories?
                 //user.Stories.Clear();
-                user.Subordinates.Clear();
                 //user.Assignments.Clear();
                 db.Users.Remove(user);
                 try
