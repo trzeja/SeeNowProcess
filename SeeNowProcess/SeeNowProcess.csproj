@@ -210,9 +210,13 @@
     <Compile Include="Controllers\ReleasePlanController.cs" />
     <Compile Include="Controllers\TaskBoardController.cs" />
     <Compile Include="Controllers\WorkByPersonController.cs" />
-    <Compile Include="DAL\ISeeNowContext.cs" />
-    <Compile Include="DAL\SeeNowContext.cs" />
-    <Compile Include="DAL\SeeNowInitializer.cs" />
+    <Compile Include="Migrations\201709091402349_userStoryRestrictions.cs" />
+    <Compile Include="Migrations\201709091402349_userStoryRestrictions.Designer.cs">
+      <DependentUpon>201709091402349_userStoryRestrictions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DAL\ISeeNowContext.cs" />
+    <Compile Include="Models\DAL\SeeNowContext.cs" />
+    <Compile Include="Models\DAL\SeeNowInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -437,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709091105280_supervisorAndNiggersRemoved.resx">
       <DependentUpon>201709091105280_supervisorAndNiggersRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709091402349_userStoryRestrictions.resx">
+      <DependentUpon>201709091402349_userStoryRestrictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

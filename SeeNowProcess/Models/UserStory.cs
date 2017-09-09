@@ -18,16 +18,25 @@ namespace SeeNowProcess.Models
       
 
         [StringLength(60, MinimumLength = 3)]
+        [Required]
         public string Title { get; set; }
+        [StringLength(200, MinimumLength = 3)]
+        [Required]
         public string Description { get; set; }
-        public int? Size { get; set; }
+        [Required, Range(1,int.MaxValue)]
+        public int Size { get; set; }
+        [Required]
         public string Unit { get; set; }
+        [StringLength(200, MinimumLength = 3)]
         public string Notes { get; set; }
+        //[Required]
         public virtual User Owner {get;set;}
-        public virtual ICollection<Team> Teams { get; set; } //to
-        public virtual ICollection<Problem> Problems { get; set; } 
-        //public Team Team { get; set; }        //lub to
+        [Required]
+        public virtual ICollection<Team> Teams { get; set; } 
+        public virtual ICollection<Problem> Problems { get; set; }       
+        [StringLength(200, MinimumLength = 3), Required]
         public string Criteria { get; set; }
+        //[Required]
         public virtual Project Project { get; set; }
 
     }

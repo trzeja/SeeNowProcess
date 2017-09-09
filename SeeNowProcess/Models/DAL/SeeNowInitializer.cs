@@ -16,20 +16,31 @@ namespace SeeNowProcess.DAL
             {
                 method = "AddProjects";
                 AddProjects(context);
+
                 method = "AddIterations";
                 AddIterations(context);
+
                 method = "AddUsers";
                 AddUsers(context);
+
                 method = "AddBoxes";
                 AddBoxes(context);
-                method = "AddUserStories";
-                AddUserStories(context);
+
                 method = "AddTeams";
                 AddTeams(context);
+
+                method = "AddUserStories";
+                AddUserStories(context);
+
+                method = "AddStoriesToTeams";
+                AddStoriesToTeams(context);
+
                 method = "AddAssignments";
                 AddAssignments(context);
+
                 method = "AddProblems";
                 AddProblems(context);
+
                 method = "AssignUsersToProblems";
                 AssignUsersToProblems(context);
             }
@@ -56,14 +67,28 @@ namespace SeeNowProcess.DAL
         }
         void AddTeams(SeeNowContext context)
         {
-            UserStory userStory = context.UserStories.Where(us => us.Title == "Once upon a Time").First();
             var Teams = new List<Team>
             {
-                new Team {Name="Tesla Team", TeamLeader=context.Users.Where(u => u.Login=="kajak").First(), UserStories=new List<UserStory> { userStory } },
-                new Team {Name="Schmetterling!", TeamLeader=context.Users.Where(u => u.Login=="adada").First(), UserStories=new List<UserStory> { userStory } }
+                new Team {Name="Tesla Team", TeamLeader=context.Users.Where(u => u.Login=="kajak").First()},
+                new Team {Name="Schmetterling!", TeamLeader=context.Users.Where(u => u.Login=="adada").First() }
             };
             Teams.ForEach(t => context.Teams.Add(t));
             context.SaveChanges();
+        }
+
+        void AddStoriesToTeams(SeeNowContext context)
+        {
+            Team teslaTeam = context.Teams.Where(us => us.Name == "Tesla Team").First();
+            context.UserStories.ToList().ForEach(u => teslaTeam.UserStories.Add(u));
+            context.MarkAsModified<Team>(teslaTeam);
+            context.SaveChanges();
+
+            //var teams = context.Teams.ToList();
+            //foreach (var team in teams)
+            //{
+            //    team.UserStories.Add(userStory);
+            //    context.MarkAsModified<Team>(team);
+            //} 
         }
 
         public override void InitializeDatabase(SeeNowContext context)
@@ -107,17 +132,18 @@ namespace SeeNowProcess.DAL
             Project RandomAccessMemoriesProject = context.Projects.Where(p => p.Name == "Random Access Memories Project").First();
             Project InterstellaProject = context.Projects.Where(p => p.Name == "Interstella Project").First();
             User Client = context.Users.Where(u => u.role == Role.Client).First();
+            Team TeslaTeam = context.Teams.Where(t => t.Name == "Tesla Team").First();
             var UserStories = new List<UserStory>
             {
-                new UserStory {Title="UserStory1", Unit="pt.", Size=12345, Owner=Client, Notes="simple note", Description="Our first User Story! Praise the Lord!!!", Criteria="I'm not sure what I want, but I want you to do it.", Project=FirstProject},
-                new UserStory {Title="Once upon a Time", Unit="USD", Size=10000, Owner=Client, Notes="Try to be gentle", Description="Have no idea! Write something smart...", Project=FirstProject, Criteria="whatever..."},
+                new UserStory {Title="UserStory1", Unit="pt.", Size=12345, Owner=Client, Notes="simple note", Description="Our first User Story! Praise the Lord!!!", Criteria="I'm not sure what I want, but I want you to do it.", Project=FirstProject,Teams = new List<Team> {TeslaTeam } },
+                new UserStory {Title="Once upon a Time", Unit="USD", Size=10000, Owner=Client, Notes="Try to be gentle", Description="Have no idea! Write something smart...", Project=FirstProject, Criteria="whatever...",Teams = new List<Team> {TeslaTeam } },
 
-                new UserStory {Title="NextUserStory", Unit="pt.", Size=12345, Owner=Client, Notes="simple note", Description="Our first User Story! Praise the Lord!!!", Criteria="I'm not sure what I want, but I want you to do it.", Project=NewProject},
-                new UserStory {Title="Twice upon a Time", Unit="USD", Size=10000, Owner=Client, Notes="Try to be gentle", Description="Have no idea! Write something smart...", Project=NewProject, Criteria="whatever..."},
+                new UserStory {Title="NextUserStory", Unit="pt.", Size=12345, Owner=Client, Notes="simple note", Description="Our first User Story! Praise the Lord!!!", Criteria="I'm not sure what I want, but I want you to do it.", Project=NewProject,Teams = new List<Team> {TeslaTeam } },
+                new UserStory {Title="Twice upon a Time", Unit="USD", Size=10000, Owner=Client, Notes="Try to be gentle", Description="Have no idea! Write something smart...", Project=NewProject, Criteria="whatever...",Teams = new List<Team> {TeslaTeam } },
 
-                new UserStory {Title="Daft story", Unit="pt.", Size=145, Owner=Client, Notes="I want it loud", Description="That's gonna be interesting", Criteria="Meke it digital and sci-fi. You know...", Project=RandomAccessMemoriesProject},
+                new UserStory {Title="Daft story", Unit="pt.", Size=145, Owner=Client, Notes="I want it loud", Description="That's gonna be interesting", Criteria="Meke it digital and sci-fi. You know...", Project=RandomAccessMemoriesProject,Teams = new List<Team> {TeslaTeam } },
 
-                new UserStory {Title="Punk story", Unit="USD", Size=100, Owner=Client, Notes="I dont want to live on this planet anymore", Description="There is still hope we will stay the same", Project=InterstellaProject, Criteria="It must be blue, blue to the bone."}
+                new UserStory {Title="Punk story", Unit="USD", Size=100, Owner=Client, Notes="I dont want to live on this planet anymore", Description="There is still hope we will stay the same", Project=InterstellaProject, Criteria="It must be blue, blue to the bone.",Teams = new List<Team> {TeslaTeam } }
 
 
             };

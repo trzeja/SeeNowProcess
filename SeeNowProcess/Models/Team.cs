@@ -11,6 +11,7 @@ namespace SeeNowProcess.Models
         public Team()
         {
             Assignments = new List<Assignment>();
+            UserStories = new List<UserStory>();
         }
         
         public int TeamID { get; set; }
