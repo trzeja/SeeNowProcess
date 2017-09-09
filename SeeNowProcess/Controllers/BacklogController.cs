@@ -171,15 +171,19 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddUserStory([Bind(Include ="Title,Description,Size,Unit,Notes,Criteria")] UserStory userStory, int project, List<int>teams)
+        public ActionResult AddUserStory([Bind(Include ="Title,Description,Size,Unit,Notes,Criteria")] UserStory userStory, int project, List<int>teams, int owner)
         {
             if (teams == null)
                 teams = new List<int>();
             using (db)
             {
-                string mess = "Success";
+                string mess = "success";
                 List<Team> dbTeams = db.Teams.Where(t => teams.Contains(t.TeamID)).ToList();
+                User ownerUser = db.Users.Where(u => u.UserID == owner).FirstOrDefault();
+                Project projectUS = db.Projects.Where(p => p.ProjectID == project).FirstOrDefault();
                 userStory.Teams = dbTeams;
+                userStory.Owner = ownerUser;
+                userStory.Project = projectUS;
                 db.UserStories.Add(userStory);
                 dbTeams.ForEach(team => db.MarkAsModified(team));
                 try

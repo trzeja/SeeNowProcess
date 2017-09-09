@@ -3,7 +3,21 @@ userStoryApp.controller("userStoryCtrl", function ($scope, $http) {
     $scope.userStoriesTeams = [];
     $scope.selected_teams = [];
     $scope.userStoriesProjects_options = [];
+    $scope.userStoriesOwnerOptions = [];
+    $scope.lock = false;
 
+    $http({
+        method: "GET",
+        url: "/Add/AllPeople",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySuccess(response) {
+        $scope.responseOwner = response.data;
+        for (var i = 0; i < $scope.responseOwner.length; i++) {
+            $scope.userStoriesOwnerOptions.push({id: $scope.responseOwner[i].id, name: $scope.responseOwner[i].NAME});
+        }
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
 
     $http({
         method: "GET",
@@ -42,6 +56,8 @@ userStoryApp.controller("userStoryCtrl", function ($scope, $http) {
 
 
     $scope.addUserStory = function () {
+        $scope.message = "Please wait...";
+        $scope.lock = true;
         $http({
             method: "POST",
             url: "/Backlog/AddUserStory",
@@ -49,13 +65,22 @@ userStoryApp.controller("userStoryCtrl", function ($scope, $http) {
                 'title': $scope.userStoryTitle, 'description': $scope.userStoryDescription,
                 'size': $scope.userStorySize, 'unit': $scope.userStoryUnit,
                 'notes': $scope.userStoryNotes, 'criteria': $scope.userStoryCriteria,
-                'project': $scope.userStoryProject.id, 'teams': $scope.selected_teams
+                'project': $scope.userStoryProject.id, 'teams': $scope.selected_teams,
+                'owner': $scope.userStoryOwner.id
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            window.location.href = "/Backlog/BacklogIndex";
+            if (response.data == "success") {
+                window.location.href = "/Backlog/BacklogIndex";
+            }
+            else {
+                $scope.lock = false;
+                $scope.message = response.data;
+            }
+            
         },
         function failure(response) {
+            $scope.lock = false;
             $scope.message = "Fail...";
         });
     }
