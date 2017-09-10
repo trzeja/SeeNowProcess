@@ -203,6 +203,19 @@ namespace SeeNowProcess.Controllers
                     mess = "Error - no such box!";
                 else
                 {
+                    //sprawdzanie, czy User może mieć przypisanego taska
+                    var belongs = problem
+                        .Story
+                        .Teams
+                        .SelectMany(t => t.Assignments)
+                        .Select(ass => ass.User)
+                        .Where(us => us.UserID == newUser.UserID);
+                    if (!belongs.Any())
+                        mess = "Error - given user isn't assigned to task's User Story";
+                }
+
+                if(mess=="")
+                {
 
                     var oldBox = problem.Box;
 
