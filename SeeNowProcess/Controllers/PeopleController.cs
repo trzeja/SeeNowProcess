@@ -375,6 +375,21 @@ namespace SeeNowProcess.Controllers
         }
 
         [HttpPost]
+        public ActionResult CheckOldPassword(string userId, string password)
+        {
+            using (db)
+            {
+                int idUser = Int32.Parse(userId);
+                User user = db.Users.Where(u => u.UserID == idUser).FirstOrDefault();
+                if (user == null)
+                    return Json("No such user!", JsonRequestBehavior.AllowGet);
+                if (!user.ComparePassword(password))
+                    return Json("Invalid password!", JsonRequestBehavior.AllowGet);
+            }
+            return Json("match", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public ActionResult updateUserPassword(int id, string oldPassword, string newPassword)
         {
             using (db)

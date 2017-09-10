@@ -1,4 +1,34 @@
 ﻿var peopleApp = angular.module("peoplePart", []);
+peopleApp.directive('checkOld', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, mCtrl, ngModel) {
+            function checkPassword(value) {
+                if (value == "") {
+                    mCtrl.$setValidity('oldPass', true)
+                } else {
+                    $http({
+                        method: "POST",
+                        url: "/People/CheckOldPassword",
+                        data: $.param({ "userId": $scope.currentUser.id, 'password': value }),
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                    }).then(function mySuccess(response) {
+                        if (response.data == "match") {
+                            mCtrl.$setValidity('oldPass', true);
+                        }
+                        else {
+                            mCtrl.$setValidity('oldPass',false);
+                        }
+                    }, function myError(response) {
+                        mCtrl.$setValidity('oldPass', false);
+                    })
+                }
+                return value;
+            }
+            mCtrl.$parsers.push(checkPassword);
+        }
+    }
+});
 peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) {
     $scope.message = '';
     $scope.lists = [];  //people from database
@@ -8,14 +38,44 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.userProjects = [];
     $scope.selected = null;
     $scope.userName = 'Select user to show content.';
-    $scope.currentUser;
+    $scope.currentUser = null;
     $scope.info;
     $scope.passwords = { "oldPassword": "", "newPassword": "", "confirmPassword": "" };
     $scope.roles = ["admin", "headMaster", "seniorDev", "juniorDev", "intern", "tester", "client"];
     $scope.fullRoles = ["Admin", "Head Master", "Senior Developer", "Junior Developer", "Intern", "Tester", "Client"];
     $scope.importance = ["None", "Trivial", "Regular", "Important", "Critical"];
     $scope.allTeams = [];
+    $scope.oldPasswordInvalid = true;
+    $scope.showInvalid = false;
+    $scope.oldChanged = false;
 
+    $scope.checkPassword = function () {
+        //tutaj po stracie focusu, sprawdzenie starego hasla
+        $scope.oldChanged = false;
+        if ($scope.passwords.oldPassword == "") {
+            $scope.oldPasswordInvalid = true;
+            $scope.showInvalid = false;
+        }
+        else {
+            $http({
+                method: "POST",
+                url: "/People/CheckOldPassword",
+                data: $.param({ "userId": $scope.currentUser.id, 'password': $scope.passwords.oldPassword }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function mySuccess(response) {
+                if (response.data == "match") {
+                    $scope.oldPasswordInvalid = false;
+                }
+                else {
+                    $scope.oldPasswordInvalid = true;
+                    $scope.showInvalid = true;
+                }
+            }, function myError(response) {
+                $scope.message = response.data;
+            })
+        }
+        
+    }
     
     $http({
         method: "GET",

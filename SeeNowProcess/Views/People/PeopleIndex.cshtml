@@ -27,6 +27,12 @@
         .my_column {
             width: 100px;
         }
+        .control-label.text-left {
+            text-align: left;
+        }
+        .disabled {
+            cursor: default; opacity: .5; 
+        }
     </style>
 </head>
 
@@ -52,7 +58,7 @@
                 <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentRole}}</h4></div>
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
-                    <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab">Account Settings</a></li>
+                    <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab" >Account Settings</a></li>
                     <li class="my-tabs"><a href="#Teams" role="tab" data-toggle="tab">Teams & Projects</a></li>
                     <!--<li class="my-tabs"><a href="#4zakladka" role="tab" data-toggle="tab">4 zakładka</a></li>-->
                 </ul>
@@ -108,44 +114,79 @@
 
                         </table>
             </div>
-            <div class="tab-pane" style="margin-left: 20px; width: 70%; margin-bottom: 100px;" id="AccountSettings">
-                <form class="form-horizontal">
+            <div class="tab-pane" style="margin-left: 20px; width: 70%; margin-bottom: 100px;" id="AccountSettings" >
+                <form name="accountForm" class="form-horizontal" novalidate>
+                    @*<div>{{message}}</div>*@
                     Name:
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="firstName"> Name: </label>
-                        <input class="col-sm-2 form-control" type="text" id="firstName" ng-model="currentUser.name" required autofocus ng-class="Submited?'ng-dirty':''">
+                        <input class="col-sm-2 form-control" type="text" name="firstName" id="firstName" ng-model="currentUser.name" required autofocus
+                               ng-minlength="4" ng-maxlength="50">
+                        <p class="col-sm-3 control-label text-left" style="color:red" for="firstName">
+                            <span class="text-left" ng-show="accountForm.firstName.$error.required">Required!</span>
+                            <span ng-show="accountForm.firstName.$error.minlength">Should be at least 4 characters long</span>
+                            <span ng-show="accountForm.firstName.$error.maxlength">Should not be more than 50 characters</span>
+                        </p>
                     </div>
                     <hr />
                     Login:
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="login"> Login: </label>
-                        <input class="form-control" type="text" id="login" ng-model="currentUser.login" required autofocus ng-class="Submited?'ng-dirty':''">
+                        <input class="col-sm-2 form-control" type="text" name="login" id="login" ng-model="currentUser.login" required autofocus
+                               ng-minlength="5" ng-maxlength="20">
+                        <p class="col-sm-3 control-label text-left" style="color:red" for="login">
+                            <span class="text-left" ng-show="accountForm.login.$error.required">Required!</span>
+                            <span ng-show="accountForm.login.$error.minlength">Should be at least 5 characters long</span>
+                            <span ng-show="accountForm.login.$error.maxlength">Should not be more than 20 characters</span>
+                        </p>
                     </div>
                     <hr />
                     Password (If you want to change it):
                     <div class="form-group row">
-                        <label class="col-sm-2 control-label" for="passwords.oldPassword"> Old password: </label>
-                        <input class="form-control" type="password" id="passwords.oldPassword" ng-model="passwords.oldPassword" autofocus ng-class="Submited?'ng-dirty':''">
+                        <label class="col-sm-2 control-label" for="oldPassword"> Old password: </label>
+                        <input class="col-sm-2 form-control" type="password" name="oldPassword" id="passwords.oldPassword" ng-model="passwords.oldPassword"
+                                autofocus ng-minlength="6" ng-maxlength="100" ng-blur="checkPassword()" ng-focus="showInvalid=false" ng-change="oldChanged=true">
+                        <p class="col-sm-3 control-label text-left" style="color:red" for="oldPassword">
+                            <span ng-show="accountForm.oldPassword.$error.minlength">Should be at least 6 characters long</span>
+                            <span ng-show="accountForm.oldPassword.$error.maxlength">Should not be more than 100 characters</span>
+                            <span ng-show="oldPasswordInvalid && showInvalid">Wrong password</span>
+                        </p>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 control-label" for="passwords.newPassword"> New password: </label>
-                        <input class="form-control" type="password" id="passwords.newPassword" ng-model="passwords.newPassword" autofocus ng-class="Submited?'ng-dirty':''">
+                        <label class="col-sm-2 control-label" for="newPassword"> New password: </label>
+                        <input class="col-sm-2 form-control" type="password" name="newPassword" id="passwords.newPassword" ng-model="passwords.newPassword" autofocus 
+                               ng-required="(!oldPasswordInvalid) && (passwords.oldPassword!='') && (!oldChanged)"
+                               ng-disabled="oldPasswordInvalid || oldChanged"
+                               ng-minlength="6" ng-maxlength="100">
+                        <p class="col-sm-3 control-label text-left" style="color:red" for="newPassword">
+                            <span ng-show="accountForm.newPassword.$error.required">Required!</span>
+                            <span ng-show="accountForm.newPassword.$error.minlength">Should be at least 6 characters long</span>
+                            <span ng-show="accountForm.newPassword.$error.maxlength">Should not be more than 100 characters</span>
+                        </p>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 control-label" for="paswords.confirmPassword"> Confirm Password: </label>
-                        <input class="form-control" type="password" id="paswords.confirmPassword" ng-model="passwords.confirmPassword" autofocus ng-class="Submited?'ng-dirty':''">
+                        <label class="col-sm-2 control-label" for="confirmPassword"> Confirm Password: </label>
+                        <input class="col-sm-2 form-control" type="password" name="confirmPassword" id="paswords.confirmPassword" ng-model="passwords.confirmPassword" autofocus
+                               ng-required="(!oldPasswordInvalid) && (passwords.oldPassword!='') && (!oldChanged)" 
+                               ng-disabled="oldPasswordInvalid || oldChanged"
+                               ng-minlength="6" ng-maxlength="100">
+                        <p class="col-sm-3 control-label text-left" style="color:red" for="newPassword">
+                            <span ng-show="accountForm.confirmPassword.$error.required">Required!</span>
+                            <span ng-show="accountForm.confirmPassword.$error.minlength">Should be at least 6 characters long</span>
+                            <span ng-show="accountForm.confirmPassword.$error.maxlength">Should not be more than 100 characters</span>
+                        </p>
                     </div>
                     <hr />
                     E-mail:
                     <div class="form-group row">
                         <label class="control-label col-sm-2" for="email"> E-mail adress: </label>
-                        <input class="form-control" type="email" id="email" ng-model="currentUser.email" required autofocus ng-class="Submited?'ng-dirty':''">
+                        <input class="form-control" type="email" id="email" ng-model="currentUser.email" required autofocus>
                     </div>
                     <hr />
                     Phone number:
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="phone"> Phone number: </label>
-                        <input class="form-control" type="tel" id="phone" ng-model="currentUser.phone" required autofocus ng-class="Submited?'ng-dirty':''">
+                        <input class="form-control" type="tel" id="phone" ng-model="currentUser.phone" required autofocus>
                     </div>
                     <div>
                         <hr />
