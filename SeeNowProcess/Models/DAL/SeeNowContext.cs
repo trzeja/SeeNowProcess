@@ -1,10 +1,13 @@
 ﻿using SeeNowProcess.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace SeeNowProcess.DAL
@@ -32,6 +35,27 @@ namespace SeeNowProcess.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+        public override int SaveChanges()
+        {
+            var errors = this.GetValidationErrors();
+            foreach (DbEntityValidationResult result in errors)
+            {
+                Type baseType = result.Entry.Entity.GetType().BaseType;
+                //skrocona wersja zakomentowanego - laduje tylko property z bledami
+                foreach(DbValidationError valErr in result.ValidationErrors)
+                {
+                    baseType.GetProperty(valErr.PropertyName).GetValue(result.Entry.Entity, null);
+                }
+                //foreach (PropertyInfo property in result.Entry.Entity.GetType().GetProperties())
+                //{
+                //    if (baseType.GetProperty(property.Name).GetCustomAttributes(typeof(RequiredAttribute), true).Any())
+                //    {
+                //        property.GetValue(result.Entry.Entity, null);
+                //    }
+                //}
+            }
+            return base.SaveChanges();
         }
     }
 }

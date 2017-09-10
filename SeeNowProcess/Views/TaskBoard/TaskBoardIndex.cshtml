@@ -37,7 +37,6 @@
         .element {
             border-radius: 20px;
             background-color: #33cc33;
-            /*width: 150px;*/
             width: 10vw;
             padding: 5px;
             margin-left: auto;
@@ -56,19 +55,16 @@
             text-align: center;
             padding: 5px;
             width: 8vw;
-            /*width: 120px;*/
         }
 
         .space {
             height: 100px;
-            /*height: 100%;*/
             padding-top: 15px;
             width: 11vw;
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
             min-height: 400px;
             max-height: 1000px;
-            /*min-width: 150px;*/
         }
 
         .visible {
@@ -126,8 +122,6 @@
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    @*<link rel="stylesheet" type="text/css" href="~/Content/drag-and-drop-styles.css">*@
-    @*<script src="~/Scripts/taskBoard.js"></script>*@
     <script src="~/Scripts/angular-drag-and-drop-lists.js"></script>
     <script src="~/Scripts/angularTaskBoard.js"></script>
     
@@ -136,13 +130,9 @@
 <body>
    
     <div ng-app="taskBoardPart" name="taskBoardPart" ng-controller="taskBoardCtrl">
-       @* <div>{{message}}</div>*@
-
         <div class="topped" align="right">
             <p><strong>Current project:</strong></p>
-            <!-- <p >{{currentName}}</p> -->
             <select ng-model="currentProject" ng-init="currentProject=Session['project']">
-                <!-- ng-options="x.id as x.name for x in projects">-->
                 <option value="0">All projects</option>
                 @foreach (var project in Model)
                 {
@@ -157,22 +147,18 @@
                 <th class="space2 column" ng-repeat="x in boxes"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p class="text-center">{{x.duration}}</p></th>
             </tr>
             <tr ng-repeat="x in list">
-                <td class="space column" style="text-align:center" ng-bind-html="x.title | trustAsHtml"></td><!--{{x.title}}-->
+                <td class="space column" style="text-align:center" ng-bind-html="x.title | trustAsHtml"></td>
             <td class="space column" valign="top" ng-repeat="y in x.boxes">
                 <ul class="visible list-unstyled text-center" dnd-list="y.tasks" dnd-drop="dropCallback(item,x.id,y.order)">
-          
                     <li ng-repeat="item in y.tasks"
                         dnd-draggable="item"
                         dnd-moved="y.tasks.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        @*dnd-selected="selected = item"
-                        ng-class="{'selected': selected === item}"*@>
+                        dnd-effect-allowed="move">
                         <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
                     </li>
                 </ul>
             </td>
             </tr>
-
         </table>
     </div>
 </body>

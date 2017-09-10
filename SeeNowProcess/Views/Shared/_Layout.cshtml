@@ -11,29 +11,17 @@
 </head>
 <body>
     <div class="container-fluid">
-      <!--  <div class="row">
-            <div class="container col-sm-1 sidebar" id="sidebar">-->
-                <!-- <u1 class="my_list-group" style="background-color:azure;height: 100%; padding-top: 20px; padding-bottom: 40px"> -->
-                <!--<button type="button" class="btn btn-lg btn-block"> Start Bootstrap </button></li> -->
-        <ul class="sidebar" id="sidebar">
-            @*<li> <select> 
-                <option> Opcja 1 </option>
-                <option> Opcja 2 </option>
-                <option> Opcja 3 </option>
-                 </select> </li>*@
+       <ul class="sidebar" id="sidebar">
             <li><a class="btn btn-lg btn-block create_button" href="/Add/Index" role="button">+Add Task</a></li> <!--Adding new project-->
             <li style="padding:5px"></li>
             <li><a class="btn btn-lg btn-block create_button" href="/Add/UserStoryAddIndex" role="button">+Add UserStory</a></li>
             <li style="padding:20px"></li>
             <li><a class="btn btn-block my_sidebar_button" href="/MyWork/MyWorkIndex" role="button"><strong>My Work</strong></a></li>
             <li><a class="btn btn-block my_sidebar_button" href="/Backlog/BacklogIndex" role="button"><strong>Backlog</strong></a></li>
-            <!--<li><a class="btn btn-block my_sidebar_button" href="/ReleasePlan/Index" role="button"><strong>Release Plan </strong></a></li>-->
-            <li><a class="btn btn-block my_sidebar_button" href="/IterationPlan/IterationPlanIndex" role="button"><strong>Iteration Plan</strong></a></li>
+           <li><a class="btn btn-block my_sidebar_button" href="/IterationPlan/IterationPlanIndex" role="button"><strong>Iteration Plan</strong></a></li>
             <li><a class="btn btn-block my_sidebar_button" href="/TaskBoard/TaskBoardIndex" role="button"><strong>Task Board</strong></a></li>
             <li><a class="btn btn-block my_sidebar_button" href="/WorkByPerson/WorkByPersonIndex" role="button"><strong>Work by person</strong></a></li>
             <li><a class="btn btn-block my_sidebar_button" href="/People/PeopleIndex" role="button"><strong>People</strong></a></li>
-            <!--<li><a class="btn btn-block my_sidebar_button" href="/Dashboard/Index" role="button"><strong>Dashboard</strong></a></li>-->
-            <li><a class="btn btn-block my_sidebar_button" href="/Contact/Index" role="button"><strong>Contact</strong></a></li>
             <li style="padding:50px;"></li>
             <li><a class="btn btn-lg btn-block create_button" href="/Create/Index" role="button">+Create Project</a></li>
             <li style="padding:5px"></li>
@@ -49,7 +37,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                  <!--  @Html.ActionLink("SeeNowProcess", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) -->
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -60,7 +47,6 @@
                         <li class="topbar my_sidebar_button"><a href="/Account/Login"><span class="glyphicon glyphicon-log-in"> </span> LOG IN</a></li>
                         <li class="topbar my_sidebar_button"><a href="/Account/Logout"><span class="glyphicon glyphicon-log-out"> </span> LOG OUT</a></li>
                     </ul>
-               <!--     @Html.Partial("_LoginPartial")-->
                 </div>
             </div> 
         </div>

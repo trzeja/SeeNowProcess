@@ -56,38 +56,16 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     }, function myError(response) {
         $scope.message = "Error";
     })
-
-    /*$http({
-        method: "GET",
-        url: "/Add/AllPeople",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    }).then(function mySucces(response) {
-        $scope.response = response.data;
-        for (var i = 0; i < $scope.response.length; ++i) {
-            $scope.users.push({ id: $scope.response[i].id, NAME: $scope.response[i].NAME })
-        }
-
-    }, function myError(response) {
-        $scope.message = "Error";
-    })*/
     
     $scope.checkUser = function (id) {
-        //$scope.users.splice(0, $scope.users.length);
-        //$scope.user.roles.push(1);
         if ($scope.selected_users.indexOf(id) === -1) {
             $scope.selected_users.push(id);
         }
         else {
             $scope.selected_users.splice($scope.selected_users.indexOf(id), 1);
         }
-       // $scope.selected_users.push(id);
     };
 
-
-    /* Roksana:
-    1. Nie dodaję na razie "Choose an option" które dodała Ania, zostaje puste pole które po wyborze opcji
-    znika z listy wyboru. Nie wiem na razie czy to dobry pomysł, zależy czy to będzie obowiązkowe pole (?)
-    2. Chyba niepotrzebnie dodałam to jako obiekty, ale proszę o weryfikację */
     $scope.status_options =
         [
             { value: "open", description: "Open" },
@@ -118,10 +96,10 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
         $http({
             method: "GET",
             url: "/Add/GetTeams?userStoryId="+id,
-            //data: $.param({'userStoryId': id}),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
             $scope.response = response.data.teams;
+            $scope.team_options = [];
             for (var i = 0; i < $scope.response.length; ++i) {
                 $scope.team_options.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
             }
@@ -149,10 +127,6 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
     }
 
     $scope.addTask = function () {
-        /*$scope.tasks.push({
-            title: $scope.title, description: $scope.description, status: $scope.status.value,
-            importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
-        });*/
         $scope.message = "Please wait...";
         $scope.lock = true;
         $scope.progress = 0;
@@ -168,7 +142,6 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
             if (response.data == "success") {
-                //$scope.message = "Did it!";
                 window.location.href = "/TaskBoard/TaskBoardIndex";
             }
             else {

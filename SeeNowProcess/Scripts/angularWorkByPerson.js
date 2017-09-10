@@ -1,4 +1,5 @@
-﻿angular.module("WorkByPersonPart", ['dndLists']).controller("WorkByPersonCtrl", function ($scope, $http) {
+﻿var WorkApp = angular.module("WorkByPersonPart", ['dndLists'])
+WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
     $scope.message = "DZIALAAA";
     $scope.show = 0;
     $scope.currentProject;
@@ -6,6 +7,7 @@
     $scope.list = [];
     $scope.lists = [];
     $scope.projects;
+    $scope.showModal = false;
 
     $scope.$watch('currentProject', function () {
         if ($scope.show != 0) {
@@ -74,13 +76,13 @@
                 var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
                 $scope.lists.push(user);
             }*/
-           $http({
+            $http({
                 method: "GET",
                 url: "/WorkByPerson/GetProblems",
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function success(result) {
                 $scope.problems = result.data;
-               // $scope.list = [];
+                // $scope.list = [];
                 //tutaj rozdzial na listy
                 for (var i = 0; i < $scope.lists.length; i++) {
                     for (var j = 0; j < $scope.boxes.length; j++) {
@@ -124,17 +126,17 @@
                     if (ok == 1)
                         $scope.list.push($scope.lists[i]);
                     ok = 0;
-                        //if ($scope.lists[i].boxes[j].tasks)
+                    //if ($scope.lists[i].boxes[j].tasks)
                     //}
                 }
             }).catch(function fail(result) {
-                $scope.problems = ":(";
+                $scope.problems = "Fail";
             })
         }).catch(function fail(result) {
-            $scope.users = ":(";
+            $scope.users = "Fail";
         })
     }).catch(function fail(result) {
-        $scope.boxes = ":(";
+        $scope.boxes = "Fail";
     })
 
     $scope.dropCallback = function (item, newUser, box) { //userstory->id, box->order
@@ -147,16 +149,126 @@
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            //czy to nie powinno byc?
+            if (response.data.error == true) {
+                $scope.showModal = true;
+                $scope.message = response.data.result;
+            }
             //item.BoxID = box;
             item.UserId = newUser;
             $scope.hello = ":)";
+            $http({
+                method: "GET",
+                url: "/WorkByPerson/GetBoxes",
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+            }).then(function success(result) {
+                //pobrac tu trzeba tez do ktorego nalezy 
+                $scope.boxes = [];
+                $scope.boxes = result.data;
+                $http({
+                    method: "GET",
+                    url: "/WorkByPerson/GetUsers",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                }).then(function success(result) {
+                    $scope.lists = [];
+                    $scope.users = result.data;
+                    for (var i = 0; i < $scope.users.length; i++) {
+                        var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
+                        $scope.lists.push(user);
+                    }
+                    $http({
+                        method: "GET",
+                        url: "/WorkByPerson/GetProblems",
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                    }).then(function success(result) {
+                        $scope.problems = result.data;
+                        $scope.list = [];
+                        //tutaj rozdzial na listy
+                        for (var i = 0; i < $scope.lists.length; i++) {
+                            for (var j = 0; j < $scope.boxes.length; j++) {
+                                var box = { order: $scope.boxes[j].BoxOrder, name: $scope.boxes[j].Name, tasks: [] };
+                                $scope.lists[i].boxes.push(box);
+                            }
+                        }
+                        for (var i = 0; i < $scope.problems.length; i++) {
+                            for (var j = 0; j < $scope.lists.length; j++) {
+                                for (var k = 0; k < $scope.problems[i].AssignedUsers.length; k++) {
+                                    if ($scope.problems[i].AssignedUsers[k] == $scope.lists[j].id) {
+                                        for (var k = 0; k < $scope.lists[j].boxes.length; k++) {
+                                            if ($scope.problems[i].BoxOrder == $scope.lists[j].boxes[k].order) //czy w tym boxie
+                                            {
+                                                var task = { Id: $scope.problems[i].Id, Title: $scope.problems[i].Title, Description: $scope.problems[i].Description, projectID: $scope.problems[i].ProjectID, UserId: $scope.lists[j].id };
+                                                $scope.lists[j].boxes[k].tasks.push(task);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        var ok = 0;
+                        $scope.list = [];
+                        for (var i = 0; i < $scope.lists.length; i++) {
+                            var ok = 0;
+                            for (var j = 0; j < $scope.boxes.length; j++) {
+                                if ($scope.lists[i].boxes[j].tasks.length > 0) {
+                                    ok = 1;
+                                }
+                            }
+                            if (ok == 1)
+                                $scope.list.push($scope.lists[i]);
+                            ok = 0;
+                        }
+                    }).catch(function fail(result) {
+                        $scope.problems = ":(";
+                    })
+                }).catch(function fail(result) {
+                    $scope.users = ":(";
+                })
+            }).catch(function fail(result) {
+                $scope.boxes = ":(";
+            })
         }, function failure(response) {
             $scope.hello = ":(";
         });
-        //item.BoxID = number;
-        //tu problem ze zmienianiem boxid a nie boxorder
         return item;
     };
 
+});
+WorkApp.directive('modal', function () {
+    return {
+        template: '<div class="modal fade">' +
+            '<div class="modal-dialog">' +
+              '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+                  '<h4 class="modal-title">ERROR</h4>' +
+                '</div>' +
+                '<div class="modal-body" ng-transclude></div>'+
+              '</div>' +
+            '</div>' +
+          '</div>',
+                    restrict: 'E',
+                    transclude: true,
+                    replace: true,
+                    scope: true,
+                    link: function postLink(scope, element, attrs) {
+                        scope.$watch(attrs.visible, function (value) {
+                            if (value == true)
+                                $(element).modal('show');
+                            else
+                                $(element).modal('hide');
+                        });
+
+                        $(element).on('shown.bs.modal', function () {
+                            scope.$apply(function () {
+                                scope.$parent[attrs.visible] = true;
+                            });
+                        });
+
+                        $(element).on('hidden.bs.modal', function () {
+                            scope.$apply(function () {
+                                scope.$parent[attrs.visible] = false;
+                            });
+                        });
+                    }
+                };
 });

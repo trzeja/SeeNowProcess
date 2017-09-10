@@ -1,14 +1,5 @@
 ﻿var myWorkAngular = angular.module("dragAndDrop", ['dndLists']);
 myWorkAngular.controller("dragging", ['$scope', '$http', function ($scope, $http) {
-//angular.module("dragAndDrop", ['dndLists']).controller("dragging", function ($scope, $http) {
-
-    //$http({
-    //    method: "GET",
-    //    url: "/MyWork/GetCurrentUser",
-    //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    //}).then(function success(result) {
-    //    $scope.user = result.data;
-    //}).catch(function fail(result) { });
     $scope.show = 0;
     $scope.currentProject;
 
@@ -28,9 +19,7 @@ myWorkAngular.controller("dragging", ['$scope', '$http', function ($scope, $http
 
         } else {
             $scope.show = 1;
-            //za pierwszym razem wysyła zawsze, gdy nie mamy ustalonego jeszcze currentProject - dlatego są błędy. 
         }
-
     });
 
     $http({
@@ -77,48 +66,22 @@ myWorkAngular.controller("dragging", ['$scope', '$http', function ($scope, $http
         })
         .then(function success(result) {
             //pobrac tu trzeba tez do ktorego nalezy 
-            //$scope.models.lists.A = result.data;
             $scope.wholeList = result.data;
 
             for (var x = 0; x < $scope.wholeList.length; x++) {
-                //switch ($scope.allProblemsList[x].Box.Order) { //moja propozycja (Mikolaj)
-                //nie dziala, moze nie da sie odwolac do tak zagnizdzonego pola... :c konsola na 
-                //przegladarce wywala ze nie znapola "Order"
-
                 for (var j = 0; j < $scope.lists.length; j++) {
                     if ($scope.wholeList[x].BoxOrder == $scope.lists[j].Order) {
                         $scope.lists[j].Tasks.push($scope.wholeList[x]);
                     }
                 }
-                //switch ($scope.wholeList[x].BoxOrder) {
-                //    case 0:
-                //        $scope.models.lists.A.push($scope.wholeList[x]);
-                //        break;
-                //    case 1:
-                //        $scope.models.lists.B.push($scope.wholeList[x]);
-                //        break;
-                //    case 2:
-                //        $scope.models.lists.C.push($scope.wholeList[x]);
-                //        break;
-                //    case 3:
-                //        $scope.models.lists.D.push($scope.wholeList[x]);
-                //        break;
-                //    case 4:
-                //        $scope.models.lists.E.push($scope.wholeList[x]);
-                //        break;
-                //    case 5:
-                //    default:
-                //        $scope.models.lists.F.push($scope.wholeList[x]);
-                //        break;
-                //}
             }
 
 
         }).catch(function fail(result) {
-            $scope.list = ":(";
+            $scope.list = "Fail";
         })
     }).catch(function fail(result) {
-        $scope.boxOrder = ":(";
+        $scope.boxOrder = "Fail";
     })
 
 

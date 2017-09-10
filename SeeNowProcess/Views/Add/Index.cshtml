@@ -22,7 +22,6 @@
 </head>
 <!--Anna-->
 <body>
-    <!--przesuwa wszystko niewiadomo czemu-->
     <form ng-app="taskForm" name="taskForm" ng-controller="taskCtrl" class="form-horizontal" method="post" novalidate>
         <div>{{message}}</div>
         <div class="form-group row">
@@ -96,9 +95,5 @@
             <label class="col-sm-10 control-label"></label>
             <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD TASK" ng-click="addTask()" ng-disabled="taskForm.$invalid || (selected_users.length < 1) || lock"><!--ADD TASK</input>-->
         </div>
-
-        @*<div>
-            {{selected_users.length}}
-        </div>*@
     </form>
 </body>

@@ -47,35 +47,16 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
 
         } else {
             $scope.show = 1;
-            //za pierwszym razem wysyła zawsze, gdy nie mamy ustalonego jeszcze currentProject - dlatego są błędy. 
         }
 
     });
 
-    //$http({
-    //    method: "GET",
-    //    url: "/Backlog/GetProjects",
-    //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    //}).then(function mySucces(response) {
-    //    $scope.projects = response.data;
-    //    var all = { id: "", name: "All projects" };
-    //    $scope.projects.push(all);
-    //    //$scope.$apply();
         $http({
             method: "GET",
             url: "/Backlog/GetCurrentProject",
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
             $scope.currentProject = response.data;
-            //if ($scope.currentProject == 0) {
-            //    $scope.currentName = "All projects";
-            //} else {
-            //    for (var i = 0; i < $scope.projects.length; i++) {
-            //        if ($scope.projects[i].id == $scope.currentProject) {
-            //            $scope.currentName = $scope.projects[i].name;
-            //        }
-            //    }
-            //}
         }, function myError(response) {
         })
 
@@ -87,24 +68,6 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             $scope.currentProjectName = response.data;
         }, function myError(response) {
         })
-    //}, function myError(response) {
-    //})
-
-    //$http({
-    //    method: "GET",
-    //    url: "/Backlog/GetCurrentProject",
-    //    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-    //}).then(function mySucces(response) {
-    //    $scope.currentProject = response.data;
-    //    for (var i in $scope.projects)
-    //    {
-    //        if (i.id == $scope.currentProject)
-    //        {
-    //            $scope.currentName = i.name;
-    //        }
-    //    }
-    //}, function myError(response) {
-    //})
 
     $http({
         method: "GET",
@@ -114,8 +77,6 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         $scope.userstories = response.data;
     }, function myError(response) {    
     })
-
-   
 
     $scope.showUserStory = function (id, userstory) {
         $scope.userstory = userstory;
@@ -159,12 +120,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
         
     }
 
-    //$scope.addUserStory = function () {
-    //    var newteam;
-    //}
-
     $scope.deleteTask = function (TaskID) {
-        /*$scope.message = ID;*/
         $http({
             method: "POST",
             url: "/Backlog/DeleteTask",
@@ -180,7 +136,7 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
     }
 
 
-    //ADD uSERSTORY MODAL
+    //ADD USERSTORY MODAL
     $http({
         method: "GET",
         url: "/Add/GetProjects",
@@ -250,8 +206,4 @@ backlogAngular.controller("backlogCtrl", ['$scope', '$http', function ($scope, $
             $scope.message = "Fail...";
         });
     }
-
-
-
-
 }]);

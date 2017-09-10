@@ -36,8 +36,6 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
     }
 
     $scope.registerUser = function () {
-        
-        //czy to moge wywalic jak sprawdzam na etapie wpisywania?
         if ($scope.password !== $scope.confirmPassword) {
             $scope.message = "Passwords don't match!";
         }
@@ -55,7 +53,6 @@ registerApp.controller("registerCtrl",  [ '$scope', '$http', function ($scope, $
                     window.location.href = "/Add/Index";
                 else {
                     $scope.lock = false;
-                    //moze jaki jest case ze istnieje sprawdzic i wyzerowac hasla chociaz?
                     $scope.message = response.data;
                     $scope.password = "";
                     $scope.confirmPassword = "";

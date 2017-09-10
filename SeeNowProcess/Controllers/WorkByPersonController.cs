@@ -185,6 +185,7 @@ namespace SeeNowProcess.Controllers
         [HttpPost]
         public ActionResult UpdateDatabase(int problemID, int oldUserID, int newUserID, int newBoxOrder, int projectId)
         {
+            string mess = "";
             using (db)
             {
                 //int projectId = int.Parse(Session["project"].ToString());
@@ -195,31 +196,71 @@ namespace SeeNowProcess.Controllers
                 var oldUser = db.Users.Where(u => u.UserID == oldUserID).FirstOrDefault();
 
                 if (problem == null)
-                    return Json("Error - no such task!", JsonRequestBehavior.AllowGet);
-                if (newUser == null)
-                    return Json("Error - no such user!", JsonRequestBehavior.AllowGet);
-                if (newBox == null)
-                    return Json("Error - no such box!", JsonRequestBehavior.AllowGet);
+                    mess = "Error - no such task!";
+                else if (newUser == null)
+                    mess = "Error - no such user!";
+                else if (newBox == null)
+                    mess = "Error - no such box!";
+                else
+                {
+                    //sprawdzanie, czy User może mieć przypisanego taska
+                    var belongs = problem
+                        .Story
+                        .Teams
+                        .SelectMany(t => t.Assignments)
+                        .Select(ass => ass.User)
+                        .Where(us => us.UserID == newUser.UserID);
+                    if (!belongs.Any())
+                        mess = "Error - given user isn't assigned to task's User Story";
+                }
 
-                var oldBox = problem.Box;
+                if(mess=="")
+                {
 
-                problem.Box = newBox;
-                newBox.Problems.Add(problem);
-                
-                db.MarkAsModified(newBox);
-                db.MarkAsModified(oldBox);
+                    var oldBox = problem.Box;
 
-                problem.AssignedUsers.Add(newUser);
-                newUser.Problems.Add(problem);
-                oldUser.Problems.Remove(problem);                
+                    problem.Box = newBox;
+                    newBox.Problems.Add(problem);
 
-                db.MarkAsModified(problem);
-                db.MarkAsModified(newUser);
-                db.MarkAsModified(oldUser);
+                    db.MarkAsModified(newBox);
+                    db.MarkAsModified(oldBox);
 
-                db.SaveChanges();
+                    problem.AssignedUsers.Add(newUser);
+                    newUser.Problems.Add(problem);
+                    oldUser.Problems.Remove(problem);
 
-                return new JsonResult { Data = newBoxId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    db.MarkAsModified(problem);
+                    db.MarkAsModified(newUser);
+                    db.MarkAsModified(oldUser);
+
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        mess = "Errors:";
+                        foreach (var validateError in e.EntityValidationErrors)
+                        {
+                            mess += "\n\tIn " + validateError.Entry.Entity.GetType().ToString() + ":";
+                            foreach (var error in validateError.ValidationErrors)
+                            {
+                                mess += "\n\t\t" + error.ErrorMessage;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        mess = e.Message;
+                    }
+                }
+                bool wasError = (mess != "");
+                if (!wasError)
+                    mess = newBoxId.ToString();
+
+
+                return Json(new { error = wasError, result = mess }, JsonRequestBehavior.AllowGet);
             }
         }
     }

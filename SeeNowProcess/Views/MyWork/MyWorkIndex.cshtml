@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<SeeNowProcess.Models.Problem>*@
-
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -38,7 +36,6 @@
         .element {
             border-radius: 20px;
             background-color: #33cc33;
-            /*width: 150px;*/
             width:10vw;
             padding: 5px;
             margin-left: auto;
@@ -57,14 +54,11 @@
             text-align: center;
             padding: 5px;
             width: 8vw;
-            /*width: 120px;*/
         }
 
         .space {
             height: 900px;
-            /*height: 100%;*/
             padding-top: 15px;
-            /*width: 200px;*/
             border: 1px solid #aaaaaa;
             background-color: #e6ffe6;
             min-height: 400px;
@@ -135,13 +129,10 @@
     <div ng-app="dragAndDrop" ng-controller="dragging">
         <div class="topped" align="right">
             <p><strong>Current project:</strong></p>
-            <!-- <p >{{currentName}}</p> -->
             <select ng-model="currentProject" ng-init="currentProject=Session['project']">
-                <!-- ng-options="x.id as x.name for x in projects">-->
                 <option value="0">All projects</option>
                 @foreach (var project in Model)
                 {
-
                     <option value="@project.ProjectID">@project.Name</option>
                 }
             </select>
@@ -163,193 +154,5 @@
             </td>
             </tr>
         </table>
-            @*<div class="row">
-                <div class="space2 col-sm-2"><h5 class="text-center"><strong>Open</strong></h5></div>
-                <div class="space2 col-sm-2"><h5 class="text-center"><strong>Planned</strong></h5></div>
-                <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Progress</strong></h5></div>
-                <div class="space2 col-sm-2"><h5 class="text-center"><strong>In Testing</strong></h5></div>
-                <div class="space2 col-sm-2"><h5 class="text-center"><strong>Done</strong></h5></div>
-                <div class="space2 col-sm-2" ng-repeat="x in boxOrder"><h5 class="text-center"><strong>{{x.Name}}</strong></h5></div>
-            </div>*@
-            @*<div class="row">
-                <div class="space col-sm-2">
-                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.A" dnd-drop="dropCallback(item,0)">
-                        <li ng-repeat="item in models.lists.A"
-                            dnd-draggable="item"
-                            dnd-moved="models.lists.A.splice($index, 1)"
-                            dnd-effect-allowed="move"
-                            dnd-selected="models.selected = item"
-                            ng-class="{'selected': models.selected === item}">
-                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="space col-sm-2">
-                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.B" dnd-drop="dropCallback(item,1)">
-                        <li ng-repeat="item in models.lists.B"
-                            dnd-draggable="item"
-                            dnd-moved="models.lists.B.splice($index, 1)"
-                            dnd-effect-allowed="move"
-                            dnd-selected="models.selected = item"
-                            ng-class="{'selected': models.selected === item}">
-                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="space col-sm-2">
-                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.C" dnd-drop="dropCallback(item,2)">
-                        <li ng-repeat="item in models.lists.C"
-                            dnd-draggable="item"
-                            dnd-moved="models.lists.C.splice($index, 1)"
-                            dnd-effect-allowed="move"
-                            dnd-selected="models.selected = item"
-                            ng-class="{'selected': models.selected === item}">
-                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="space col-sm-2">
-                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.D" dnd-drop="dropCallback(item,3)">
-                        <li ng-repeat="item in models.lists.D"
-                            dnd-draggable="item"
-                            dnd-moved="models.lists.D.splice($index, 1)"
-                            dnd-effect-allowed="move"
-                            dnd-selected="models.selected = item"
-                            ng-class="{'selected': models.selected === item}">
-                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="space col-sm-2">
-                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.E" dnd-drop="dropCallback(item,4)">
-                        <li ng-repeat="item in models.lists.E"
-                            dnd-draggable="item"
-                            dnd-moved="models.lists.E.splice($index, 1)"
-                            dnd-effect-allowed="move"
-                            dnd-selected="models.selected = item"
-                            ng-class="{'selected': models.selected === item}">
-                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="space col-sm-2">
-                    <ul class="visible list-unstyled text-center" dnd-list="models.lists.F" dnd-drop="dropCallback(item,5)">
-                        <li ng-repeat="item in models.lists.F"
-                            dnd-draggable="item"
-                            dnd-moved="models.lists.F.splice($index, 1)"
-                            dnd-effect-allowed="move"
-                            dnd-selected="models.selected = item"
-                            ng-class="{'selected': models.selected === item}">
-                            <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>*@
 </div>
 </body>
-
-@*<table class="fill">
-                <tr>
-                    <th class="wid space2"><h5 class="text-center"><strong>Open</strong></h5></th>
-                    <th class="wid space2"><h5 class="text-center"><strong>Planned</strong></h5></th>
-                    <th class="wid space2"><h5 class="text-center"><strong>In Progress</strong></h5></th>
-                    <th class="wid space2"><h5 class="text-center"><strong>In Testing</strong></h5></th>
-                    <th class="wid space2"><h5 class="text-center"><strong>Done</strong></h5></th>
-                    <th class="wid space2"><h5 class="text-center"><strong>Cancelled</strong></h5></th>
-                </tr>
-
-
-                <tr>
-                    <td class="wid">
-                        <div class="space">
-                        <ul class="visible list-unstyled text-center" dnd-list="models.lists.A">
-                            <li ng-repeat="item in models.lists.A"
-                                dnd-draggable="item"
-                                dnd-moved="models.lists.A.splice($index, 1)"
-                                dnd-effect-allowed="move"
-                                dnd-selected="models.selected = item"
-                                ng-class="{'selected': models.selected === item}">
-                                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                            </li>
-                        </ul>
-                            </div>
-                    </td>
-                    <td class="wid">
-                        <div class="space">
-                            <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
-                                <li ng-repeat="item in models.lists.B"
-                                    dnd-draggable="item"
-                                    dnd-moved="models.lists.B.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                    dnd-selected="models.selected = item"
-                                    ng-class="{'selected': models.selected === item}">
-                                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                                </li>
-                            </ul>
-                            </div>
-
-    </td>
-
-                    <td class="wid">
-                        <div class="space">
-                            <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
-                                <li ng-repeat="item in models.lists.C"
-                                    dnd-draggable="item"
-                                    dnd-moved="models.lists.C.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                    dnd-selected="models.selected = item"
-                                    ng-class="{'selected': models.selected === item}">
-                                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                                </li>
-                            </ul>
-                            </div>
-
-    </td>
-
-                    <td class="wid">
-                        <div class="space">
-                            <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
-                                <li ng-repeat="item in models.lists.D"
-                                    dnd-draggable="item"
-                                    dnd-moved="models.lists.D.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                    dnd-selected="models.selected = item"
-                                    ng-class="{'selected': models.selected === item}">
-                                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                                </li>
-                            </ul>
-                            </div>
-    </td>
-                    <td class="wid">
-                        <div class="space">
-                            <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
-                                <li ng-repeat="item in models.lists.E"
-                                    dnd-draggable="item"
-                                    dnd-moved="models.lists.E.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                    dnd-selected="models.selected = item"
-                                    ng-class="{'selected': models.selected === item}">
-                                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                                </li>
-                            </ul>
-                            </div>
-    </td>
-
-                    <td class="wid">
-                        <div class="space">
-                            <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
-                                <li ng-repeat="item in models.lists.F"
-                                    dnd-draggable="item"
-                                    dnd-moved="models.lists.F.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                    dnd-selected="models.selected = item"
-                                    ng-class="{'selected': models.selected === item}">
-                                    <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                                </li>
-                            </ul>
-                            </div>
-    </td>
-                </tr>
-
-            </table>*@
