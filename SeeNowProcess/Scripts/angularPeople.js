@@ -431,8 +431,8 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.addUserToTeam = function (id) {
         $http({
             method: "POST",
-            url: "/People/AddUserToTeam",
-            data: $.param({ "userId": id, "teamId": $scope.newTeam.id}),
+            url: "/People/AssignTeam",
+            data: $.param({ "userId": id, "teamId": $scope.newTeam.TeamID}),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
         }).then(function mySucces(response) {
