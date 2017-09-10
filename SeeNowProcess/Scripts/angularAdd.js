@@ -122,6 +122,7 @@ taskApp.controller("taskCtrl", function ($scope,$http) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
             $scope.response = response.data.teams;
+            $scope.team_options = [];
             for (var i = 0; i < $scope.response.length; ++i) {
                 $scope.team_options.push({ id: $scope.response[i].id, NAME: $scope.response[i].name })
             }
