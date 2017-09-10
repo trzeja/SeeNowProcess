@@ -34,43 +34,6 @@
     <div class="form-group row">
         <label class="col-sm-10 control-label"></label>
         <input type="submit" class="form-control btn green_button" style="margin-left: 20%" value="LOGIN" 
-               ng-disabled="loginForm.$invalid || lock"> <!-- ng-click="loginCheck()"-->
-        <!--TODO: error logowania, nie wysylanie wielu żądań-->
+               ng-disabled="loginForm.$invalid || lock"> 
     </div>
 </form>
-
-<!--
-<h2>Login Using Angular</h2>
-
-<div ng-controller="LoginController">
-    <form name="myForm" novalidate ng-submit="LoginForm()">
-        <div style="color:green">{{msg}}</div>
-        <table ng-show="!IsLoggedIn" class="table table-horizontal">
-            <tr>
-                <td>Email/UserName :</td>
-                <td>
-                    <input type="email" ng-model="UserModel.Email" name="UserEmail" <!--ng-class="Submited?'ng-dirty':''" required autofocus  class="form-control />
-                  <!--  <span style="color:red" ng-show="(myForm.UserEmail.$dirty || Submited ) && myForm.UserEmail.$error.required">Please enter Email</span>
-                    <span style="color:red" ng-show="myForm.UserEmail.$error.email">Email is not valid</span>
-                </td>
-            </tr>
-            <tr>
-                <td>Password :</td>
-                <td>
-                    <input type="password" ng-model="UserModel.Password" name="UserPassword" ng-class="Submited?'ng-dirty':''" required autofocus class="form-control" />
-              <!--      <span style="color:red" ng-show="(myForm.UserPassword.$dirty || Submited) && myForm.UserPassword.$error.required">Password Required</span>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="submit" value="submit" class="btn btn-success" />
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-@section scripts{
-    <script src="~/Controllers/AngularController.js"></script>
-}
--->

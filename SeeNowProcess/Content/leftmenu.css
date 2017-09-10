@@ -28,32 +28,20 @@
 .sidebar {
     position:fixed;
     background-color:black;  
-    /*height: 100%; */
     width:25%;
     padding-top: 40px;
     height:100%;
-   /* padding-bottom: 50px; */
     min-width:150px;
-    max-width:200px;
+    max-width:220px;
     margin-bottom:0px;
     margin-left:-20px;
     overflow:auto;
 }
 
 .sidebar li {
-    list-style-type:none;
-    /*list-style-type:none;*/    
+    list-style-type:none;   
 }
 
-/*
-@media screen and (max-width: 900px) {
-    sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-}*/
-/*DODAJĘ COKOLWIEK ŻEBY PLIK POJAWIŁ SIĘ W COMMICIE*/
 .topbar {
     margin-right:10px;
 }
@@ -74,16 +62,13 @@
   margin-left: -10px;
 }
 
-
-
 .create_button {
   background-color:chartreuse; 
   color:black; 
   font-size: 15px;
   padding-top: 5px; 
   padding-bottom: 5px;
-  text-align:center;
-  /*bottom: 0;  nie działa :( */
+  text-align:left;
   margin-bottom: 0;
   margin-left: -10px;
   border-width: 1px 0 0 ;
@@ -96,15 +81,11 @@
     width:75%;
     overflow:auto;
 }
+
 @media screen and (max-width: 600px) {
     main_page {
         width: 75%;
         margin-left:150px;
     }
 }
-/*
-#main {
-    width: 100%;
-    position:absolute;
-    padding: 15px;
-}*/
+

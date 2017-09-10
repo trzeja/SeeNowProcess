@@ -35,11 +35,10 @@
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="confirmPassword"> Confirm Password: </label>
-        <input class="col-sm-2 form-control" type="password" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword" ng-disabled="lock" required autofocus @*match-password="password"*@>
+        <input class="col-sm-2 form-control" type="password" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword" ng-disabled="lock" required autofocus>
         <p class="col-sm-3 control-label text-left" style="color:red" for="confirmPassword">
             <span class="text-left" ng-show="registerForm.confirmPassword.$error.required">Required!</span>
             <span class="text-left" ng-show="!registerForm.confirmPassword.$error.required && (password != confirmPassword)">Passwords does not match</span>
-            @*<span class="text-left" ng-show="!registerForm.confirmPassword.$valid">Password does not match</span>*@
         </p>
     </div>
     <div class="form-group row">
@@ -60,12 +59,8 @@
         </p>
     </div>
     <div class="form-group row">
-        <!-- sprawdzanie ilosci cyfr i czy cyfry? -->
         <label class="col-sm-2 control-label" for="phone"> Phone number: </label>
-        <input class="col-sm-2 form-control" type="tel" id="phone" name="phone" ng-model="phone" @*required*@ ng-disabled="lock" autofocus>
-        @*<p class="col-sm-3 control-label text-left" style="color:red" for="phone">
-            <span class="text-left" ng-show="registerForm.phone.$error.required">Required!</span>
-        </p>*@
+        <input class="col-sm-2 form-control" type="tel" id="phone" name="phone" ng-model="phone" ng-disabled="lock" autofocus>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 control-label" for="role"> Role: </label>
@@ -78,7 +73,6 @@
         <label class="col-sm-10 control-label"></label>
         <input type="submit" class="btn green_button" style="margin-left: 20%" value="REGISTER" ng-click="forms()"
                ng-disabled="registerForm.$invalid || lock || (password != confirmPassword)"/>
-               <!--nie wiem czemu nie dziala, moze jakiego bledu nie widze ng-disabled="registerForm.$invalid"-->
         
     </div>
 </form>

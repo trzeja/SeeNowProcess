@@ -34,13 +34,10 @@
     <div>{{message}}</div>
     <div class="topped" align="right">
         <p><strong>Current project:</strong></p>
-        <!-- <p >{{currentName}}</p> -->
         <select ng-model="currentProject" ng-init="currentProject=Session['project']">
-            <!-- ng-options="x.id as x.name for x in projects">-->
             <option value="0">All projects</option>
             @foreach (var project in Model)
             {
-
                 <option value="@project.ProjectID">@project.Name</option>
             }
         </select>
@@ -51,8 +48,6 @@
     <!--Modal - adding iteration-->
     <div class="modal fade" id="iterationModal" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content for adding Iteration without working datepicker :/-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -123,10 +118,6 @@
 
         </div>
     </div>
-
-    
-    
-
 
     <table class="fillIteration">
         <thead>
@@ -208,7 +199,6 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label selectContainer" for="task_project"> PROJECT: </label>
                                 <input class="col-sm-2 form-control" type="text" name="task_project" ng-model="project" disabled />
-                                @*<select class="form-control" name="task_project" ng-model="project" ng-options="x.value for x in project_options" ng-change="getUserStories(project.id)"></select>*@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label selectContainer" for="task_parent"> PARENT USER STORY: </label>
@@ -249,98 +239,4 @@
 
             </div>
         </div>
-    
-
-
-
 </body>
-
-@*KOD ZAKOMENTOWANY PRAWIE DZIAŁAJĄCY
-        <div ng-app="iterationPart" name="iterationPart" ng-controller="iterationCtrl">
-        <div>
-            <label class="col-sm-10 control-label"></label>
-            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD ITERATION" ng-click="addIteration()">
-        </div>
-        <div class="row" >
-            <div class="space2 col-sm-2" ng-repeat="x in iterations"><h5 class="text-center"><strong>{{x.Name}}</strong></h5><p>{{x.StartDate}} - {{x.EndDate}}</p></div>
-        </div>
-        <div class="row" >
-            <div class="space col-sm-2 column" ng-repeat="x in lists">
-                <ul class="visible list-unstyled text-center" dnd-list="x">
-                    <li ng-repeat="item in x"
-                        dnd-draggable="item"
-                        dnd-moved="x.splice($index, 1)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="selected = item"
-                        ng-class="{'selected': selected === item}">
-                        <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-*@
-
-
-@*  KOD Z PLIKÓW OD ROKSANY (jeszcze nie wyrzucać)
-    <div class="space col-sm-2">
-        <ul class="visible list-unstyled text-center" dnd-list="models.lists.B">
-            <li ng-repeat="item in models.lists.B"
-                dnd-draggable="item"
-                dnd-moved="models.lists.B.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-            </li>
-        </ul>
-    </div>
-    <div class="space col-sm-2">
-        <ul class="visible list-unstyled text-center" dnd-list="models.lists.C">
-            <li ng-repeat="item in models.lists.C"
-                dnd-draggable="item"
-                dnd-moved="models.lists.C.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-            </li>
-        </ul>
-    </div>
-    <div class="space col-sm-2">
-        <ul class="visible list-unstyled text-center" dnd-list="models.lists.D">
-            <li ng-repeat="item in models.lists.D"
-                dnd-draggable="item"
-                dnd-moved="models.lists.D.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-            </li>
-        </ul>
-    </div>
-    <div class="space col-sm-2">
-        <ul class="visible list-unstyled text-center" dnd-list="models.lists.E">
-            <li ng-repeat="item in models.lists.E"
-                dnd-draggable="item"
-                dnd-moved="models.lists.E.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-            </li>
-        </ul>
-    </div>
-    <div class="space col-sm-2">
-        <ul class="visible list-unstyled text-center" dnd-list="models.lists.F">
-            <li ng-repeat="item in models.lists.F"
-                dnd-draggable="item"
-                dnd-moved="models.lists.F.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="models.selected = item"
-                ng-class="{'selected': models.selected === item}">
-                <div class="element">{{item.Title}}<p class="element2">{{item.Description}}</p></div>
-            </li>
-        </ul>
-    </div>*@

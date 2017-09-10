@@ -204,7 +204,6 @@
     <Compile Include="Controllers\DIContextBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IterationPlanController.cs" />
-    <Compile Include="Controllers\MyRecentController.cs" />
     <Compile Include="Controllers\MyWorkController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\ReleasePlanController.cs" />
@@ -367,9 +366,7 @@
     <Content Include="Views\Add\Index.cshtml" />
     <Content Include="Views\Backlog\BacklogIndex.cshtml" />
     <Content Include="Views\Create\Index.cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\IterationPlan\IterationPlanIndex.cshtml" />
-    <Content Include="Views\MyRecent\Index.cshtml" />
     <Content Include="Views\MyWork\MyWorkIndex.cshtml" />
     <Content Include="Views\People\PeopleIndex.cshtml" />
     <Content Include="Views\TaskBoard\TaskBoardIndex.cshtml" />

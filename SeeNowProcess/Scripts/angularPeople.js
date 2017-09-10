@@ -258,26 +258,6 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
         })
     }
 
-
-    $scope.dropCallback = function (item, x) {
-        $scope.message = "DropCallback: " + x;
-        $http({
-            method: "POST",
-            url: "/IterationPlan/MoveTask",
-            data: $.param({ "taskId": item.id, "newIterationId": x }),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-
-        }).then(function mySucces(response) {
-            $scope.message = "Result: " + response.data;
-            if (response.data == "Success")
-                //window.location.href = "/IterationPlan/Index";
-                $scope.message = "Task moved";
-        }, function myError(response) {
-            $scope.message = "Error in moving task";
-        })
-        return item;
-    }
-
     $scope.deleteTask = function (UserID, TaskID) {
         /*$scope.message = ID;*/
         $http({
