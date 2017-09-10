@@ -236,7 +236,6 @@ namespace SeeNowProcess.Controllers
                                 mess += "\n\t\t" + error.ErrorMessage;
                             }
                         }
-                        return Json(mess, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
                     {
