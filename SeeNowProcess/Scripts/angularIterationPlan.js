@@ -27,9 +27,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
     $scope.endDate = '';
     $scope.startingDate;
     $scope.endingDate;
-    //$scope.idProject;
-
-
     $scope.show = 0;
     $scope.currentProject;
     $scope.currentProjectName;
@@ -50,9 +47,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
 
         } else {
             $scope.show = 1;
-            //za pierwszym razem wysyła zawsze, gdy nie mamy ustalonego jeszcze currentProject - dlatego są błędy. 
         }
-
     });
 
     $http({
@@ -72,58 +67,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
         $scope.currentProjectName = response.data;
     }, function myError(response) {
     })
-
-  /*  $scope.addIteration = function () {
-        $http({
-            method: "POST",
-            url: "/IterationPlan/AddingIteration",
-            data: $.param({ "name": iterations.Name }),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-
-        }).then(function mySucces(response) {
-            lists.push = response.data;
-        }, function myError(response) {
-            $scope.message = "Error";
-        })
-    }*/
-       /* $scope.iterations.push({ "Name": "Backlog", "StartDate": "dhefuieff", "EndDate": "jeoefof;rg" });
-        $scope.iterations.push({ "Name": "Backlog 2", "StartDate": "dhefuiesgfhff", "EndDate": "jeoeffhgfhfof;rg" });
-        $scope.iterations.push({ "Name": "Backlog 2", "StartDate": "dhefuiesgfhff", "EndDate": "jeoeffhgfhfof;rg" });
-        $scope.iterations.push({ "Name": "Backlog 2", "StartDate": "dhefuiesgfhff", "EndDate": "jeoeffhgfhfof;rg" });
-        for (var i = 0; i < $scope.iterations.length; ++i) {
-            var lista_pomocnicza = [];
-            lista_pomocnicza.push({ Title: "Sierotka Marysia", Description: "Whatever" });
-            lista_pomocnicza.push({ Title: "Sierotka Marysia2", Description: "Whatever Happens" });
-            $scope.lists.push(lista_pomocnicza);
-           // $scope.lists.i.push({ Title: "Sierotka Marysia", Description: "Whatever" });
-        }*/
-        /*$http({
-            method: "GET",
-            url: "/IterationPlan/GetNumber",
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-        }).then(function mySucces(response) {
-            $scope.message = response.data;
-            $scope.iterations = response.data;
-            for (var i = 0; i < $scope.iterations.length; ++i) {
-                var id = $scope.iterations[i].id;
-                $http({
-                    method: "POST",
-                    url: "/IterationPlan/GetIteration",
-                    data: $.param({ "id": $scope.iterations[i].id }),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-
-                }).then(function mySucces(response) {
-                    var object = { "id":/* $scope.iterations[i].id i, "data": response.data };
-                    $scope.lists.push(object);
-                  //  $scope.message = response.data;
-                }, function myError(response) {
-                    $scope.message = "Error";
-                })
-            }
-        }, function myError(response) {
-            $scope.message = "Error";
-        })*/
-        
     
     $http({
         method: "GET",
@@ -167,7 +110,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
             }).then(function mySucces(response) {
                 $scope.message = "Result: " + response.data;
                 if (response.data == "Success")
-                    //window.location.href = "/IterationPlan/Index";
                     $scope.message = "Task moved";
             }, function myError(response) {
                      $scope.message = "Error in moving task";
@@ -182,7 +124,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
             $http({
                 method: "GET",
                 url: "/Add/GetTeams?userStoryId=" + id,
-                //data: $.param({'userStoryId': id}),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function mySucces(response) {
                 $scope.response = response.data.teams;
@@ -230,7 +171,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
-                //$scope.message = "Result: " + response.data;
                 if (response.data == "Success") {
                     window.location.href = "/IterationPlan/IterationPlanIndex";
                 }
@@ -248,7 +188,6 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
         }
 
         $scope.passIterationId = function (id,name) {
-            //iterationService.addIterationId(id);
             $rootScope.$emit("CallMe", {id,name});
         }
 }]);
@@ -318,22 +257,14 @@ iterationApp.controller("taskCtrl", ['$scope', '$http', '$rootScope', function (
     })
 
     $scope.checkUser = function (id) {
-        //$scope.users.splice(0, $scope.users.length);
-        //$scope.user.roles.push(1);
         if ($scope.selected_users.indexOf(id) === -1) {
             $scope.selected_users.push(id);
         }
         else {
             $scope.selected_users.splice($scope.selected_users.indexOf(id), 1);
         }
-        // $scope.selected_users.push(id);
     };
 
-
-    /* Roksana:
-    1. Nie dodaję na razie "Choose an option" które dodała Ania, zostaje puste pole które po wyborze opcji
-    znika z listy wyboru. Nie wiem na razie czy to dobry pomysł, zależy czy to będzie obowiązkowe pole (?)
-    2. Chyba niepotrzebnie dodałam to jako obiekty, ale proszę o weryfikację */
     $scope.status_options =
         [
             { value: "open", description: "Open" },
@@ -363,7 +294,6 @@ iterationApp.controller("taskCtrl", ['$scope', '$http', '$rootScope', function (
         $http({
             method: "GET",
             url: "/Add/GetTeams?userStoryId=" + id,
-            //data: $.param({'userStoryId': id}),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function mySucces(response) {
             $scope.response = response.data.teams;
@@ -394,11 +324,6 @@ iterationApp.controller("taskCtrl", ['$scope', '$http', '$rootScope', function (
     }
 
     $scope.addTask = function () {
-        /*$scope.tasks.push({
-            title: $scope.title, description: $scope.description, status: $scope.status.value,
-            importance: $scope.importance.value, estimated_time: $scope.estimated_time, parent: $scope.parent.value
-        });*/
-        //var iterationId = iterationService.getIterationId()
         $scope.lock = true;
         $scope.message = "Please wait...";
         $scope.progress = 0;
@@ -414,14 +339,12 @@ iterationApp.controller("taskCtrl", ['$scope', '$http', '$rootScope', function (
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
             if (response.data == "success") {
-                //$scope.message = "Did it!";
                 window.location.href = "/IterationPlan/IterationPlanIndex"
             }
             else {
                 $scope.lock = false;
                 $scope.message = response.data;
             }
-            
         },
         function failure(response) {
             $scope.lock = false;

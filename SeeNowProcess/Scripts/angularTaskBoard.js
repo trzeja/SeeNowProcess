@@ -5,14 +5,10 @@ taskBoardAngular.filter('trustAsHtml', ['$sce', function ($sce) {
     };
 }]);
 taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scope, $http) {
-    $scope.message = "DZIALAAA";
+    $scope.message = "";
     $scope.show = 0;
     $scope.currentProject;
-    
-
-
     $scope.projects;
-
     $scope.$watch('currentProject', function () {
         if ($scope.show != 0) {
             $http({
@@ -29,7 +25,6 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
 
         } else {
             $scope.show = 1;
-            //za pierwszym razem wysyła zawsze, gdy nie mamy ustalonego jeszcze currentProject - dlatego są błędy. 
         }
 
     });
@@ -46,15 +41,12 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(result) {
             //pobrac tu trzeba tez do ktorego nalezy 
-            //$scope.models.lists.A = result.data;
             $scope.boxes = result.data;
             $http({
                 method: "GET",
                 url: "/TaskBoard/GetUserStories",
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function success(result) {
-                //pobrac tu trzeba tez do ktorego nalezy -> nie wiem o co mi chodzilo...
-                //$scope.models.lists.A = result.data;
                 $scope.userstories = result.data;
 
                 $http({
@@ -124,7 +116,6 @@ taskBoardAngular.controller("taskBoardCtrl", ['$scope', '$http', function ($scop
         });
 
         item.UserSID = userstory;
-        //tu problem ze zmienianiem boxid a nie boxorder
         return item;
     };
 }]);

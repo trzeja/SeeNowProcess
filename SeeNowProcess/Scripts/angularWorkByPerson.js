@@ -130,13 +130,13 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
                     //}
                 }
             }).catch(function fail(result) {
-                $scope.problems = ":(";
+                $scope.problems = "Fail";
             })
         }).catch(function fail(result) {
-            $scope.users = ":(";
+            $scope.users = "Fail";
         })
     }).catch(function fail(result) {
-        $scope.boxes = ":(";
+        $scope.boxes = "Fail";
     })
 
     $scope.dropCallback = function (item, newUser, box) { //userstory->id, box->order
@@ -149,7 +149,6 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            //czy to nie powinno byc?
             if (response.data.error == true) {
                 $scope.showModal = true;
                 $scope.message = response.data.result;
@@ -163,7 +162,6 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function success(result) {
                 //pobrac tu trzeba tez do ktorego nalezy 
-                //$scope.models.lists.A = result.data;
                 $scope.boxes = [];
                 $scope.boxes = result.data;
                 $http({
@@ -171,18 +169,12 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
                     url: "/WorkByPerson/GetUsers",
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
                 }).then(function success(result) {
-                    //pobrac tu trzeba tez do ktorego nalezy -> nie wiem o co mi chodzilo...
-                    //$scope.models.lists.A = result.data;
                     $scope.lists = [];
                     $scope.users = result.data;
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
                         $scope.lists.push(user);
                     }
-                    /*for (var i = 0; i < $scope.lists.length; i++) {
-                        var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
-                        $scope.lists.push(user);
-                    }*/
                     $http({
                         method: "GET",
                         url: "/WorkByPerson/GetProblems",
@@ -206,20 +198,10 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
                                             {
                                                 var task = { Id: $scope.problems[i].Id, Title: $scope.problems[i].Title, Description: $scope.problems[i].Description, projectID: $scope.problems[i].ProjectID, UserId: $scope.lists[j].id };
                                                 $scope.lists[j].boxes[k].tasks.push(task);
-                                                //$scope.lists[j].boxes[k].tasks.push({$scope.problems[i]});
                                             }
                                         }
                                     }
                                 }
-                                /*if ($scope.problems[i].UserSID == $scope.list[j].id) //czy jest w tym userstory
-                                {
-                                    for (var k = 0; k < $scope.list[j].boxes.length; k++) {
-                                        if ($scope.problems[i].BoxOrder == $scope.list[j].boxes[k].order) //czy w tym boxie
-                                        {
-                                            $scope.list[j].boxes[k].tasks.push($scope.problems[i]);
-                                        }
-                                    }
-                                }*/
                             }
                         }
                         var ok = 0;
@@ -234,8 +216,6 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
                             if (ok == 1)
                                 $scope.list.push($scope.lists[i]);
                             ok = 0;
-                            //if ($scope.lists[i].boxes[j].tasks)
-                            //}
                         }
                     }).catch(function fail(result) {
                         $scope.problems = ":(";
@@ -249,8 +229,6 @@ WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
         }, function failure(response) {
             $scope.hello = ":(";
         });
-        //item.BoxID = number;
-        //tu problem ze zmienianiem boxid a nie boxorder
         return item;
     };
 
