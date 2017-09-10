@@ -1,4 +1,5 @@
-﻿angular.module("WorkByPersonPart", ['dndLists']).controller("WorkByPersonCtrl", function ($scope, $http) {
+﻿var WorkApp = angular.module("WorkByPersonPart", ['dndLists'])
+WorkApp.controller("WorkByPersonCtrl", function ($scope, $http) {
     $scope.message = "DZIALAAA";
     $scope.show = 0;
     $scope.currentProject;
@@ -6,6 +7,7 @@
     $scope.list = [];
     $scope.lists = [];
     $scope.projects;
+    $scope.showModal = false;
 
     $scope.$watch('currentProject', function () {
         if ($scope.show != 0) {
@@ -74,13 +76,13 @@
                 var user = { id: $scope.users[i].UserID, name: $scope.users[i].Name, boxes: [] };
                 $scope.lists.push(user);
             }*/
-           $http({
+            $http({
                 method: "GET",
                 url: "/WorkByPerson/GetProblems",
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
             }).then(function success(result) {
                 $scope.problems = result.data;
-               // $scope.list = [];
+                // $scope.list = [];
                 //tutaj rozdzial na listy
                 for (var i = 0; i < $scope.lists.length; i++) {
                     for (var j = 0; j < $scope.boxes.length; j++) {
@@ -124,7 +126,7 @@
                     if (ok == 1)
                         $scope.list.push($scope.lists[i]);
                     ok = 0;
-                        //if ($scope.lists[i].boxes[j].tasks)
+                    //if ($scope.lists[i].boxes[j].tasks)
                     //}
                 }
             }).catch(function fail(result) {
@@ -148,6 +150,10 @@
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
             //czy to nie powinno byc?
+            if (response.data.error == true) {
+                $scope.showModal = true;
+                $scope.message = response.data.result;
+            }
             //item.BoxID = box;
             item.UserId = newUser;
             $scope.hello = ":)";
@@ -183,7 +189,7 @@
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
                     }).then(function success(result) {
                         $scope.problems = result.data;
-                         $scope.list = [];
+                        $scope.list = [];
                         //tutaj rozdzial na listy
                         for (var i = 0; i < $scope.lists.length; i++) {
                             for (var j = 0; j < $scope.boxes.length; j++) {
@@ -248,4 +254,43 @@
         return item;
     };
 
+});
+WorkApp.directive('modal', function () {
+    return {
+        template: '<div class="modal fade">' +
+            '<div class="modal-dialog">' +
+              '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+                  '<h4 class="modal-title">ERROR</h4>' +
+                '</div>' +
+                '<div class="modal-body" ng-transclude></div>'+
+              '</div>' +
+            '</div>' +
+          '</div>',
+                    restrict: 'E',
+                    transclude: true,
+                    replace: true,
+                    scope: true,
+                    link: function postLink(scope, element, attrs) {
+                        scope.$watch(attrs.visible, function (value) {
+                            if (value == true)
+                                $(element).modal('show');
+                            else
+                                $(element).modal('hide');
+                        });
+
+                        $(element).on('shown.bs.modal', function () {
+                            scope.$apply(function () {
+                                scope.$parent[attrs.visible] = true;
+                            });
+                        });
+
+                        $(element).on('hidden.bs.modal', function () {
+                            scope.$apply(function () {
+                                scope.$parent[attrs.visible] = false;
+                            });
+                        });
+                    }
+                };
 });
