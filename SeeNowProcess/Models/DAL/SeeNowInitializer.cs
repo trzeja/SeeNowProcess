@@ -252,7 +252,13 @@ namespace SeeNowProcess.DAL
             context.Problems.ToList().ForEach(p =>
             {
                 User user;
-                for (int i = 1; (user = context.Users.Where(u => u.UserID == i * p.ProblemID).FirstOrDefault()) != null; ++i)
+                var avaibleUsers = p
+                        .Story
+                        .Teams
+                        .SelectMany(t => t.Assignments)
+                        .Select(ass => ass.User)
+                        .ToList();
+                for (int i = 1; (user = avaibleUsers.Where(u => u.UserID == i * p.ProblemID).FirstOrDefault()) != null; ++i)
                     p.AssignedUsers.Add(user);
             });
         }
