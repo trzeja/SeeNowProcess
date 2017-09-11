@@ -30,7 +30,6 @@ namespace SeeNowProcess.Models
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required]
         public DateTime? EndDate { get; set; }
 
         [Required]
