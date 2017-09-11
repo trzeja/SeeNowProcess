@@ -24,7 +24,7 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
     $scope.lists = [];
     $scope.selected = null;
     $scope.startDate = '';
-    $scope.endDate = '';
+    $scope.endDate = null;
     $scope.startingDate;
     $scope.endingDate;
     $scope.show = 0;
@@ -156,7 +156,12 @@ iterationApp.controller("iterationCtrl", ['$scope', '$http', '$rootScope', funct
             $scope.message = "Please wait...";
             $scope.lock = true;
             $scope.startingDate = $scope.startDate.getFullYear().toString() + "-" + ($scope.startDate.getMonth()+1).toString() + "-" + $scope.startDate.getDate().toString();
-            $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth() + 1).toString() + "-" + $scope.endDate.getDate().toString();
+            if ($scope.endDate != null) {
+                $scope.endingDate = $scope.endDate.getFullYear().toString() + "-" + ($scope.endDate.getMonth() + 1).toString() + "-" + $scope.endDate.getDate().toString();
+            }
+            else {
+                $scope.endingDate = "";
+            }
             $scope.send;
             if ($scope.currentProject == '0') {
                 $scope.send = $scope.project;

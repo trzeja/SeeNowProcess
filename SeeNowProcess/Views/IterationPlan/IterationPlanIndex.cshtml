@@ -85,10 +85,9 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label" for="datepickerEnd"> END DATE: </label>
-                            <input class="col-sm-2 form-control" type="date" name="datepickerEnd" id="datepickerEnd" ng-model="endDate" required ng-disabled="lock">
+                            <input class="col-sm-2 form-control" type="date" name="datepickerEnd" id="datepickerEnd" ng-model="endDate" ng-disabled="lock">
                             <p class="col-sm-3 control-label text-left" style="color:red" for="title">
-                                <span class="text-left" ng-show="iterationForm.datepickerEnd.$error.required">Required!</span>
-                                <span class="text-left" ng-show="(startDate > endDate) && (!iterationForm.datepickerEnd.$error.required)">End date cannot be before start date</span>
+                                <span class="text-left" ng-show="(startDate > endDate) && (endDate!=null)">End date cannot be before start date</span>
                             </p>
                         </div>
 
@@ -111,7 +110,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn green_button" data-dismiss="modal" ng-click="addIteration()" ng-disabled="iterationForm.$invalid || lock || (startDate > endDate)">Add</button>
+                    <button type="button" class="btn green_button" data-dismiss="modal" ng-click="addIteration()" ng-disabled="iterationForm.$invalid || lock || ((startDate > endDate) && (endDate!=null))">Add</button>
                     <button type="button" class="btn black_button" data-dismiss="modal">Close</button>
                 </div>
             </div>
