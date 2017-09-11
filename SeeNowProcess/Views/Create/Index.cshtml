@@ -14,33 +14,57 @@
     <link rel="stylesheet" type="text/css" href="~/Content/leftmenu.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="~/Scripts/angularCreateProject.js"></script>
+    <style>
+        .control-label.text-left {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <form ng-app="projectForm" name="projectForm" ng-controller="projectCtrl" class="form-horizontal" method="post">
+    <form ng-app="projectForm" name="projectForm" ng-controller="projectCtrl" class="form-horizontal" method="post" novalidate>
         <div>{{message}}</div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="title"> TITLE: </label>
-            <input name="ProjectTitle" class="form-control" type="text" id="project_title" ng-model="title" required>
+            <input name="title" class="col-sm-2 form-control" type="text" id="project_title" ng-model="title" required ng-minlength="3", ng-maxlength="60" ng-disabled="lock">
+            <p class="col-sm-3 control-label text-left" style="color:red" for="login">
+                <span ng-show="projectForm.title.$error.required">Required!</span>
+                <span ng-show="projectForm.title.$error.minlength">Should be at least 3 characters long</span>
+                <span ng-show="projectForm.title.$error.maxlength">Should not be more than 60 characters</span>
+            </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="description"> DESCRIPTION: </label>
-            <textarea class="form-control" rows="5" id="project_description" ng-model="description" required> </textarea>
+            <textarea class="col-sm-2 form-control" rows="5" id="project_description" name="description" ng-model="description" required ng-minlength="3", ng-maxlength="200" ng-disabled="lock"> </textarea>
+            <p class="col-sm-3 control-label text-left" style="color:red" for="login">
+                <span ng-show="projectForm.description.$error.required">Required!</span>
+                <span ng-show="projectForm.description.$error.minlength">Should be at least 3 characters long</span>
+                <span ng-show="projectForm.description.$error.maxlength">Should not be more than 200 characters</span>
+            </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="datepickerStart"> START DATE: </label>
-            <input class="form-control" type="date" id="datepickerStart" ng-model="startDate" required>
+            <input class="col-sm-2 form-control" type="date" id="datepickerStart" name="datepickerStart" ng-model="startDate" required ng-disabled="lock">
+            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                <span ng-show="projectForm.datepickerStart.$error.required">Required!</span>
+            </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="datepickerEnd"> COMPLETION DATE: </label>
-            <input class="form-control" type="date" id="datepickerEnd" ng-model="endDate" required>
+            <input class="form-control" type="date" id="datepickerEnd" name="datapickerEnd" ng-model="endDate" ng-disabled="lock">
+            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                <span ng-show="(startDate > endDate) && (endDate != null)">Completion date cannot be before start date</span>
+            </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 control-label" for="status"> STATUS: </label>
-            <select class="form-control" name="task_status" ng-model="status" ng-options="x.description for x in status_options"></select>
+            <select class="col-sm-2 form-control" name="status" ng-model="status" ng-options="x.description for x in status_options" required ng-disabled="lock"></select>
+            <p class="col-sm-3 control-label text-left" style="color:red" for="title">
+                <span ng-show="projectForm.status.$error.required">Required!</span>
+            </p>
         </div>
         <div class="form-group row">
             <label class="col-sm-10 control-label"></label>
-            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD PROJECT" ng-click="addProject()">
+            <input type="submit" class="btn green_button" style="margin-left: 20%" value="ADD PROJECT" ng-click="addProject()" ng-disabled="projectForm.$invalid || lock || ((startDate > endDate) && (endDate != null))">
         </div>
 
         <div>

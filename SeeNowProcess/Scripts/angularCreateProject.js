@@ -1,6 +1,7 @@
 ﻿var projectApp = angular.module("projectForm", []);
 projectApp.controller("projectCtrl", function ($scope, $http) {
-
+    $scope.endDate = null;
+    $scope.lock = false;
     $scope.status_options =
         [
             { value: "open", description: "Open" },
@@ -10,6 +11,8 @@ projectApp.controller("projectCtrl", function ($scope, $http) {
    
 
     $scope.addProject = function () {
+        $scope.message = "Please wait...";
+        $scope.lock = true;
         $http({
             method: "POST",
             url: "/Create/AddProject",
@@ -20,10 +23,12 @@ projectApp.controller("projectCtrl", function ($scope, $http) {
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
         }).then(function success(response) {
-            $scope.message = "Did it!";
+            window.location.href = "/Home/Index";
+           // $scope.message = "Did it!";
         },
         function failure(response) {
             $scope.message = "Fail...";
+            $scope.lock = false;
         });
     }
 });
