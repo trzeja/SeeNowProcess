@@ -56,7 +56,7 @@
                 <div><label class="infoTag">{{info.e}}</label>{{currentUser.email}}</div> 
                 <div><label class="infoTag">{{info.n}}</label> {{currentUser.phone}}</div>
                 <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentRole}}</h4></div>
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs" role="tablist" ng-show="currentUser != null">
                     <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
                     <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab" >Account Settings</a></li>
                     <li class="my-tabs"><a href="#Teams" role="tab" data-toggle="tab">Teams & Projects</a></li>
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="tab-content">
-            <div class="tab-pane active" id="OpenAssignments">
+            <div ng-show="currentUser != null" class="tab-pane active" id="OpenAssignments">
                 <h4><strong>Tasks</strong></h4>
                 <hr />
                 <table class="table table-bordered table-striped">
@@ -114,14 +114,14 @@
 
                         </table>
             </div>
-            <div class="tab-pane" style="margin-left: 20px; width: 70%; margin-bottom: 100px;" id="AccountSettings" >
+            <div class="tab-pane" style="margin-left: 20px; width: 70%; margin-bottom: 100px;" id="AccountSettings" ng-show="currentUser != null">
                 <form name="accountForm" class="form-horizontal" novalidate>
                     @*<div>{{message}}</div>*@
                     Name:
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="firstName"> Name: </label>
                         <input class="col-sm-2 form-control" type="text" name="firstName" id="firstName" ng-model="currentUser.name" required autofocus
-                               ng-minlength="4" ng-maxlength="50">
+                               ng-minlength="4" ng-maxlength="50" ng-disabled="lock">
                         <p class="col-sm-3 control-label text-left" style="color:red" for="firstName">
                             <span class="text-left" ng-show="accountForm.firstName.$error.required">Required!</span>
                             <span ng-show="accountForm.firstName.$error.minlength">Should be at least 4 characters long</span>
@@ -133,7 +133,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="login"> Login: </label>
                         <input class="col-sm-2 form-control" type="text" name="login" id="login" ng-model="currentUser.login" required autofocus
-                               ng-minlength="5" ng-maxlength="20">
+                               ng-minlength="5" ng-maxlength="20" ng-disabled="lock">
                         <p class="col-sm-3 control-label text-left" style="color:red" for="login">
                             <span class="text-left" ng-show="accountForm.login.$error.required">Required!</span>
                             <span ng-show="accountForm.login.$error.minlength">Should be at least 5 characters long</span>
@@ -145,7 +145,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="oldPassword"> Old password: </label>
                         <input class="col-sm-2 form-control" type="password" name="oldPassword" id="passwords.oldPassword" ng-model="passwords.oldPassword"
-                                autofocus ng-minlength="6" ng-maxlength="100" ng-blur="checkPassword()" ng-focus="showInvalid=false" ng-change="oldChanged=true">
+                                autofocus ng-minlength="6" ng-maxlength="100" ng-blur="checkPassword()" ng-focus="showInvalid=false" ng-change="oldChanged=true" ng-disabled="lock">
                         <p class="col-sm-3 control-label text-left" style="color:red" for="oldPassword">
                             <span ng-show="accountForm.oldPassword.$error.minlength">Should be at least 6 characters long</span>
                             <span ng-show="accountForm.oldPassword.$error.maxlength">Should not be more than 100 characters</span>
@@ -156,7 +156,7 @@
                         <label class="col-sm-2 control-label" for="newPassword"> New password: </label>
                         <input class="col-sm-2 form-control" type="password" name="newPassword" id="passwords.newPassword" ng-model="passwords.newPassword" autofocus 
                                ng-required="(!oldPasswordInvalid) && (passwords.oldPassword!='') && (!oldChanged)"
-                               ng-disabled="oldPasswordInvalid || oldChanged"
+                               ng-disabled="oldPasswordInvalid || oldChanged || lock"
                                ng-minlength="6" ng-maxlength="100">
                         <p class="col-sm-3 control-label text-left" style="color:red" for="newPassword">
                             <span ng-show="accountForm.newPassword.$error.required">Required!</span>
@@ -168,56 +168,58 @@
                         <label class="col-sm-2 control-label" for="confirmPassword"> Confirm Password: </label>
                         <input class="col-sm-2 form-control" type="password" name="confirmPassword" id="paswords.confirmPassword" ng-model="passwords.confirmPassword" autofocus
                                ng-required="(!oldPasswordInvalid) && (passwords.oldPassword!='') && (!oldChanged)" 
-                               ng-disabled="oldPasswordInvalid || oldChanged"
-                               ng-minlength="6" ng-maxlength="100">
+                               ng-disabled="oldPasswordInvalid || oldChanged || lock">
                         <p class="col-sm-3 control-label text-left" style="color:red" for="newPassword">
                             <span ng-show="accountForm.confirmPassword.$error.required">Required!</span>
-                            <span ng-show="accountForm.confirmPassword.$error.minlength">Should be at least 6 characters long</span>
-                            <span ng-show="accountForm.confirmPassword.$error.maxlength">Should not be more than 100 characters</span>
+                            <span class="text-left" ng-show="(!accountForm.confirmPassword.$error.required) && (passwords.newPassword != passwords.confirmPassword)">Passwords does not match</span>
                         </p>
                     </div>
                     <hr />
                     E-mail:
                     <div class="form-group row">
                         <label class="control-label col-sm-2" for="email"> E-mail adress: </label>
-                        <input class="form-control" type="email" id="email" ng-model="currentUser.email" required autofocus>
+                        <input class="col-sm-2 form-control" type="email" id="email" name="email" ng-model="currentUser.email" required autofocus ng-disabled="lock">
+                        <p class="col-sm-3 control-label text-left" style="color:red" for="email">
+                            <span class="text-left" ng-show="accountForm.email.$error.required">Required!</span>
+                            <span class="text-left" ng-show="accountForm.email.$error.email">Wrong email format</span>
+                        </p>
                     </div>
                     <hr />
                     Phone number:
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="phone"> Phone number: </label>
-                        <input class="form-control" type="tel" id="phone" ng-model="currentUser.phone" required autofocus>
+                        <input class="col-sm-2 form-control" type="tel" id="phone" name="phone" ng-model="currentUser.phone" autofocus ng-disabled="lock">
                     </div>
                     <div>
                         <hr />
                         Role:
                         <br/>
                         <label>
-                            <input type="radio" ng-model="role" value="admin">
+                            <input type="radio" ng-model="role" value="admin" ng-disabled="lock">
                             Admin
                         </label><br />
                         <label>
-                            <input type="radio" ng-model="role" value="headMaster">
+                            <input type="radio" ng-model="role" value="headMaster" ng-disabled="lock">
                             Head Master
                         </label><br />
                         <label>
-                            <input type="radio" ng-model="role" value="seniorDev">
+                            <input type="radio" ng-model="role" value="seniorDev" ng-disabled="lock">
                             Senior Developer
                         </label><br />
                         <label>
-                            <input type="radio" ng-model="role" value="juniorDev">
+                            <input type="radio" ng-model="role" value="juniorDev" ng-disabled="lock">
                             Junior Developer
                         </label><br />
                         <label>
-                            <input type="radio" ng-model="role" value="intern">
+                            <input type="radio" ng-model="role" value="intern" ng-disabled="lock">
                             Intern
                         </label><br />
                         <label>
-                            <input type="radio" ng-model="role" value="tester">
+                            <input type="radio" ng-model="role" value="tester" ng-disabled="lock">
                             Tester
                         </label><br />
                         <label>
-                            <input type="radio" ng-model="role" value="client">
+                            <input type="radio" ng-model="role" value="client" ng-disabled="lock">
                             Client
                         </label><br />
                     </div>
@@ -225,11 +227,11 @@
                 </form>
                 <hr/>
                 <div>
-                    <button type="button" class="btn green_button" ng-click="updateUser(currentUser.id)">Update Settings</button>
-                    <button type="button" class="btn red_button" ng-click="deleteUser(currentUser.id)">Delete User</button>
+                    <button type="button" class="btn green_button" ng-disabled="lock || accountForm.$invalid || (oldPasswordInvalid && (passwords.oldPassword!='')) || (oldChanged && (passwords.oldPassword!='')) || (passwords.newPassword != passwords.confirmPassword)" ng-click="updateUser(currentUser.id)">Update Settings</button>
+                    <button type="button" class="btn red_button" ng-disabled="lock || accountForm.$invalid || (oldPasswordInvalid && (passwords.oldPassword!='')) || (oldChanged && (passwords.oldPassword!='')) || (passwords.newPassword != passwords.confirmPassword)" ng-click="deleteUser(currentUser.id)">Delete User</button>
                 </div>
             </div>
-            <div class="tab-pane" id="Teams">
+            <div class="tab-pane" id="Teams" ng-show="currentUser != null">
                 <h4><strong>Teams</strong><input type="submit" class="btn green_button" value="Add to team" data-toggle="modal" data-target="#TeamModal"></h4>
                     <hr />
                         <table class="table table-bordered table-striped">

@@ -48,11 +48,12 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.oldPasswordInvalid = true;
     $scope.showInvalid = false;
     $scope.oldChanged = false;
+    $scope.lock = false;
 
     $scope.checkPassword = function () {
         //tutaj po stracie focusu, sprawdzenie starego hasla
         $scope.oldChanged = false;
-        if ($scope.passwords.oldPassword == "") {
+        if (($scope.passwords.oldPassword == "") || ($scope.passwords.oldPassword.length < 6) || ($scope.passwords.oldPassword.length > 100)) {
             $scope.oldPasswordInvalid = true;
             $scope.showInvalid = false;
         }
@@ -88,7 +89,6 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     })
 
     $scope.showUser = function (ID, name) {
-        /*$scope.message = ID;*/
         $scope.userName = name;
         $http({
             method: "POST",
@@ -98,39 +98,14 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
 
         }).then(function mySucces(response) {
             $scope.currentUser = response.data[0];
-            /*switch ($scope.currentUser.role) {
-                case 0:
-                    $scope.currentRole = "Admin";
-                    $scope.role = "admin";
-                    break;
-                case 1:
-                    $scope.currentRole = "Head Master";
-                    $scope.role = "headMaster";
-                    break;
-                case 2:
-                    $scope.currentRole = "Senior Developer";
-                    $scope.role = "seniorDev";
-                    break;
-                case 3:
-                    $scope.currentRole = "Junior Developer";
-                    $scope.role = "juniorDev";
-                    break;
-                case 4:
-                    $scope.currentRole = "Intern";
-                    $scope.role = "intern";
-                    break;
-                case 5:
-                    $scope.currentRole = "Tester";
-                    $scope.role = "tester";
-                    break;
-                case 6:
-                    $scope.currentRole = "Client";
-                    $scope.role = "client";
-                    break;
-            }*/
             $scope.role = $scope.roles[$scope.currentUser.role];
             $scope.currentRole = $scope.fullRoles[$scope.currentUser.role];
-
+            $scope.passwords.oldPassword = "";
+            $scope.passwords.newPassword = "";
+            $scope.passwords.confirmPassword = "";
+            $scope.oldPasswordInvalid = true;
+            $scope.showInvalid = false;
+            $scope.oldChanged = false;
             $scope.message = $scope.currentUser.id;
             $scope.info = {e: "Email: ", n: "Phone Number: ", r: "Role: "};
             $http({
@@ -213,57 +188,48 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     }
 
     $scope.updateUser = function (id) {
-        /*switch ($scope.role) {
-            case "admin":
-                $scope.roleNumber = 0;
-                break;
-            case "headMaster":
-                $scope.roleNumber = 1;
-                $scope.role = "";
-                break;
-            case "seniorDev":
-                $scope.roleNumber = 2;
-                break;
-            case "juniorDev":
-                $scope.roleNumber = 3;
-                break;
-            case "intern":
-                $scope.roleNumber = 4;
-                break;
-            case  "tester":
-                $scope.roleNumber = 5;
-                break;
-            case "client":
-                $scope.roleNumber = 6;
-                break;
-        }*/
+        $scope.lock = true;
         $scope.roleNumber = $scope.roles.indexOf($scope.role);
         if ($scope.passwords.newPassword == $scope.passwords.confirmPassword && $scope.passwords.newPassword != "") {
             $http({
                 method: "POST",
                 url: "/People/updateUserPassword",
-                data: $.param({ "id": $scope.currentUser.id, "oldPassword": $scope.password, "newPassword": $scope.newPassword }),
+                data: $.param({ "id": $scope.currentUser.id, "oldPassword": $scope.passwords.oldPassword, "newPassword": $scope.passwords.newPassword }),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
             }).then(function mySucces(response) {
-                $scope.message = "Success";
-                $http({
-                    method: "POST",
-                    url: "/People/updateUserData",
-                    data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.login, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone, "role": $scope.roleNumber }),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                if (response.data == "Success") {
+                    //$scope.message = "Success";
+                    $http({
+                        method: "POST",
+                        url: "/People/updateUserData",
+                        data: $.param({ "id": $scope.currentUser.id, "name": $scope.currentUser.name, "login": $scope.currentUser.login, "email": $scope.currentUser.email, "phone": $scope.currentUser.phone, "role": $scope.roleNumber }),
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
-                }).then(function mySucces(response) {
+                    }).then(function mySucces(response) {
+                        if (response.data == "Success") {
+                            //$scope.message = response.data;
+                            $scope.showUser($scope.currentUser.id); //może tu do głownej zakładki jakiś redirect?
+                            $scope.userName = $scope.currentUser.name;
+                            //$scope.lock = false;
+                        }
+                        else {
+                            $scope.lock = false;
+                            $scope.message = response.data;
+                        }
+
+                    }, function myError(response) {
+                        $scope.lock = false;
+                        $scope.message = "Error in displaying User Stories."; //na pewno takie cos?
+                    })
+                }
+                else {
+                    $scope.lock = false;
                     $scope.message = response.data;
-                    $scope.showUser($scope.currentUser.id);
-                    $scope.userName = $scope.currentUser.name;
-
-                }, function myError(response) {
-                    $scope.message = "Error in displaying User Stories.";
-                })
-
+                }
             }, function myError(response) {
-                $scope.message = "Error in passwords.";
+                $scope.lock = false;
+                $scope.message = "Error in passwords"; //na pewno takie cos?
             })
 
         } else if ($scope.passwords.newPassword == "") {
@@ -291,6 +257,7 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     }
 
     $scope.deleteUser = function (id) {
+        $scope.lock = true;
         $http({
             method: "POST",
             url: "/People/deleteUser",
@@ -298,22 +265,30 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 
         }).then(function mySucces(response) {
-            $scope.message = "Success";
-            $http({
-                method: "GET",
-                url: "/People/AllPeople",
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
-            }).then(function mySucces(response) {
-                $scope.lists = response.data;
-                $scope.currentUser = null;
-                $scope.userName = 'Select user to show content.';
-                $scope.role = null;
-            }, function myError(response) {
-                $scope.message = "Error";
-            })
+            if (response.data == "Success") {
+                //$scope.message = "Success";
+                $http({
+                    method: "GET",
+                    url: "/People/AllPeople",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+                }).then(function mySucces(response) {
+                    $scope.lists = response.data;
+                    $scope.currentUser = null;
+                    $scope.userName = 'Select user to show content.';
+                    $scope.role = null;
+                }, function myError(response) {
+                    $scope.lock = false;
+                    $scope.message = "Error";
+                })
+            }
+            else {
+                $scope.lock = false;
+                $scope.message = response.data;
+            }
 
 
         }, function myError(response) {
+            $scope.lock = false;
             $scope.message = "Error in displaying User Stories.";
         })
     }
