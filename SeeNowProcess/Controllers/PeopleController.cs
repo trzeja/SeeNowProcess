@@ -71,6 +71,19 @@ namespace SeeNowProcess.Controllers
             }
         }
 
+        public ActionResult GetCurrentUser()
+        {
+            using (db)
+            {
+                int userId = Int32.Parse(Session["user"].ToString());
+                var user = db.Users.Where(u => u.UserID == userId).FirstOrDefault();
+                List<string> list = new List<string>();
+                list.Add(user.UserID.ToString());
+                list.Add(user.role.ToString());
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [Route("{id}")]
         public ActionResult Show(int id)
         {

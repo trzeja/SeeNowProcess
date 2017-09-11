@@ -49,6 +49,28 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
     $scope.showInvalid = false;
     $scope.oldChanged = false;
     $scope.lock = false;
+    $scope.logged = null;
+    $scope.isAdmin = false;
+    $http({
+        method: "GET",
+        url: "/People/GetCurrentUser",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+    }).then(function mySuccess(response) {
+        $scope.logged = response.data[0];
+        if (response.data[1] == 'Admin') {
+            $scope.isAdmin = true;
+        }
+    }, function myError(response) {
+        $scope.message = "Error";
+    })
+    $scope.checkIfMe = function () {
+        if (($scope.currentUser != null) && ($scope.logged!=null)) {
+            if ($scope.currentUser.id == $scope.logged) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     $scope.checkPassword = function () {
         //tutaj po stracie focusu, sprawdzenie starego hasla

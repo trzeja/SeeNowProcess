@@ -58,7 +58,7 @@
                 <div><h4><bold><label class="infoTag">{{info.r}}</label>{{currentRole}}</h4></div>
                 <ul class="nav nav-tabs" role="tablist" ng-show="currentUser != null">
                     <li class="active my-tabs"><a href="#OpenAssignments" role="tab" data-toggle="tab">Open Assignments</a></li>
-                    <li class="my-tabs"><a href="#AccountSettings" role="tab" data-toggle="tab" >Account Settings</a></li>
+                    <li class="my-tabs" ng-show="checkIfMe()"><a href="#AccountSettings" role="tab" data-toggle="tab" >Account Settings</a></li>
                     <li class="my-tabs"><a href="#Teams" role="tab" data-toggle="tab">Teams & Projects</a></li>
                     <!--<li class="my-tabs"><a href="#4zakladka" role="tab" data-toggle="tab">4 zakładka</a></li>-->
                 </ul>
@@ -228,7 +228,7 @@
                 <hr/>
                 <div>
                     <button type="button" class="btn green_button" ng-disabled="lock || accountForm.$invalid || (oldPasswordInvalid && (passwords.oldPassword!='')) || (oldChanged && (passwords.oldPassword!='')) || (passwords.newPassword != passwords.confirmPassword)" ng-click="updateUser(currentUser.id)">Update Settings</button>
-                    <button type="button" class="btn red_button" ng-disabled="lock || accountForm.$invalid || (oldPasswordInvalid && (passwords.oldPassword!='')) || (oldChanged && (passwords.oldPassword!='')) || (passwords.newPassword != passwords.confirmPassword)" ng-click="deleteUser(currentUser.id)">Delete User</button>
+                    <button type="button" class="btn red_button" ng-disabled="(!isAdmin) || lock || accountForm.$invalid || (oldPasswordInvalid && (passwords.oldPassword!='')) || (oldChanged && (passwords.oldPassword!='')) || (passwords.newPassword != passwords.confirmPassword)" ng-click="deleteUser(currentUser.id)">Delete User</button>
                 </div>
             </div>
             <div class="tab-pane" id="Teams" ng-show="currentUser != null">
