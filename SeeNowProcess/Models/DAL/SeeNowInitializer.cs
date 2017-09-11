@@ -59,7 +59,12 @@ namespace SeeNowProcess.DAL
                 new User {Login="adada", Email="Adam.Adamiak@company.com", Name="Adam Adamiak", Password="pieknyRejs", PhoneNumber="356-865-345", role=Role.JuniorDev },
                 new User {Login="alada", Email="Alojzy.Adamiak@company.com", Name="Alojzy Adamiak", Password="chcialbymByc", PhoneNumber="356-865-346", role=Role.JuniorDev },
                 new User {Login="aliada",Email="Alicja.Adamiak@company.com", Name="Alicja Adamiak", Password="!!Marynarzem@", PhoneNumber="356-865-350", role=Role.Intern },
-                new User {Login="client", Email="Nasty.Client@doitnow.com", Name="Nasty Client", Password="I'dDoItBetter", PhoneNumber="666-666-666", role=Role.Client}
+                new User {Login="client", Email="Nasty.Client@doitnow.com", Name="Nasty Client", Password="I'dDoItBetter", PhoneNumber="666-666-666", role=Role.Client},
+
+                new User {Login="DarthVader", Email="Darth.Vader@deathstar.com", Name="Darth Vader", Password="EmperorSucks", PhoneNumber="166-266-366", role=Role.HeadMaster},
+                new User {Login="StormTrooper", Email="StormTrooper886@deathstar.com", Name="Stormtrooper", Password="DidYouHearThat", PhoneNumber="466-656-667", role=Role.SeniorDev},
+                new User {Login="Mieszko", Email="Mieszko.Pierwszy@polska.pl", Name="Mieszko Pierwszy", Password="MyTiimeIsNow!", PhoneNumber="626-633-616", role=Role.HeadMaster},
+                new User {Login="Czarny", Email="Zawisza.Czarny@polska.pl", Name="Zawisza Czarny", Password="YouHaveMyWord", PhoneNumber="661-616-266", role=Role.SeniorDev}
             };
 
             Users.ForEach(u => context.Users.Add(u));
@@ -70,7 +75,9 @@ namespace SeeNowProcess.DAL
             var Teams = new List<Team>
             {
                 new Team {Name="Tesla Team", TeamLeader=context.Users.Where(u => u.Login=="kajak").First()},
-                new Team {Name="Schmetterling!", TeamLeader=context.Users.Where(u => u.Login=="adada").First() }
+                new Team {Name="Schmetterling!", TeamLeader=context.Users.Where(u => u.Login=="adada").First() },
+                new Team {Name="Vader's Team", TeamLeader=context.Users.Where(u => u.Login=="DarthVader").First() },
+                new Team {Name="Mieszko's Team!", TeamLeader=context.Users.Where(u => u.Login=="Mieszko").First() }
             };
             Teams.ForEach(t => context.Teams.Add(t));
             context.SaveChanges();
@@ -79,8 +86,20 @@ namespace SeeNowProcess.DAL
         void AddStoriesToTeams(SeeNowContext context)
         {
             Team teslaTeam = context.Teams.Where(us => us.Name == "Tesla Team").First();
-            context.UserStories.ToList().ForEach(u => teslaTeam.UserStories.Add(u));
+            Team vaderTeam = context.Teams.Where(us => us.Name == "Vader's Team").First();
+
+            var allStories = context.UserStories.ToList();
+
+            for (int i = 0; i < allStories.Count()-2; i++)
+            {
+                teslaTeam.UserStories.Add(allStories[i]);
+            }
+
+            vaderTeam.UserStories.Add(allStories[allStories.Count() - 1]);
+            vaderTeam.UserStories.Add(allStories[allStories.Count() - 2]);            
+
             context.MarkAsModified<Team>(teslaTeam);
+            context.MarkAsModified<Team>(vaderTeam);
             context.SaveChanges();
 
             //var teams = context.Teams.ToList();
@@ -120,6 +139,16 @@ namespace SeeNowProcess.DAL
             List<User> germanUsers = context.Users.Where(u => germanLogins.Contains(u.Login)).ToList();
             teslaUsers.ForEach(u => context.Assignments.Add(new Assignment { Team = teslaTeam, User = u }));
             germanUsers.ForEach(u => context.Assignments.Add(new Assignment { Team = germanTeam, User = u }));
+
+            Team vaderTeam = context.Teams.Where(t => t.Name == "Vader's Team").First();
+            List<string> vaderLogins = new List<string> { "DarthVader", "StormTrooper" };
+            List<User> vaderUsers = context.Users.Where(u => vaderLogins.Contains(u.Login)).ToList();
+            Team mieszkoTeam = context.Teams.Where(t => t.Name == "Mieszko's Team!").First();
+            List<string> mieszkoLogins = new List<string> { "Mieszko", "Czarny" };
+            List<User> mieszkoUsers = context.Users.Where(u => mieszkoLogins.Contains(u.Login)).ToList();
+            vaderUsers.ForEach(u => context.Assignments.Add(new Assignment { Team = vaderTeam, User = u }));
+            mieszkoUsers.ForEach(u => context.Assignments.Add(new Assignment { Team = mieszkoTeam, User = u }));
+
 
             context.SaveChanges();
 
