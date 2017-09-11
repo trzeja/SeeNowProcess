@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201709091402349_userStoryRestrictions.Designer.cs">
       <DependentUpon>201709091402349_userStoryRestrictions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709111550006_projectRestrictions.cs" />
+    <Compile Include="Migrations\201709111550006_projectRestrictions.Designer.cs">
+      <DependentUpon>201709111550006_projectRestrictions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\DAL\ISeeNowContext.cs" />
     <Compile Include="Models\DAL\SeeNowContext.cs" />
     <Compile Include="Models\DAL\SeeNowInitializer.cs" />
@@ -423,6 +427,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709091402349_userStoryRestrictions.resx">
       <DependentUpon>201709091402349_userStoryRestrictions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709111550006_projectRestrictions.resx">
+      <DependentUpon>201709111550006_projectRestrictions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
