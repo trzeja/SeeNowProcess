@@ -162,6 +162,7 @@ namespace SeeNowProcess.DAL
             Project InterstellaProject = context.Projects.Where(p => p.Name == "Interstella Project").First();
             User Client = context.Users.Where(u => u.role == Role.Client).First();
             Team TeslaTeam = context.Teams.Where(t => t.Name == "Tesla Team").First();
+            Team VaderTeam = context.Teams.Where(t => t.Name == "Vader's Team").First();
             var UserStories = new List<UserStory>
             {
                 new UserStory {Title="UserStory1", Unit="pt.", Size=12345, Owner=Client, Notes="simple note", Description="Our first User Story! Praise the Lord!!!", Criteria="I'm not sure what I want, but I want you to do it.", Project=FirstProject,Teams = new List<Team> {TeslaTeam } },
@@ -170,9 +171,9 @@ namespace SeeNowProcess.DAL
                 new UserStory {Title="NextUserStory", Unit="pt.", Size=12345, Owner=Client, Notes="simple note", Description="Our first User Story! Praise the Lord!!!", Criteria="I'm not sure what I want, but I want you to do it.", Project=NewProject,Teams = new List<Team> {TeslaTeam } },
                 new UserStory {Title="Twice upon a Time", Unit="USD", Size=10000, Owner=Client, Notes="Try to be gentle", Description="Have no idea! Write something smart...", Project=NewProject, Criteria="whatever...",Teams = new List<Team> {TeslaTeam } },
 
-                new UserStory {Title="Daft story", Unit="pt.", Size=145, Owner=Client, Notes="I want it loud", Description="That's gonna be interesting", Criteria="Meke it digital and sci-fi. You know...", Project=RandomAccessMemoriesProject,Teams = new List<Team> {TeslaTeam } },
+                new UserStory {Title="Daft story", Unit="pt.", Size=145, Owner=Client, Notes="I want it loud", Description="That's gonna be interesting", Criteria="Meke it digital and sci-fi. You know...", Project=RandomAccessMemoriesProject,Teams = new List<Team> {VaderTeam } },
 
-                new UserStory {Title="Punk story", Unit="USD", Size=100, Owner=Client, Notes="I dont want to live on this planet anymore", Description="There is still hope we will stay the same", Project=InterstellaProject, Criteria="It must be blue, blue to the bone.",Teams = new List<Team> {TeslaTeam } }
+                new UserStory {Title="Punk story", Unit="USD", Size=100, Owner=Client, Notes="I dont want to live on this planet anymore", Description="There is still hope we will stay the same", Project=InterstellaProject, Criteria="It must be blue, blue to the bone.",Teams = new List<Team> { VaderTeam } }
 
 
             };
@@ -224,10 +225,10 @@ namespace SeeNowProcess.DAL
                 new Problem {Title="Analyse generated classes",                 Description="Ask Kaj for details",                                                                                  Importance=Importance.Regular,  Story=onceUponATimeUserStory, Box=firstProjectBoxes.Where(b=>b.Name=="Waiting for Tests").First(),CreationDate=new DateTime(2017,4,1, 9,0,0), Iteration=firstProjectIteration,  Progress=50,  EstimatedTime=new TimeSpan(12,0,0) },
                 new Problem {Title="Learn how to use VS",                       Description="Google for VS tutorial",                                                                               Importance=Importance.Trivial,  Story=onceUponATimeUserStory, Box=firstProjectBoxes.Where(b=>b.Name=="Approved").First(),         CreationDate=new DateTime(2017,4,1,10,0,0), Iteration=firstProjectIteration,  Progress=100, EstimatedTime=new TimeSpan( 4,0,0), FinalTime=new TimeSpan(2,0,0) },
 
-                new Problem {Title="Make some coffe",        Description="Go to the kitchen and steal someone's else coffe",   Importance=Importance.Important,Story=nextUserStory, Box=newProjectBoxes.Where(b=>b.Name=="New").First(),              CreationDate=new DateTime(2017,4,1, 3,2,0), Iteration=nextProjectIteration, Progress=50,  EstimatedTime=new TimeSpan(12,0,0)},
-                new Problem {Title="Repair Mary's computer", Description="Use a hammer.",     Importance=Importance.Critical, Story=nextUserStory, Box=newProjectBoxes.Where(b=>b.Name=="Assigned").First(),         CreationDate=new DateTime(2017,4,1, 4,0,0), Iteration=nextProjectIteration, Progress=100, EstimatedTime=new TimeSpan( 4,0,0)},
-                new Problem {Title="Buy some donuts",                 Description="Go to the Rusty Brown's Ring Donuts",                                                                                  Importance=Importance.Regular,  Story=nextUserStory, Box=newProjectBoxes.Where(b=>b.Name=="Waiting for Tests").First(),CreationDate=new DateTime(2017,4,1, 9,0,0), Iteration=nextProjectIteration,  Progress=50,  EstimatedTime=new TimeSpan(12,0,0) },
-                new Problem {Title="Write some documentation",                       Description="Sometimes i like to wear women's panties and walk arounf 5'th Street",                                                                               Importance=Importance.Trivial,  Story=nextUserStory, Box=newProjectBoxes.Where(b=>b.Name=="Approved").First(),         CreationDate=new DateTime(2017,4,1,10,0,0), Iteration=nextProjectIteration,  Progress=100, EstimatedTime=new TimeSpan( 4,0,0), FinalTime=new TimeSpan(2,0,0) },
+                new Problem {Title="Make some coffe",        Description="Go to the kitchen and steal someone's else coffe",   Importance=Importance.Important,Story=daftStoryUserStory, Box=newProjectBoxes.Where(b=>b.Name=="New").First(),              CreationDate=new DateTime(2017,4,1, 3,2,0), Iteration=nextProjectIteration, Progress=50,  EstimatedTime=new TimeSpan(12,0,0)},
+                new Problem {Title="Repair Mary's computer", Description="Use a hammer.",     Importance=Importance.Critical, Story=daftStoryUserStory, Box=newProjectBoxes.Where(b=>b.Name=="Assigned").First(),         CreationDate=new DateTime(2017,4,1, 4,0,0), Iteration=nextProjectIteration, Progress=100, EstimatedTime=new TimeSpan( 4,0,0)},
+                new Problem {Title="Buy some donuts",                 Description="Go to the Rusty Brown's Ring Donuts",                                                                                  Importance=Importance.Regular,  Story=daftStoryUserStory, Box=newProjectBoxes.Where(b=>b.Name=="Waiting for Tests").First(),CreationDate=new DateTime(2017,4,1, 9,0,0), Iteration=nextProjectIteration,  Progress=50,  EstimatedTime=new TimeSpan(12,0,0) },
+                new Problem {Title="Write some documentation",                       Description="Sometimes i like to wear women's panties and walk arounf 5'th Street",                                                                               Importance=Importance.Trivial,  Story=daftStoryUserStory, Box=newProjectBoxes.Where(b=>b.Name=="Approved").First(),         CreationDate=new DateTime(2017,4,1,10,0,0), Iteration=nextProjectIteration,  Progress=100, EstimatedTime=new TimeSpan( 4,0,0), FinalTime=new TimeSpan(2,0,0) },
 
                 new Problem {Title="Clean the desk on top",        Description="The desk-top, you get it, right?",   Importance=Importance.Important,Story=daftStoryUserStory, Box=randomAccessMemoriesProjectBoxes.Where(b=>b.Name=="New").First(),              CreationDate=new DateTime(2013,4,1, 3,2,0), Iteration=randomAccessMemoriesIteration,Progress=50, EstimatedTime=new TimeSpan(12,0,0) },
                 new Problem { Title = "Open the window", Description = "I know there is no handle, you work in KS", Importance = Importance.Critical, Story = daftStoryUserStory, Box = randomAccessMemoriesProjectBoxes.Where(b => b.Name == "Assigned").First(), CreationDate = new DateTime(2013, 4, 1, 4, 0, 0), Iteration = randomAccessMemoriesIteration,Progress=50, EstimatedTime = new TimeSpan(4, 0, 0)},
@@ -274,21 +275,46 @@ namespace SeeNowProcess.DAL
         }
         private void AssignUsersToProblems(SeeNowContext context)
         {
-            // userow mamy 7, taski mamy 4
+            // userow mamy 7(11), taski mamy 4(16)
             // kazdy user bedzie mial przypisane taski o IDkach bedacych dzielnikami jego ID
             // np. user #6 -> taski 1, 2, 3, user #3 -> taski 1,3 itp
-            context.Problems.ToList().ForEach(p =>
+            //context.Problems.ToList().ForEach(p =>
+            //{
+            //    User user;
+            //    var avaibleUsers = p
+            //            .Story
+            //            .Teams
+            //            .SelectMany(t => t.Assignments)
+            //            .Select(ass => ass.User)
+            //            .ToList();
+            //    for (int i = 1; (user = avaibleUsers.Where(u => u.UserID == i * p.ProblemID).FirstOrDefault()) != null; ++i)
+            //        p.AssignedUsers.Add(user);
+            //});
+
+            User vader = context.Users.Where(u => u.Login == "DarthVader").FirstOrDefault();
+            User stormTrooper = context.Users.Where(u => u.Login == "StormTrooper").FirstOrDefault();
+
+            User kajak = context.Users.Where(u => u.Login == "kajak").FirstOrDefault();
+            User adada = context.Users.Where(u => u.Login == "adada").FirstOrDefault();
+
+            var problems = context.Problems.ToList();
+
+            kajak.Problems.Add(problems[0]);
+            kajak.Problems.Add(problems[1]);
+            adada.Problems.Add(problems[2]);
+            adada.Problems.Add(problems[3]);
+
+            for (int i = 4; i < problems.Count(); i+=2)
             {
-                User user;
-                var avaibleUsers = p
-                        .Story
-                        .Teams
-                        .SelectMany(t => t.Assignments)
-                        .Select(ass => ass.User)
-                        .ToList();
-                for (int i = 1; (user = avaibleUsers.Where(u => u.UserID == i * p.ProblemID).FirstOrDefault()) != null; ++i)
-                    p.AssignedUsers.Add(user);
-            });
+                vader.Problems.Add(problems[i]);
+                stormTrooper.Problems.Add(problems[i + 1]);
+            }
+
+            context.MarkAsModified<User>(kajak);
+            context.MarkAsModified<User>(adada);
+            context.MarkAsModified<User>(vader);
+            context.MarkAsModified<User>(stormTrooper);
+
         }
     }
 }
