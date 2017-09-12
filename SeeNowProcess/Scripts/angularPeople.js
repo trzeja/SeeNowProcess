@@ -68,6 +68,9 @@ peopleApp.controller("peopleCtrl", ['$scope', '$http', function ($scope, $http) 
             if ($scope.currentUser.id == $scope.logged) {
                 return true;
             }
+            else if ($scope.isAdmin == true) {
+                return true
+            }
         }
         return false;
     }

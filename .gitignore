@@ -245,3 +245,4 @@ ModelManifest.xml
 .fake/
 /Workers/Migrations
 /SeeNowProcess/img/szop (2).jpg
+/CheckUserAccess.sql
